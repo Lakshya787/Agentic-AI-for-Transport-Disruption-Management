@@ -1,0 +1,26 @@
+{
+  "scenario_id": "L1_simple_001",
+  "complexity_level": "L1",
+  "description": "Single road closure on a central link. One alternate path exists. Tests basic rerouting capability.",
+  "network_file": "networks/grid_4x4.net.xml",
+  "network_seed": 42,
+  "simulation_duration": 600,
+  "disruption_time": 100,
+  "num_vehicles": 8,
+  "fleet_seed": 42,
+  "disruptions": [
+    {
+      "id": "D1",
+      "type": "road_closure",
+      "time": 100,
+      "edge_from": "B2",
+      "edge_to": "C2",
+      "duration": null
+    }
+  ],
+  "requests": [
+    {"id": "R1", "origin": "A0", "destination": "D3", "time": 50, "passengers": 2, "priority": 1},
+    {"id": "R2", "origin": "B0", "destination": "C3", "time": 60, "passengers": 1, "priority": 1},
+    {"id": "R3", "origin": "A3", "destination": "D1", "time": 80, "passengers": 1, "priority": 2}
+  ]
+}

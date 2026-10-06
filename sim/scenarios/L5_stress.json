@@ -1,0 +1,31 @@
+{
+  "scenario_id": "L5_stress_001",
+  "complexity_level": "L5",
+  "description": "Near-collapse scenario. 3 closures, 2 congestions, 2 breakdowns, massive demand surge. Tests graceful degradation and fallback behavior.",
+  "network_file": "networks/grid_4x4.net.xml",
+  "network_seed": 42,
+  "simulation_duration": 1200,
+  "disruption_time": 100,
+  "num_vehicles": 10,
+  "fleet_seed": 42,
+  "disruptions": [
+    {"id": "D1", "type": "road_closure", "time": 100, "edge_from": "B2", "edge_to": "C2"},
+    {"id": "D2", "type": "road_closure", "time": 120, "edge_from": "A2", "edge_to": "A3"},
+    {"id": "D3", "type": "road_closure", "time": 180, "edge_from": "C2", "edge_to": "D2"},
+    {"id": "D4", "type": "congestion", "time": 100, "edge_from": "B3", "edge_to": "C3", "congestion_factor": 4.0},
+    {"id": "D5", "type": "congestion", "time": 150, "edge_from": "B1", "edge_to": "C1", "congestion_factor": 3.0},
+    {"id": "D6", "type": "vehicle_breakdown", "time": 130, "vehicle_id": "V002"},
+    {"id": "D7", "type": "vehicle_breakdown", "time": 200, "vehicle_id": "V005"},
+    {"id": "D8", "type": "demand_surge", "time": 250, "surge_multiplier": 3.0, "surge_num_requests": 10, "surge_area_nodes": ["A0", "A1", "B0", "B1", "C0", "C1"]}
+  ],
+  "requests": [
+    {"id": "R1", "origin": "A0", "destination": "D3", "time": 50, "passengers": 2, "priority": 1},
+    {"id": "R2", "origin": "B0", "destination": "C3", "time": 60, "passengers": 1, "priority": 1},
+    {"id": "R3", "origin": "A2", "destination": "D2", "time": 70, "passengers": 1, "priority": 2},
+    {"id": "R4", "origin": "C0", "destination": "D3", "time": 90, "passengers": 3, "priority": 1},
+    {"id": "R5", "origin": "A3", "destination": "D0", "time": 110, "passengers": 1, "priority": 3},
+    {"id": "R6", "origin": "D1", "destination": "A0", "time": 130, "passengers": 2, "priority": 1},
+    {"id": "R7", "origin": "B3", "destination": "D1", "time": 160, "passengers": 1, "priority": 1},
+    {"id": "R8", "origin": "C3", "destination": "A1", "time": 190, "passengers": 2, "priority": 2}
+  ]
+}

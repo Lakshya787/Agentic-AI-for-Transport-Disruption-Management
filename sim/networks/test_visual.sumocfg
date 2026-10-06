@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <input>
+        <net-file value="/home/akt/Desktop/Clg/IIITNR/Sem5/04-Minor/sim/networks/grid_4x4.net.xml"/>
+    </input>
+    <time>
+        <begin value="0"/>
+        <end value="400"/>
+    </time>
+    <gui_only>
+        <start value="true"/>
+    </gui_only>
+</configuration>

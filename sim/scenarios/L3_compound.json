@@ -1,0 +1,23 @@
+{
+  "scenario_id": "L3_compound_001",
+  "complexity_level": "L3",
+  "description": "Primary route blocked, detour congested, AND one vehicle breaks down. Fleet rebalancing needed.",
+  "network_file": "networks/grid_4x4.net.xml",
+  "network_seed": 42,
+  "simulation_duration": 600,
+  "disruption_time": 100,
+  "num_vehicles": 8,
+  "fleet_seed": 42,
+  "disruptions": [
+    {"id": "D1", "type": "road_closure", "time": 100, "edge_from": "B2", "edge_to": "C2"},
+    {"id": "D2", "type": "congestion", "time": 100, "edge_from": "B3", "edge_to": "C3", "congestion_factor": 3.5},
+    {"id": "D3", "type": "vehicle_breakdown", "time": 120, "vehicle_id": "V003"}
+  ],
+  "requests": [
+    {"id": "R1", "origin": "A0", "destination": "D3", "time": 50, "passengers": 2, "priority": 1},
+    {"id": "R2", "origin": "B0", "destination": "C3", "time": 60, "passengers": 1, "priority": 1},
+    {"id": "R3", "origin": "A2", "destination": "D2", "time": 70, "passengers": 1, "priority": 2},
+    {"id": "R4", "origin": "C0", "destination": "D3", "time": 90, "passengers": 3, "priority": 1},
+    {"id": "R5", "origin": "A3", "destination": "D0", "time": 110, "passengers": 1, "priority": 3}
+  ]
+}

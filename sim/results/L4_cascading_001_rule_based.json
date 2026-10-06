@@ -1,0 +1,207 @@
+{
+  "scenario_id": "L4_cascading_001",
+  "system": "rule_based",
+  "metrics": {
+    "hcvr_percent": 0.0,
+    "rfr_percent": 75.0,
+    "adif": 1.074283591486168,
+    "execution_latency_s": 0.008784294128417969,
+    "idr_percent": 25.0
+  },
+  "decisions": [
+    {
+      "scenario_id": "",
+      "request_id": "R5",
+      "recommended_action": "REROUTE_AND_DISPATCH",
+      "vehicle_id": "V001",
+      "assigned_route": [
+        "A3",
+        "A2",
+        "A1",
+        "B1",
+        "B0",
+        "C0",
+        "D0"
+      ],
+      "estimated_delay_reduction_min": 0.0,
+      "safety_guard_passed": true,
+      "rejection_reason": null,
+      "route_distance_km": 1.08,
+      "estimated_travel_time_s": 78.0
+    },
+    {
+      "scenario_id": "",
+      "request_id": "R3",
+      "recommended_action": "REROUTE_AND_DISPATCH",
+      "vehicle_id": "V003",
+      "assigned_route": [
+        "A2",
+        "A1",
+        "B1",
+        "C1",
+        "C2",
+        "D2"
+      ],
+      "estimated_delay_reduction_min": 0.4,
+      "safety_guard_passed": true,
+      "rejection_reason": null,
+      "route_distance_km": 0.9,
+      "estimated_travel_time_s": 64.5
+    },
+    {
+      "scenario_id": "",
+      "request_id": "R1",
+      "recommended_action": "REROUTE_AND_DISPATCH",
+      "vehicle_id": "V007",
+      "assigned_route": [
+        "A0",
+        "A1",
+        "B1",
+        "C1",
+        "C2",
+        "C3",
+        "D3"
+      ],
+      "estimated_delay_reduction_min": 0.0,
+      "safety_guard_passed": true,
+      "rejection_reason": null,
+      "route_distance_km": 1.08,
+      "estimated_travel_time_s": 78.0
+    },
+    {
+      "scenario_id": "",
+      "request_id": "R2",
+      "recommended_action": "REROUTE_AND_DISPATCH",
+      "vehicle_id": "V008",
+      "assigned_route": [
+        "B0",
+        "B1",
+        "C1",
+        "C2",
+        "C3"
+      ],
+      "estimated_delay_reduction_min": 0.0,
+      "safety_guard_passed": true,
+      "rejection_reason": null,
+      "route_distance_km": 0.72,
+      "estimated_travel_time_s": 51.6
+    },
+    {
+      "scenario_id": "",
+      "request_id": "R4",
+      "recommended_action": "REROUTE_AND_DISPATCH",
+      "vehicle_id": "V005",
+      "assigned_route": [
+        "C0",
+        "C1",
+        "C2",
+        "C3",
+        "D3"
+      ],
+      "estimated_delay_reduction_min": 0.0,
+      "safety_guard_passed": true,
+      "rejection_reason": null,
+      "route_distance_km": 0.72,
+      "estimated_travel_time_s": 51.9
+    },
+    {
+      "scenario_id": "",
+      "request_id": "R6",
+      "recommended_action": "REROUTE_AND_DISPATCH",
+      "vehicle_id": "V010",
+      "assigned_route": [
+        "D1",
+        "C1",
+        "B1",
+        "A1",
+        "A0"
+      ],
+      "estimated_delay_reduction_min": 0.0,
+      "safety_guard_passed": true,
+      "rejection_reason": null,
+      "route_distance_km": 0.72,
+      "estimated_travel_time_s": 51.9
+    },
+    {
+      "scenario_id": "",
+      "request_id": "SURGE_D5_0",
+      "recommended_action": "REROUTE_AND_DISPATCH",
+      "vehicle_id": "V004",
+      "assigned_route": [
+        "B0",
+        "A0"
+      ],
+      "estimated_delay_reduction_min": 0.0,
+      "safety_guard_passed": true,
+      "rejection_reason": null,
+      "route_distance_km": 0.18,
+      "estimated_travel_time_s": 13.2
+    },
+    {
+      "scenario_id": "",
+      "request_id": "SURGE_D5_1",
+      "recommended_action": "REROUTE_AND_DISPATCH",
+      "vehicle_id": "V006",
+      "assigned_route": [
+        "B1",
+        "B0"
+      ],
+      "estimated_delay_reduction_min": 0.0,
+      "safety_guard_passed": true,
+      "rejection_reason": null,
+      "route_distance_km": 0.18,
+      "estimated_travel_time_s": 12.9
+    },
+    {
+      "scenario_id": "",
+      "request_id": "SURGE_D5_2",
+      "recommended_action": "REROUTE_AND_DISPATCH",
+      "vehicle_id": "V009",
+      "assigned_route": [
+        "A1",
+        "A0"
+      ],
+      "estimated_delay_reduction_min": 0.0,
+      "safety_guard_passed": true,
+      "rejection_reason": null,
+      "route_distance_km": 0.18,
+      "estimated_travel_time_s": 13.2
+    },
+    {
+      "scenario_id": "",
+      "request_id": "SURGE_D5_3",
+      "recommended_action": "NO_VEHICLE_AVAILABLE",
+      "vehicle_id": null,
+      "assigned_route": null,
+      "estimated_delay_reduction_min": 0.0,
+      "safety_guard_passed": false,
+      "rejection_reason": "No available vehicle with sufficient SoC and capacity",
+      "route_distance_km": null,
+      "estimated_travel_time_s": null
+    },
+    {
+      "scenario_id": "",
+      "request_id": "SURGE_D5_4",
+      "recommended_action": "NO_VEHICLE_AVAILABLE",
+      "vehicle_id": null,
+      "assigned_route": null,
+      "estimated_delay_reduction_min": 0.0,
+      "safety_guard_passed": false,
+      "rejection_reason": "No available vehicle with sufficient SoC and capacity",
+      "route_distance_km": null,
+      "estimated_travel_time_s": null
+    },
+    {
+      "scenario_id": "",
+      "request_id": "SURGE_D5_5",
+      "recommended_action": "NO_VEHICLE_AVAILABLE",
+      "vehicle_id": null,
+      "assigned_route": null,
+      "estimated_delay_reduction_min": 0.0,
+      "safety_guard_passed": false,
+      "rejection_reason": "No available vehicle with sufficient SoC and capacity",
+      "route_distance_km": null,
+      "estimated_travel_time_s": null
+    }
+  ]
+}

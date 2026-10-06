@@ -1,0 +1,282 @@
+{
+  "scenario_id": "L5_stress_001",
+  "system": "rule_based",
+  "metrics": {
+    "hcvr_percent": 0.0,
+    "rfr_percent": 44.44444444444444,
+    "adif": 1.2291716931019723,
+    "execution_latency_s": 0.008408069610595703,
+    "idr_percent": 55.55555555555556
+  },
+  "decisions": [
+    {
+      "scenario_id": "",
+      "request_id": "R5",
+      "recommended_action": "REROUTE_AND_DISPATCH",
+      "vehicle_id": "V001",
+      "assigned_route": [
+        "A3",
+        "A2",
+        "A1",
+        "B1",
+        "B0",
+        "C0",
+        "D0"
+      ],
+      "estimated_delay_reduction_min": 0.0,
+      "safety_guard_passed": true,
+      "rejection_reason": null,
+      "route_distance_km": 1.08,
+      "estimated_travel_time_s": 78.0
+    },
+    {
+      "scenario_id": "",
+      "request_id": "R3",
+      "recommended_action": "REROUTE_AND_DISPATCH",
+      "vehicle_id": "V003",
+      "assigned_route": [
+        "A2",
+        "A1",
+        "B1",
+        "C1",
+        "D1",
+        "D2"
+      ],
+      "estimated_delay_reduction_min": 0.9,
+      "safety_guard_passed": true,
+      "rejection_reason": null,
+      "route_distance_km": 0.9,
+      "estimated_travel_time_s": 90.3
+    },
+    {
+      "scenario_id": "",
+      "request_id": "R8",
+      "recommended_action": "REROUTE_AND_DISPATCH",
+      "vehicle_id": "V006",
+      "assigned_route": [
+        "C3",
+        "B3",
+        "B2",
+        "A2",
+        "A1"
+      ],
+      "estimated_delay_reduction_min": 0.0,
+      "safety_guard_passed": true,
+      "rejection_reason": null,
+      "route_distance_km": 0.72,
+      "estimated_travel_time_s": 51.6
+    },
+    {
+      "scenario_id": "",
+      "request_id": "R1",
+      "recommended_action": "REROUTE_AND_DISPATCH",
+      "vehicle_id": "V007",
+      "assigned_route": [
+        "A0",
+        "B0",
+        "C0",
+        "C1",
+        "C2",
+        "C3",
+        "D3"
+      ],
+      "estimated_delay_reduction_min": 0.0,
+      "safety_guard_passed": true,
+      "rejection_reason": null,
+      "route_distance_km": 1.08,
+      "estimated_travel_time_s": 78.0
+    },
+    {
+      "scenario_id": "",
+      "request_id": "R2",
+      "recommended_action": "REROUTE_AND_DISPATCH",
+      "vehicle_id": "V008",
+      "assigned_route": [
+        "B0",
+        "C0",
+        "C1",
+        "C2",
+        "C3"
+      ],
+      "estimated_delay_reduction_min": 0.0,
+      "safety_guard_passed": true,
+      "rejection_reason": null,
+      "route_distance_km": 0.72,
+      "estimated_travel_time_s": 51.6
+    },
+    {
+      "scenario_id": "",
+      "request_id": "R4",
+      "recommended_action": "REROUTE_AND_DISPATCH",
+      "vehicle_id": "V009",
+      "assigned_route": [
+        "C0",
+        "C1",
+        "C2",
+        "C3",
+        "D3"
+      ],
+      "estimated_delay_reduction_min": 0.0,
+      "safety_guard_passed": true,
+      "rejection_reason": null,
+      "route_distance_km": 0.72,
+      "estimated_travel_time_s": 51.9
+    },
+    {
+      "scenario_id": "",
+      "request_id": "R6",
+      "recommended_action": "REROUTE_AND_DISPATCH",
+      "vehicle_id": "V010",
+      "assigned_route": [
+        "D1",
+        "C1",
+        "B1",
+        "A1",
+        "A0"
+      ],
+      "estimated_delay_reduction_min": 0.0,
+      "safety_guard_passed": true,
+      "rejection_reason": null,
+      "route_distance_km": 0.72,
+      "estimated_travel_time_s": 51.9
+    },
+    {
+      "scenario_id": "",
+      "request_id": "R7",
+      "recommended_action": "REROUTE_AND_DISPATCH",
+      "vehicle_id": "V004",
+      "assigned_route": [
+        "B3",
+        "B2",
+        "B1",
+        "C1",
+        "D1"
+      ],
+      "estimated_delay_reduction_min": 0.4,
+      "safety_guard_passed": true,
+      "rejection_reason": null,
+      "route_distance_km": 0.72,
+      "estimated_travel_time_s": 77.4
+    },
+    {
+      "scenario_id": "",
+      "request_id": "SURGE_D8_0",
+      "recommended_action": "NO_VEHICLE_AVAILABLE",
+      "vehicle_id": null,
+      "assigned_route": null,
+      "estimated_delay_reduction_min": 0.0,
+      "safety_guard_passed": false,
+      "rejection_reason": "No available vehicle with sufficient SoC and capacity",
+      "route_distance_km": null,
+      "estimated_travel_time_s": null
+    },
+    {
+      "scenario_id": "",
+      "request_id": "SURGE_D8_1",
+      "recommended_action": "NO_VEHICLE_AVAILABLE",
+      "vehicle_id": null,
+      "assigned_route": null,
+      "estimated_delay_reduction_min": 0.0,
+      "safety_guard_passed": false,
+      "rejection_reason": "No available vehicle with sufficient SoC and capacity",
+      "route_distance_km": null,
+      "estimated_travel_time_s": null
+    },
+    {
+      "scenario_id": "",
+      "request_id": "SURGE_D8_2",
+      "recommended_action": "NO_VEHICLE_AVAILABLE",
+      "vehicle_id": null,
+      "assigned_route": null,
+      "estimated_delay_reduction_min": 0.0,
+      "safety_guard_passed": false,
+      "rejection_reason": "No available vehicle with sufficient SoC and capacity",
+      "route_distance_km": null,
+      "estimated_travel_time_s": null
+    },
+    {
+      "scenario_id": "",
+      "request_id": "SURGE_D8_3",
+      "recommended_action": "NO_VEHICLE_AVAILABLE",
+      "vehicle_id": null,
+      "assigned_route": null,
+      "estimated_delay_reduction_min": 0.0,
+      "safety_guard_passed": false,
+      "rejection_reason": "No available vehicle with sufficient SoC and capacity",
+      "route_distance_km": null,
+      "estimated_travel_time_s": null
+    },
+    {
+      "scenario_id": "",
+      "request_id": "SURGE_D8_4",
+      "recommended_action": "NO_VEHICLE_AVAILABLE",
+      "vehicle_id": null,
+      "assigned_route": null,
+      "estimated_delay_reduction_min": 0.0,
+      "safety_guard_passed": false,
+      "rejection_reason": "No available vehicle with sufficient SoC and capacity",
+      "route_distance_km": null,
+      "estimated_travel_time_s": null
+    },
+    {
+      "scenario_id": "",
+      "request_id": "SURGE_D8_5",
+      "recommended_action": "NO_VEHICLE_AVAILABLE",
+      "vehicle_id": null,
+      "assigned_route": null,
+      "estimated_delay_reduction_min": 0.0,
+      "safety_guard_passed": false,
+      "rejection_reason": "No available vehicle with sufficient SoC and capacity",
+      "route_distance_km": null,
+      "estimated_travel_time_s": null
+    },
+    {
+      "scenario_id": "",
+      "request_id": "SURGE_D8_6",
+      "recommended_action": "NO_VEHICLE_AVAILABLE",
+      "vehicle_id": null,
+      "assigned_route": null,
+      "estimated_delay_reduction_min": 0.0,
+      "safety_guard_passed": false,
+      "rejection_reason": "No available vehicle with sufficient SoC and capacity",
+      "route_distance_km": null,
+      "estimated_travel_time_s": null
+    },
+    {
+      "scenario_id": "",
+      "request_id": "SURGE_D8_7",
+      "recommended_action": "NO_VEHICLE_AVAILABLE",
+      "vehicle_id": null,
+      "assigned_route": null,
+      "estimated_delay_reduction_min": 0.0,
+      "safety_guard_passed": false,
+      "rejection_reason": "No available vehicle with sufficient SoC and capacity",
+      "route_distance_km": null,
+      "estimated_travel_time_s": null
+    },
+    {
+      "scenario_id": "",
+      "request_id": "SURGE_D8_8",
+      "recommended_action": "NO_VEHICLE_AVAILABLE",
+      "vehicle_id": null,
+      "assigned_route": null,
+      "estimated_delay_reduction_min": 0.0,
+      "safety_guard_passed": false,
+      "rejection_reason": "No available vehicle with sufficient SoC and capacity",
+      "route_distance_km": null,
+      "estimated_travel_time_s": null
+    },
+    {
+      "scenario_id": "",
+      "request_id": "SURGE_D8_9",
+      "recommended_action": "NO_VEHICLE_AVAILABLE",
+      "vehicle_id": null,
+      "assigned_route": null,
+      "estimated_delay_reduction_min": 0.0,
+      "safety_guard_passed": false,
+      "rejection_reason": "No available vehicle with sufficient SoC and capacity",
+      "route_distance_km": null,
+      "estimated_travel_time_s": null
+    }
+  ]
+}

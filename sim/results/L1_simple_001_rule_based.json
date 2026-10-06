@@ -1,0 +1,70 @@
+{
+  "scenario_id": "L1_simple_001",
+  "system": "rule_based",
+  "metrics": {
+    "hcvr_percent": 0.0,
+    "rfr_percent": 100.0,
+    "adif": 1.000059025044841,
+    "execution_latency_s": 0.004244565963745117,
+    "idr_percent": 0.0
+  },
+  "decisions": [
+    {
+      "scenario_id": "",
+      "request_id": "R3",
+      "recommended_action": "REROUTE_AND_DISPATCH",
+      "vehicle_id": "V001",
+      "assigned_route": [
+        "A3",
+        "A2",
+        "A1",
+        "B1",
+        "C1",
+        "D1"
+      ],
+      "estimated_delay_reduction_min": 0.0,
+      "safety_guard_passed": true,
+      "rejection_reason": null,
+      "route_distance_km": 0.9,
+      "estimated_travel_time_s": 64.8
+    },
+    {
+      "scenario_id": "",
+      "request_id": "R1",
+      "recommended_action": "REROUTE_AND_DISPATCH",
+      "vehicle_id": "V007",
+      "assigned_route": [
+        "A0",
+        "A1",
+        "A2",
+        "B2",
+        "B3",
+        "C3",
+        "D3"
+      ],
+      "estimated_delay_reduction_min": 0.0,
+      "safety_guard_passed": true,
+      "rejection_reason": null,
+      "route_distance_km": 1.08,
+      "estimated_travel_time_s": 78.0
+    },
+    {
+      "scenario_id": "",
+      "request_id": "R2",
+      "recommended_action": "REROUTE_AND_DISPATCH",
+      "vehicle_id": "V002",
+      "assigned_route": [
+        "B0",
+        "B1",
+        "B2",
+        "B3",
+        "C3"
+      ],
+      "estimated_delay_reduction_min": 0.0,
+      "safety_guard_passed": true,
+      "rejection_reason": null,
+      "route_distance_km": 0.72,
+      "estimated_travel_time_s": 51.6
+    }
+  ]
+}
