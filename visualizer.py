@@ -229,10 +229,10 @@ def create_network_figure(
         fleet_list = fleet_states if isinstance(fleet_states, list) else fleet_states.values()
         for veh in fleet_list:
             v_id = veh.get("id") or veh.get("vehicle_id", "V")
-            loc = veh.get("loc") or veh.get("current_node", "N0")
+            loc = veh.get("position") or veh.get("loc") or veh.get("current_node", "N0")
             soc = veh.get("soc", 100)
             cap = veh.get("capacity", 4)
-            is_operable = veh.get("operable", True)
+            is_operable = (veh.get("status") == "available") if "status" in veh else veh.get("operable", True)
 
             if loc in NODE_POSITIONS:
                 px, py = NODE_POSITIONS[loc]
@@ -264,7 +264,7 @@ def create_network_figure(
         for req in requests:
             r_id = req.get("id", "R")
             orig = req.get("origin")
-            dest = req.get("dest")
+            dest = req.get("destination") or req.get("dest")
             priority = req.get("priority", "standard")
             is_emer = (priority == "emergency")
 
@@ -277,7 +277,20 @@ def create_network_figure(
                     mode="markers",
                     marker=dict(symbol="star" if is_emer else "circle", size=14, color="#ef4444" if is_emer else "#3b82f6", line=dict(width=1.5, color="#ffffff")),
                     hoverinfo="text",
-                    hovertext=f"<b>Request {r_id} (Origin)</b><br>Priority: {priority.upper()}<br>Pickup: {orig} → Dropoff: {dest}",
+                    hovertext=f"<b>Request {r_id} (Origin)</b><br>Priority: {priority.upper()}<br>Pickup: {orig} ({NODE_NAMES.get(orig, '')})<br>Dropoff: {dest} ({NODE_NAMES.get(dest, '')})",
+                    showlegend=False
+                ))
+
+            # Destination marker
+            if dest in NODE_POSITIONS and len(requests) <= 3:
+                dx, dy = NODE_POSITIONS[dest]
+                fig.add_trace(go.Scatter(
+                    x=[dx + 0.18],
+                    y=[dy + 0.18],
+                    mode="markers",
+                    marker=dict(symbol="square-cross" if is_emer else "diamond", size=12, color="#ef4444" if is_emer else "#6366f1", line=dict(width=1.2, color="#ffffff")),
+                    hoverinfo="text",
+                    hovertext=f"<b>Request {r_id} (Destination)</b><br>Dropoff: {dest} ({NODE_NAMES.get(dest, '')})",
                     showlegend=False
                 ))
 
