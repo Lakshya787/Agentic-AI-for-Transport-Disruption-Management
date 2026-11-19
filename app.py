@@ -17,6 +17,14 @@ import networkx as nx
 
 # Project imports
 from network import create_network, apply_disruptions, NODE_NAMES, STREET_NAMES
+from real_network import (
+    create_real_manhattan_network,
+    create_6x6_scaled_network,
+    apply_real_disruptions,
+    MANHATTAN_NODES
+)
+from run_larger_instances import load_real_manhattan_scenarios, generate_6x6_scenarios
+from explainability import generate_explainability_report, format_trace_to_markdown
 from scenarios import generate_scenarios, OD_CANDIDATES
 from safety_guard import validate_decision, apply_sop_fallback
 from tools import tool_route_travel_time
@@ -26,7 +34,12 @@ from controllers import (
     controller_b3_multi_agent
 )
 from run_benchmark import compute_scenario_metrics
-from visualizer import create_network_figure, create_benchmark_bar_chart, CONTROLLER_COLORS
+from visualizer import (
+    create_network_figure,
+    create_benchmark_bar_chart,
+    create_multi_scale_bar_chart,
+    CONTROLLER_COLORS
+)
 
 # ─────────────────────────────────────────────────────────────────────────────
 # 1. Page Configuration & Custom CSS
@@ -191,7 +204,28 @@ with st.sidebar:
     st.image("https://img.icons8.com/isometric/100/traffic-jam.png", width=64)
     st.title("Control Deck")
 
-    st.subheader("1. Simulation Mode")
+    st.subheader("1. Network Topology Scale")
+    selected_scale = st.selectbox(
+        "Choose Scale:",
+        [
+            "4×4 Manhattan Baseline (N=16, 24 Edges)",
+            "6×6 Scaled District (N=36, 60 Edges)",
+            "Macro (Real Manhattan N=42, Real NYC Incidents)"
+        ],
+        help="Switch between the base 4x4 grid, expanded 6x6 district, and real NYC Manhattan topology."
+    )
+
+    if "Real Manhattan" in selected_scale:
+        active_scenarios = load_real_manhattan_scenarios()
+        G_orig = create_real_manhattan_network()
+    elif "6×6" in selected_scale:
+        active_scenarios = generate_6x6_scenarios()
+        G_orig = create_6x6_scaled_network()
+    else:
+        active_scenarios = all_scenarios
+        G_orig = create_network()
+
+    st.subheader("2. Simulation Mode")
     sim_mode = st.radio(
         "Choose Mode:",
         ["Instant Replay (Recorded Benchmark)", "Live Gemini API Call"],
@@ -200,7 +234,7 @@ with st.sidebar:
 
     st.divider()
 
-    st.subheader("2. Scenario Selector")
+    st.subheader("3. Scenario Selector")
     selected_level = st.selectbox(
         "Disruption Complexity Tier:",
         [1, 2, 3, 4, 5],
@@ -213,11 +247,13 @@ with st.sidebar:
         }[x]
     )
 
-    # Scenarios for the selected level
-    level_scenarios = [s for s in all_scenarios if s["level"] == selected_level]
+    # Scenarios for the selected level and scale
+    level_scenarios = [s for s in active_scenarios if s["level"] == selected_level]
+    if not level_scenarios:
+        level_scenarios = active_scenarios[:1]
     scenario_ids = [s["scenario_id"] for s in level_scenarios]
     selected_scenario_id = st.selectbox("Select Scenario Run:", scenario_ids)
-    current_scenario = scenario_map[selected_scenario_id]
+    current_scenario = next(s for s in level_scenarios if s["scenario_id"] == selected_scenario_id)
 
     # Live API Key input if live mode chosen
     gemini_key = ""
@@ -281,9 +317,8 @@ st.markdown("""
 # ─────────────────────────────────────────────────────────────────────────────
 # 5. Simulation Execution & Resolution Helper (State-Persistent)
 # ─────────────────────────────────────────────────────────────────────────────
-G_orig = create_network()
-G_disrupted, real_closed = apply_disruptions(G_orig, current_scenario["disruptions"])
-congested_edges = [d["edge"] for d in current_scenario["disruptions"] if d["type"] == "congestion"]
+G_disrupted, real_closed = apply_real_disruptions(G_orig, current_scenario["disruptions"])
+congested_edges = [d["edge"] for d in current_scenario["disruptions"] if d.get("type") == "congestion" and "edge" in d]
 
 def resolve_scenario_results(scenario, mode, api_key, force_live=False):
     """
@@ -378,9 +413,10 @@ sim_results = resolve_scenario_results(current_scenario, sim_mode, gemini_key, f
 # ─────────────────────────────────────────────────────────────────────────────
 # 6. Core Application Tabs
 # ─────────────────────────────────────────────────────────────────────────────
-tab_arena, tab_network, tab_analytics, tab_methodology, tab_resume = st.tabs([
+tab_arena, tab_network, tab_explain, tab_analytics, tab_methodology, tab_resume = st.tabs([
     "🎮 Comparative Arena (B1 vs B2 vs B3)",
-    "🗺️ 2D Manhattan Grid Visualizer",
+    "🗺️ 2D Road Network Visualizer",
+    "🔍 Explainable AI & Deliberation Inspector",
     "📊 Empirical Benchmark Analytics",
     "🔬 Research Framework & Math",
     "💼 Resume & Portfolio Toolkit"
@@ -625,9 +661,12 @@ with tab_arena:
 # TAB 2: INTERACTIVE 2D MANHATTAN GRID VISUALIZER
 # ═════════════════════════════════════════════════════════════════════════════
 with tab_network:
-    st.markdown("### 🗺️ Full Interactive 2D Urban Road Network (Manhattan Grid)")
+    scale_label = selected_scale.split("(")[0].strip()
+    n_nodes = len(G_disrupted.nodes())
+    n_edges = len(G_disrupted.edges())
+    st.markdown(f"### 🗺️ Full Interactive 2D Urban Road Network ({scale_label})")
     st.write(
-        "A 4×4 topological grid featuring 16 intersections ($N_0$ to $N_{15}$) and 24 bidirectional road corridors. "
+        f"Active topology featuring **{n_nodes} intersections** and **{n_edges} road corridors**. "
         "Explore real-time closures, severe bottlenecks, EV fleet positions, and patient requests."
     )
 
@@ -662,20 +701,75 @@ with tab_network:
 
     with st.expander("📋 View Complete Network Topology & Street Directory"):
         street_data = []
-        for (u, v), name in STREET_NAMES.items():
-            is_c = tuple(sorted((u, v))) in [tuple(sorted(e)) for e in real_closed]
-            is_b = tuple(sorted((u, v))) in [tuple(sorted(e)) for e in congested_edges]
+        seen_edges = set()
+        for u, v, data in G_disrupted.edges(data=True):
+            edge_key = tuple(sorted((u, v)))
+            if edge_key in seen_edges:
+                continue
+            seen_edges.add(edge_key)
+            name = data.get("street_name") or STREET_NAMES.get((u, v), STREET_NAMES.get((v, u), f"{u} ↔ {v}"))
+            is_c = edge_key in [tuple(sorted(e)) for e in real_closed]
+            is_b = edge_key in [tuple(sorted(e)) for e in congested_edges]
             status = "⛔ Closed" if is_c else ("⚠️ Bottleneck" if is_b else "✅ Open")
+
+            u_name = G_disrupted.nodes[u].get("name", NODE_NAMES.get(u, u))
+            v_name = G_disrupted.nodes[v].get("name", NODE_NAMES.get(v, v))
+
             street_data.append({
                 "Street Name": name,
-                "Intersections": f"{u} ({NODE_NAMES.get(u)}) ↔ {v} ({NODE_NAMES.get(v)})",
+                "Intersections": f"{u} ({u_name}) ↔ {v} ({v_name})",
+                "Travel Time": f"{data.get('travel_time', 0.0):.1f} min",
+                "Capacity": f"{data.get('capacity', 40)} veh/hr",
                 "Current Status": status
             })
         st.dataframe(pd.DataFrame(street_data), use_container_width=True)
 
 
 # ═════════════════════════════════════════════════════════════════════════════
-# TAB 3: EMPIRICAL BENCHMARK ANALYTICS
+# TAB 3: EXPLAINABLE AI & DELIBERATION INSPECTOR
+# ═════════════════════════════════════════════════════════════════════════════
+with tab_explain:
+    st.markdown("### 🔍 Neuro-Symbolic Explainability & Causal Audit Inspector")
+    st.write(
+        "Inspect the multi-agent deliberation chain, range feasibility proofs, priority triage arbitration, "
+        "and deterministic safety certificates for every dispatch decision."
+    )
+
+    exp_report = generate_explainability_report(val_b3, current_scenario, G_orig, G_disrupted, viol_b3)
+
+    em_c1, em_c2, em_c3, em_c4 = st.columns(4)
+    em_c1.metric("Requests Audited", len(current_scenario["requests"]))
+    em_c2.metric("Served Fulfillments", exp_report["served_requests"])
+    em_c3.metric("Battery Safety Buffer", "15.0% Reserve", help="Guaranteed battery margin above theoretical energy draw")
+    em_c4.metric("Safety Guard Status", "4 Physical Checks", help="Reachability, SoC sufficiency, capacity, and zero-conflict")
+
+    st.divider()
+
+    st.markdown("#### 🔬 Causal Decision Breakdown for Selected Request")
+    req_choices = [t["request_id"] for t in exp_report["explainability_traces"]]
+    chosen_rid = st.selectbox("Choose Passenger Request to Audit Decision:", req_choices, key="tab_explain_req_select")
+    chosen_trace = next((t for t in exp_report["explainability_traces"] if t["request_id"] == chosen_rid), None)
+
+    if chosen_trace:
+        st.markdown(format_trace_to_markdown(chosen_trace))
+
+        with st.expander("📊 Full Causal Dimensions JSON Object"):
+            st.json(chosen_trace)
+
+    st.divider()
+    st.markdown("#### 🛡️ Neuro-Symbolic Architecture Comparison")
+    st.markdown("""
+    | Evaluation Dimension | Classical SOP ($B_1$) | Monolithic Single-LLM ($B_2$) | Proposed Tool-Augmented MAS ($B_3$) |
+    | :--- | :--- | :--- | :--- |
+    | **Text Incident Parsing** | ❌ Blind (Cannot parse text alerts) | ⚠️ Partial (Suffers attention dilution) | ✅ **Specialized Traffic Agent** extracts closed edges |
+    | **Graph Path Finding** | ✅ Deterministic Dijkstra | ❌ Hallucinates non-existent roads | ✅ **Dijkstra Tool** invoked deterministically |
+    | **Priority Triage** | ❌ Greedy FIFO (Starves Emergency) | ⚠️ Context collapse at $L_4\text{--}L_5$ | ✅ **Fleet Agent** reserves high-SoC EVs for emergency |
+    | **Physical Safety** | ❌ May route into closed flooded roads | ❌ No physical check | ✅ **Deterministic Safety Guard** audits & repairs |
+    """)
+
+
+# ═════════════════════════════════════════════════════════════════════════════
+# TAB 4: EMPIRICAL BENCHMARK ANALYTICS
 # ═════════════════════════════════════════════════════════════════════════════
 with tab_analytics:
     st.markdown("### 📊 Empirical Benchmark Analytics & Controller Trade-offs")
@@ -727,9 +821,40 @@ with tab_analytics:
         "Spending one-twentieth of a single US cent ($\approx \\$0.0005$) on multi-agent inference to avoid sending an EV into a flooded corridor or stranded patient is economically negligible."
     )
 
+    st.divider()
+    st.subheader("🌍 Multi-Scale Scalability Analysis (Micro N=16 vs. Meso N=36 vs. Macro N=42)")
+    st.write(
+        "Empirical scalability comparison across expanding network sizes: from the 4×4 baseline grid ($N=16$) "
+        "to a 6×6 district ($N=36$) and the authentic 42-node Real Manhattan network with real NYC DOT closures."
+    )
+
+    sc_c1, sc_c2 = st.columns(2)
+    with sc_c1:
+        st.plotly_chart(
+            create_multi_scale_bar_chart("rfr_weighted", "Priority Fulfillment vs. Scale (Emergency Service)", "Fulfillment Rate (%)"),
+            use_container_width=True
+        )
+    with sc_c2:
+        st.plotly_chart(
+            create_multi_scale_bar_chart("hcvr", "Pre-Guard Violations vs. Scale (Interception Need)", "Violation Rate (%)"),
+            use_container_width=True
+        )
+
+    sc_c3, sc_c4 = st.columns(2)
+    with sc_c3:
+        st.plotly_chart(
+            create_multi_scale_bar_chart("latency_s", "Execution Latency Scaling vs. Scale", "Latency (s)"),
+            use_container_width=True
+        )
+    with sc_c4:
+        st.plotly_chart(
+            create_multi_scale_bar_chart("tokens", "Token Footprint per Decision vs. Scale", "Tokens Consumed"),
+            use_container_width=True
+        )
+
 
 # ═════════════════════════════════════════════════════════════════════════════
-# TAB 4: RESEARCH FRAMEWORK & METHODOLOGY
+# TAB 5: RESEARCH FRAMEWORK & METHODOLOGY
 # ═════════════════════════════════════════════════════════════════════════════
 with tab_methodology:
     st.markdown("### 🔬 Research Framework, Mentorship & Mathematical Formulation")

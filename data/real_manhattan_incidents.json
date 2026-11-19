@@ -1,0 +1,183 @@
+{
+  "dataset_metadata": {
+    "source": "NYC Open Data (NYC DOT Street Closures u2e5-msge) & 511NY Incident Feeds",
+    "district": "Midtown & Lower Manhattan, New York City",
+    "total_scenarios": 5,
+    "description": "Curated authentic urban disruption scenarios mapping real NYC street closures, water main bursts, arterial traffic accidents, and hospital emergency alerts to the Manhattan road topology."
+  },
+  "scenarios": [
+    {
+      "scenario_id": "NYC_REAL_L1",
+      "level": 1,
+      "title": "Scheduled Utility Resurfacing on Central Park South",
+      "disruptions": [
+        {
+          "type": "road_closure",
+          "edge": ["M01", "M02"],
+          "street_name": "Central Park South",
+          "reported_via_text_only": false,
+          "cause": "NYC DOT Authorized Pavement Rehabilitation",
+          "permit_id": "DOT-MAN-2026-9812"
+        }
+      ],
+      "text_alerts": [
+        "ℹ️ NYC DOT TRAFFIC ADVISORY: Central Park South between Columbus Circle (M01) and 5th Avenue (M02) is closed to vehicular traffic due to scheduled resurfacing. Detour via W 58th St."
+      ]
+    },
+    {
+      "scenario_id": "NYC_REAL_L2",
+      "level": 2,
+      "title": "Subterranean Water Main Rupture on 5th Avenue",
+      "disruptions": [
+        {
+          "type": "road_closure",
+          "edge": ["M11", "M18"],
+          "street_name": "5th Avenue (42nd to Empire State)",
+          "reported_via_text_only": true,
+          "cause": "Major 36-inch Water Main Rupture",
+          "severity": "CRITICAL"
+        },
+        {
+          "type": "congestion",
+          "edge": ["M10", "M17"],
+          "street_name": "Broadway (Times Sq to Herald Sq)",
+          "factor": 3.2,
+          "cause": "Spillover Congestion from 5th Ave Closure"
+        }
+      ],
+      "text_alerts": [
+        "🚨 URGENT POLICE DISPATCH: Massive subterranean water main collapse on 5th Avenue between Bryant Park (M11) and Empire State Building (M18). Street is severely flooded and impassable to all emergency and transit vehicles. Avoid M11 ↔ M18 immediately.",
+        "⚠️ 511NY TRAFFIC BOTTLENECK: Severe gridlock along Broadway between Times Square (M10) and Herald Square (M17). Speeds reduced to crawl; travel time increased 3.2× normal."
+      ]
+    },
+    {
+      "scenario_id": "NYC_REAL_L3",
+      "level": 3,
+      "title": "East River Arterial Collision & Midtown Steam Pipe Leak",
+      "disruptions": [
+        {
+          "type": "road_closure",
+          "edge": ["M09", "M10"],
+          "street_name": "W 42nd St (Theater Row)",
+          "reported_via_text_only": true,
+          "cause": "ConEd Emergency Steam Pipe Valve Failure"
+        },
+        {
+          "type": "congestion",
+          "edge": ["M14", "M20"],
+          "street_name": "FDR Drive Midtown (UN to Bellevue Ramp)",
+          "factor": 3.6,
+          "cause": "3-Vehicle Overturned Tanker Collision"
+        },
+        {
+          "type": "vehicle_breakdown",
+          "vehicle_id": "EV_03",
+          "cause": "High-voltage battery thermal fault near Penn Station"
+        }
+      ],
+      "text_alerts": [
+        "🚨 NYPD EMERGENCY BROADCAST: High-pressure ConEd steam valve rupture on W 42nd Street between Port Authority (M09) and Times Square (M10). Roadway fully blocked by emergency hazmat apparatus. Zero vehicle throughput.",
+        "⚠️ 511NY LIVE TRAFFIC: Multi-vehicle crash with overturned trailer on FDR Drive Southbound from UN Plaza (M14) to Bellevue Hospital Ramp (M20). Delays exceeding 3.6× normal free-flow.",
+        "🔧 FLEET DISPATCH NOTICE: EV_03 has triggered high-voltage fault code and is decommissioned at Penn Station."
+      ]
+    },
+    {
+      "scenario_id": "NYC_REAL_L4",
+      "level": 4,
+      "title": "Cascading Gridlock: Holland Tunnel Gridlock & Hospital Corridor Flooding",
+      "disruptions": [
+        {
+          "type": "road_closure",
+          "edge": ["M19", "M21"],
+          "street_name": "E 34th St to NYU Langone",
+          "reported_via_text_only": true,
+          "cause": "Sudden Water Main Leak near Medical Center"
+        },
+        {
+          "type": "road_closure",
+          "edge": ["M25", "M26"],
+          "street_name": "W 23rd St (Chelsea - Flatiron)",
+          "reported_via_text_only": false,
+          "cause": "Emergency Crane Dismantling"
+        },
+        {
+          "type": "congestion",
+          "edge": ["M40", "M41"],
+          "street_name": "Canal Street (Holland Tunnel to Chinatown)",
+          "factor": 3.8,
+          "cause": "Interstate Freight Spillover"
+        },
+        {
+          "type": "vehicle_breakdown",
+          "vehicle_id": "EV_05",
+          "cause": "Inverter shutdown near Grand Central"
+        }
+      ],
+      "text_alerts": [
+        "🚨 URGENT HOSPITAL ACCESS ALERT: East 34th Street between Murray Hill (M19) and NYU Langone Medical Center (M21) is closed due to flash street flooding. Ambulances and medical transports must utilize 1st Avenue or 23rd Street detours.",
+        "ℹ️ NYC DOT NOTICE: West 23rd Street between Chelsea Hub (M25) and Flatiron Building (M26) closed for crane dismantling.",
+        "⚠️ 511NY TRAFFIC BOTTLENECK: Canal Street inbound from Holland Tunnel (M40) to Chinatown (M41) standstill; travel time delay factor 3.8×.",
+        "🔧 FLEET ADVISORY: EV_05 suffered complete inverter lockout and is unavailable."
+      ]
+    },
+    {
+      "scenario_id": "NYC_REAL_L5",
+      "level": 5,
+      "title": "Compound Manhattan Crisis: Multi-Corridor Blackout & Hospital Triage Rush",
+      "disruptions": [
+        {
+          "type": "road_closure",
+          "edge": ["M12", "M13"],
+          "street_name": "E 42nd St (Grand Central - Chrysler)",
+          "reported_via_text_only": true,
+          "cause": "Underground Electrical Transformer Explosion"
+        },
+        {
+          "type": "road_closure",
+          "edge": ["M20", "M33"],
+          "street_name": "FDR Drive South (Bellevue to 14th St)",
+          "reported_via_text_only": true,
+          "cause": "Highway Retaining Wall Structural Breach"
+        },
+        {
+          "type": "road_closure",
+          "edge": ["M16", "M17"],
+          "street_name": "W 34th St (Penn - Herald Sq)",
+          "reported_via_text_only": false,
+          "cause": "Emergency Structural Shoring"
+        },
+        {
+          "type": "congestion",
+          "edge": ["M01", "M05"],
+          "street_name": "8th Avenue North",
+          "factor": 3.5,
+          "cause": "Spillover Traffic"
+        },
+        {
+          "type": "congestion",
+          "edge": ["M26", "M31"],
+          "street_name": "Broadway (Flatiron to Union Sq)",
+          "factor": 3.7,
+          "cause": "Midtown South Bottleneck"
+        },
+        {
+          "type": "vehicle_breakdown",
+          "vehicle_id": "EV_02",
+          "cause": "Dead battery cell"
+        },
+        {
+          "type": "vehicle_breakdown",
+          "vehicle_id": "EV_06",
+          "cause": "Collision damage"
+        }
+      ],
+      "text_alerts": [
+        "🚨 URGENT POLICE DISPATCH: Major electrical explosion beneath East 42nd Street between Grand Central (M12) and Chrysler Building (M13). Smoke emerging from manholes; segment completely barricaded.",
+        "🚨 EMERGENCY ARTERIAL CLOSURE: FDR Drive southbound between Bellevue Hospital (M20) and 14th Street (M33) is shut down by State Police following a retaining wall breach. Avoid FDR South.",
+        "ℹ️ NYC DOT NOTICE: West 34th Street from Penn Station (M16) to Herald Square (M17) closed for emergency shoring.",
+        "⚠️ 511NY LIVE ADVISORY: 8th Avenue North (M01 ↔ M05) and Broadway South (M26 ↔ M31) experiencing compound gridlock delays >3.5×.",
+        "🔧 FLEET NOTICE: EV_02 and EV_06 are offline and out of service."
+      ]
+    }
+  ]
+}

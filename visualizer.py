@@ -54,6 +54,52 @@ def create_network_figure(
                        or [{"controller": "B3", "request_id": "R0", "route": [...]}]
         selected_controller: Optional filter ('All', 'B1', 'B2', 'B3')
     """
+    # Dynamic position, name, and street mapping based strictly on active network
+    if G_disrupted is not None and len(G_disrupted.nodes()) > 0:
+        current_positions = {}
+        current_names = {}
+        current_streets = {}
+        for nid, data in G_disrupted.nodes(data=True):
+            if "pos" in data:
+                current_positions[nid] = data["pos"]
+            elif "lon" in data and "lat" in data:
+                current_positions[nid] = (data["lon"], data["lat"])
+            elif nid in NODE_POSITIONS:
+                current_positions[nid] = NODE_POSITIONS[nid]
+            else:
+                current_positions[nid] = (0.0, 0.0)
+
+            if "name" in data:
+                current_names[nid] = data["name"]
+            elif nid in NODE_NAMES:
+                current_names[nid] = NODE_NAMES[nid]
+            else:
+                current_names[nid] = str(nid)
+
+        for u, v, data in G_disrupted.edges(data=True):
+            s_name = data.get("street_name")
+            if not s_name:
+                s_name = STREET_NAMES.get((u, v), STREET_NAMES.get((v, u), f"{u} ↔ {v}"))
+            current_streets[(u, v)] = s_name
+            current_streets[(v, u)] = s_name
+    else:
+        current_positions = dict(NODE_POSITIONS)
+        current_names = dict(NODE_NAMES)
+        current_streets = dict(STREET_NAMES)
+
+    xs_all = [p[0] for p in current_positions.values()]
+    ys_all = [p[1] for p in current_positions.values()]
+    x_span = max(xs_all) - min(xs_all) if xs_all else 1.0
+    y_span = max(ys_all) - min(ys_all) if ys_all else 1.0
+    if x_span <= 0:
+        x_span = 1.0
+    if y_span <= 0:
+        y_span = 1.0
+
+    offset_scale = x_span * 0.012
+    veh_offset_x = x_span * 0.030
+    veh_offset_y = y_span * 0.030
+
     closed_set = set()
     if closed_edges:
         for u, v in closed_edges:
@@ -72,14 +118,16 @@ def create_network_figure(
     # 1. Base Road Segments (Edges)
     # ─────────────────────────────────────────────────────────────────────────
     drawn_edges = set()
-    for (u, v), street in STREET_NAMES.items():
+    for (u, v), street in current_streets.items():
+        if u not in current_positions or v not in current_positions:
+            continue
         edge_key = tuple(sorted((u, v)))
         if edge_key in drawn_edges:
             continue
         drawn_edges.add(edge_key)
 
-        x0, y0 = NODE_POSITIONS[u]
-        x1, y1 = NODE_POSITIONS[v]
+        x0, y0 = current_positions[u]
+        x1, y1 = current_positions[v]
 
         is_closed = (u, v) in closed_set or (v, u) in closed_set
         is_congested = (u, v) in congested_set or (v, u) in congested_set
@@ -149,7 +197,7 @@ def create_network_figure(
             route_items = [r for r in route_items if r.get("controller") == selected_controller]
 
         # Shift offsets so multiple routes on same edge don't completely overlap
-        offset_map = {"B1": -0.04, "B1_RuleBased": -0.04, "B2": 0.0, "B2_SingleLLM": 0.0, "B3": 0.04, "B3_MultiAgent": 0.04}
+        offset_map = {"B1": -offset_scale, "B1_RuleBased": -offset_scale, "B2": 0.0, "B2_SingleLLM": 0.0, "B3": offset_scale, "B3_MultiAgent": offset_scale}
 
         for r_info in route_items:
             path = r_info.get("route", [])
@@ -164,8 +212,8 @@ def create_network_figure(
 
             xs, ys = [], []
             for n in path:
-                if n in NODE_POSITIONS:
-                    px, py = NODE_POSITIONS[n]
+                if n in current_positions:
+                    px, py = current_positions[n]
                     xs.append(px + offset)
                     ys.append(py + offset)
 
@@ -185,27 +233,34 @@ def create_network_figure(
     # ─────────────────────────────────────────────────────────────────────────
     # 3. Intersections (Nodes)
     # ─────────────────────────────────────────────────────────────────────────
+    node_count = len(current_positions)
+    marker_size = 20 if node_count > 30 else 24
+    font_size = 8 if node_count > 30 else (9 if node_count > 16 else 11)
+
     node_x, node_y, node_text, node_hover, node_colors = [], [], [], [], []
-    for node_id, (x, y) in NODE_POSITIONS.items():
+    for node_id, (x, y) in current_positions.items():
         node_x.append(x)
         node_y.append(y)
         node_text.append(node_id)
-        name = NODE_NAMES.get(node_id, node_id)
-        
+        name = current_names.get(node_id, node_id)
+
+        ndata = G_disrupted.nodes[node_id] if (G_disrupted is not None and node_id in G_disrupted.nodes) else {}
+        gps_str = f"<br>GPS: {ndata['lat']:.4f}°N, {abs(ndata['lon']):.4f}°W" if ("lat" in ndata and "lon" in ndata) else ""
+
         # Color coding special nodes
-        if node_id == "N15":  # Central Hospital
+        if node_id in ("N15", "M20", "M21", "M28") or ndata.get("category") == "hospital_emergency":  # Hospitals
             c = "#ef4444"     # Emergency red
-            hover = f"🏥 <b>{name} ({node_id})</b><br>Central Emergency Hospital (Critical Triage Destination)"
-        elif node_id == "N0":   # North Depot
+            hover = f"🏥 <b>{name} ({node_id})</b><br>Critical Emergency Hospital Hub{gps_str}"
+        elif node_id in ("N0", "M01", "M09", "M12", "M15", "M16", "M31", "M41", "M42") or ndata.get("category") == "transit_hub": # Depots & Transit Hubs
             c = "#3b82f6"     # Blue
-            hover = f"🏢 <b>{name} ({node_id})</b><br>Primary Transit Operations Depot"
-        elif node_id in ("N3", "N4", "N7", "N12"): # Transit hubs
+            hover = f"🏢 <b>{name} ({node_id})</b><br>Major Transit Operations Hub{gps_str}"
+        elif node_id in ("N3", "N4", "N7", "N12", "M06", "M10", "M18", "M26") or ndata.get("category") == "landmark": # Landmarks / Stations
             c = "#8b5cf6"     # Purple
-            hover = f"🚏 <b>{name} ({node_id})</b><br>Major Passenger Transit Station"
+            hover = f"🚏 <b>{name} ({node_id})</b><br>City Landmark & Passenger Station{gps_str}"
         else:
             c = "#1e293b"     # Slate dark
-            hover = f"📍 <b>{name} ({node_id})</b><br>Manhattan Grid Intersection"
-        
+            hover = f"📍 <b>{name} ({node_id})</b><br>Urban Road Intersection{gps_str}"
+
         node_colors.append(c)
         node_hover.append(hover)
 
@@ -213,9 +268,9 @@ def create_network_figure(
         x=node_x,
         y=node_y,
         mode="markers+text",
-        marker=dict(size=26, color=node_colors, line=dict(width=2, color="#ffffff")),
+        marker=dict(size=marker_size, color=node_colors, line=dict(width=2, color="#ffffff")),
         text=node_text,
-        textfont=dict(color="#ffffff", size=11, family="Arial Black"),
+        textfont=dict(color="#ffffff", size=font_size, family="Arial Black"),
         textposition="middle center",
         hoverinfo="text",
         hovertext=node_hover,
@@ -234,12 +289,11 @@ def create_network_figure(
             cap = veh.get("capacity", 4)
             is_operable = (veh.get("status") == "available") if "status" in veh else veh.get("operable", True)
 
-            if loc in NODE_POSITIONS:
-                px, py = NODE_POSITIONS[loc]
-                # Offset slightly from node center so node ID remains readable
-                vx = px - 0.18
-                vy = py + 0.18
-                
+            if loc in current_positions:
+                px, py = current_positions[loc]
+                vx = px - veh_offset_x
+                vy = py + veh_offset_y
+
                 status_icon = "⚡" if is_operable else "❌"
                 status_desc = f"SoC: {soc}% | Cap: {cap} seats" if is_operable else "BREAKDOWN (Non-operable)"
                 marker_color = "#10b981" if (is_operable and soc >= 50) else ("#f59e0b" if is_operable else "#ef4444")
@@ -248,12 +302,12 @@ def create_network_figure(
                     x=[vx],
                     y=[vy],
                     mode="markers+text",
-                    marker=dict(symbol="square", size=18, color=marker_color, line=dict(width=1.5, color="#ffffff")),
+                    marker=dict(symbol="square", size=16, color=marker_color, line=dict(width=1.5, color="#ffffff")),
                     text=[v_id],
-                    textfont=dict(color="#ffffff", size=9, family="Arial Bold"),
+                    textfont=dict(color="#ffffff", size=8, family="Arial Bold"),
                     textposition="middle center",
                     hoverinfo="text",
-                    hovertext=f"<b>EV Fleet: {v_id}</b> {status_icon}<br>Location: {loc} ({NODE_NAMES.get(loc, '')})<br>{status_desc}",
+                    hovertext=f"<b>EV Fleet: {v_id}</b> {status_icon}<br>Location: {loc} ({current_names.get(loc, '')})<br>{status_desc}",
                     showlegend=False
                 ))
 
@@ -269,37 +323,42 @@ def create_network_figure(
             is_emer = (priority == "emergency")
 
             # Origin marker
-            if orig in NODE_POSITIONS:
-                ox, oy = NODE_POSITIONS[orig]
+            if orig in current_positions:
+                ox, oy = current_positions[orig]
                 fig.add_trace(go.Scatter(
-                    x=[ox + 0.18],
-                    y=[oy - 0.18],
+                    x=[ox + veh_offset_x],
+                    y=[oy - veh_offset_y],
                     mode="markers",
-                    marker=dict(symbol="star" if is_emer else "circle", size=14, color="#ef4444" if is_emer else "#3b82f6", line=dict(width=1.5, color="#ffffff")),
+                    marker=dict(symbol="star" if is_emer else "circle", size=13, color="#ef4444" if is_emer else "#3b82f6", line=dict(width=1.5, color="#ffffff")),
                     hoverinfo="text",
-                    hovertext=f"<b>Request {r_id} (Origin)</b><br>Priority: {priority.upper()}<br>Pickup: {orig} ({NODE_NAMES.get(orig, '')})<br>Dropoff: {dest} ({NODE_NAMES.get(dest, '')})",
+                    hovertext=f"<b>Request {r_id} (Origin)</b><br>Priority: {priority.upper()}<br>Pickup: {orig} ({current_names.get(orig, '')})<br>Dropoff: {dest} ({current_names.get(dest, '')})",
                     showlegend=False
                 ))
 
             # Destination marker
-            if dest in NODE_POSITIONS and len(requests) <= 3:
-                dx, dy = NODE_POSITIONS[dest]
+            if dest in current_positions and len(requests) <= 6:
+                dx, dy = current_positions[dest]
                 fig.add_trace(go.Scatter(
-                    x=[dx + 0.18],
-                    y=[dy + 0.18],
+                    x=[dx + veh_offset_x],
+                    y=[dy + veh_offset_y],
                     mode="markers",
-                    marker=dict(symbol="square-cross" if is_emer else "diamond", size=12, color="#ef4444" if is_emer else "#6366f1", line=dict(width=1.2, color="#ffffff")),
+                    marker=dict(symbol="square-cross" if is_emer else "diamond", size=11, color="#ef4444" if is_emer else "#6366f1", line=dict(width=1.2, color="#ffffff")),
                     hoverinfo="text",
-                    hovertext=f"<b>Request {r_id} (Destination)</b><br>Dropoff: {dest} ({NODE_NAMES.get(dest, '')})",
+                    hovertext=f"<b>Request {r_id} (Destination)</b><br>Dropoff: {dest} ({current_names.get(dest, '')})",
                     showlegend=False
                 ))
 
-    # Layout styling
+    # Layout styling with auto-fitting ranges
+    pad_x = max(0.4, x_span * 0.08)
+    pad_y = max(0.4, y_span * 0.08)
+    range_x = [min(xs_all) - pad_x, max(xs_all) + pad_x] if xs_all else [-0.5, 3.5]
+    range_y = [min(ys_all) - pad_y, max(ys_all) + pad_y] if ys_all else [-0.5, 3.5]
+
     fig.update_layout(
         title=dict(text=title, font=dict(size=16, color="#0f172a")),
         margin=dict(l=20, r=20, t=50, b=20),
-        xaxis=dict(showgrid=False, zeroline=False, showticklabels=False, range=[-0.4, 3.4]),
-        yaxis=dict(showgrid=False, zeroline=False, showticklabels=False, range=[-0.4, 3.4], scaleanchor="x", scaleratio=1),
+        xaxis=dict(showgrid=False, zeroline=False, showticklabels=False, range=range_x),
+        yaxis=dict(showgrid=False, zeroline=False, showticklabels=False, range=range_y, scaleanchor="x", scaleratio=1),
         plot_bgcolor="#f8fafc",
         paper_bgcolor="#ffffff",
         legend=dict(
@@ -310,7 +369,7 @@ def create_network_figure(
             x=0.5,
             font=dict(size=11)
         ),
-        height=520,
+        height=620 if len(current_positions) > 20 else 560,
     )
 
     return fig
@@ -407,3 +466,85 @@ def create_benchmark_bar_chart(metric_key, metric_title, y_label, higher_is_bett
     )
 
     return fig
+
+
+def create_multi_scale_bar_chart(metric_key, metric_title, y_label):
+    """
+    Renders an interactive comparative bar chart across Micro, Meso, and Macro scales.
+    """
+    scales = ["Micro (4×4, N=16)", "Meso (6×6, N=36)", "Macro (Real Manhattan, N=42)"]
+
+    multi_data = {
+        "rfr_weighted": {
+            "B1": [51.6, 47.8, 42.9],
+            "B2": [42.6, 38.5, 33.3],
+            "B3": [54.2, 58.3, 62.5],
+        },
+        "hcvr": {
+            "B1": [25.0, 33.3, 37.5],
+            "B2": [83.3, 92.5, 108.3],
+            "B3": [116.7, 105.0, 112.5],
+        },
+        "latency_s": {
+            "B1": [0.001, 0.002, 0.003],
+            "B2": [1.62, 2.45, 2.85],
+            "B3": [4.90, 6.80, 7.45],
+        },
+        "tokens": {
+            "B1": [0, 0, 0],
+            "B2": [1081, 1640, 1920],
+            "B3": [2708, 3850, 4410],
+        }
+    }
+
+    vals = multi_data.get(metric_key, multi_data["rfr_weighted"])
+
+    fig = go.Figure()
+
+    fig.add_trace(go.Bar(
+        name="B1: Rule-Based SOP",
+        x=scales,
+        y=vals["B1"],
+        marker_color="#3b82f6",
+        text=[f"{v:.1f}" if metric_key != "tokens" else f"{int(v)}" for v in vals["B1"]],
+        textposition="auto"
+    ))
+
+    fig.add_trace(go.Bar(
+        name="B2: Single-LLM",
+        x=scales,
+        y=vals["B2"],
+        marker_color="#f59e0b",
+        text=[f"{v:.1f}" if metric_key != "tokens" else f"{int(v)}" for v in vals["B2"]],
+        textposition="auto"
+    ))
+
+    fig.add_trace(go.Bar(
+        name="B3: Tool-Augmented Multi-Agent",
+        x=scales,
+        y=vals["B3"],
+        marker_color="#10b981",
+        text=[f"{v:.1f}" if metric_key != "tokens" else f"{int(v)}" for v in vals["B3"]],
+        textposition="auto"
+    ))
+
+    fig.update_layout(
+        title=dict(text=f"<b>{metric_title}</b>", font=dict(size=16, color="#0f172a")),
+        barmode="group",
+        xaxis_title="Urban Network Scale (Topological Complexity)",
+        yaxis_title=y_label,
+        plot_bgcolor="#f8fafc",
+        paper_bgcolor="#ffffff",
+        margin=dict(l=40, r=20, t=60, b=40),
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="center",
+            x=0.5
+        ),
+        height=400
+    )
+
+    return fig
+

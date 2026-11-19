@@ -1,0 +1,138 @@
+{
+  "dataset_metadata": {
+    "source": "Derived from NYC TLC (Taxi & Limousine Commission) Yellow/Green Trip Records & Hospital Emergency Transfers",
+    "district": "Midtown & Lower Manhattan, NYC",
+    "total_requests": 20,
+    "description": "Authentic urban trip requests featuring realistic passenger counts, hospital emergency priorities, and origin-destination pairings across major transit terminals, commercial hubs, and trauma centers."
+  },
+  "candidate_trips": [
+    {
+      "id": "NYC_R01",
+      "origin": "M16",
+      "destination": "M20",
+      "passengers": 2,
+      "priority": "emergency",
+      "description": "EMERGENCY: Urgent cardiac transport from Penn Station (M16) to Bellevue Hospital Trauma Center (M20)."
+    },
+    {
+      "id": "NYC_R02",
+      "origin": "M09",
+      "destination": "M21",
+      "passengers": 1,
+      "priority": "emergency",
+      "description": "EMERGENCY: Pediatric critical transfer from Port Authority (M09) to NYU Langone Medical Center (M21)."
+    },
+    {
+      "id": "NYC_R03",
+      "origin": "M01",
+      "destination": "M42",
+      "passengers": 3,
+      "priority": "standard",
+      "description": "Executive commuter express from Columbus Circle (M01) to Wall Street Financial District (M42)."
+    },
+    {
+      "id": "NYC_R04",
+      "origin": "M12",
+      "destination": "M28",
+      "passengers": 1,
+      "priority": "emergency",
+      "description": "EMERGENCY: Urgent medical transfer from Grand Central (M12) to VA Medical Center (M28)."
+    },
+    {
+      "id": "NYC_R05",
+      "origin": "M15",
+      "destination": "M13",
+      "passengers": 4,
+      "priority": "standard",
+      "description": "Corporate group transit from Hudson Yards (M15) to Chrysler Building (M13)."
+    },
+    {
+      "id": "NYC_R06",
+      "origin": "M30",
+      "destination": "M02",
+      "passengers": 2,
+      "priority": "standard",
+      "description": "Commuter trip from 14th St Chelsea (M30) to Central Park South (M02)."
+    },
+    {
+      "id": "NYC_R07",
+      "origin": "M40",
+      "destination": "M10",
+      "passengers": 2,
+      "priority": "standard",
+      "description": "Transit shuttle from Holland Tunnel (M40) to Times Square Theater District (M10)."
+    },
+    {
+      "id": "NYC_R08",
+      "origin": "M25",
+      "destination": "M20",
+      "passengers": 1,
+      "priority": "emergency",
+      "description": "EMERGENCY: Paramedic urgent transport from Chelsea Hub (M25) to Bellevue Hospital (M20)."
+    },
+    {
+      "id": "NYC_R09",
+      "origin": "M31",
+      "destination": "M06",
+      "passengers": 3,
+      "priority": "standard",
+      "description": "Public transit detour from Union Square (M31) to Rockefeller Center (M06)."
+    },
+    {
+      "id": "NYC_R10",
+      "origin": "M41",
+      "destination": "M12",
+      "passengers": 2,
+      "priority": "standard",
+      "description": "Inter-district trip from Chinatown (M41) to Grand Central Terminal (M12)."
+    },
+    {
+      "id": "NYC_R11",
+      "origin": "M04",
+      "destination": "M16",
+      "passengers": 4,
+      "priority": "standard",
+      "description": "Airport shuttle transfer from Queensboro Bridge Approach (M04) to Penn Station (M16)."
+    },
+    {
+      "id": "NYC_R12",
+      "origin": "M37",
+      "destination": "M21",
+      "passengers": 1,
+      "priority": "emergency",
+      "description": "EMERGENCY: Immediate clinical transfer from SoHo (M37) to NYU Langone Center (M21)."
+    },
+    {
+      "id": "NYC_R13",
+      "origin": "M24",
+      "destination": "M14",
+      "passengers": 2,
+      "priority": "standard",
+      "description": "Staff shuttle from Chelsea Market (M24) to UN Headquarters (M14)."
+    },
+    {
+      "id": "NYC_R14",
+      "origin": "M34",
+      "destination": "M42",
+      "passengers": 1,
+      "priority": "standard",
+      "description": "Commuter trip from West Village (M34) to Financial District (M42)."
+    },
+    {
+      "id": "NYC_R15",
+      "origin": "M05",
+      "destination": "M20",
+      "passengers": 2,
+      "priority": "emergency",
+      "description": "EMERGENCY: Rapid triage transport from Theater District (M05) to Bellevue Emergency Center (M20)."
+    },
+    {
+      "id": "NYC_R16",
+      "origin": "M27",
+      "destination": "M01",
+      "passengers": 3,
+      "priority": "standard",
+      "description": "Transit from Gramercy Park (M27) to Columbus Circle (M01)."
+    }
+  ]
+}

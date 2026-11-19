@@ -6,7 +6,23 @@
       "rfr": 100.0,
       "rfr_weighted": 100.0,
       "hcvr": 0.0,
-      "latency_s": 0.0007274150848388672,
+      "hcvr_pre": 0.0,
+      "hcvr_post": 0.0,
+      "pre_violations_count": 0,
+      "post_violations_count": 0,
+      "pre_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "post_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "latency_s": 0.000728607177734375,
       "prompt_tokens": 0,
       "candidate_tokens": 0,
       "total_tokens": 0,
@@ -15,28 +31,87 @@
     "B2_metrics": {
       "rfr": 100.0,
       "rfr_weighted": 100.0,
-      "hcvr": 33.33333333333333,
-      "latency_s": 3.8436830043792725,
-      "prompt_tokens": 487,
-      "candidate_tokens": 272,
-      "total_tokens": 759,
-      "cost_usd": 0.0001575
+      "hcvr": 66.66666666666666,
+      "hcvr_pre": 66.66666666666666,
+      "hcvr_post": 0.0,
+      "pre_violations_count": 2,
+      "post_violations_count": 0,
+      "pre_by_type": {
+        "route_unreachable": 2,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "post_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "latency_s": 5.2975242137908936,
+      "prompt_tokens": 534,
+      "candidate_tokens": 203,
+      "total_tokens": 737,
+      "cost_usd": 0.00013460000000000002
     },
     "B3_metrics": {
       "rfr": 100.0,
       "rfr_weighted": 100.0,
       "hcvr": 0.0,
-      "latency_s": 8.393881797790527,
-      "prompt_tokens": 1218,
-      "candidate_tokens": 500,
-      "total_tokens": 1718,
-      "cost_usd": 0.0003218
+      "hcvr_pre": 0.0,
+      "hcvr_post": 0.0,
+      "pre_violations_count": 0,
+      "post_violations_count": 0,
+      "pre_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "post_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "latency_s": 3.413104295730591,
+      "prompt_tokens": 1111,
+      "candidate_tokens": 434,
+      "total_tokens": 1545,
+      "cost_usd": 0.0002847
     },
-    "B2_raw": "```json\n{\n  \"identified_closed_edges\": [\n    [\"N0\", \"N1\"]\n  ],\n  \"assignments\": [\n    {\n      \"request_id\": \"R1\",\n      \"vehicle_id\": \"V0\",\n      \"route\": [\n        \"N0\",\n        \"N4\",\n        \"N8\",\n        \"N12\",\n        \"N13\",\n        \"N14\",\n        \"N15\"\n      ]\n    },\n    {\n      \"request_id\": \"R0\",\n      \"vehicle_id\": \"V5\",\n      \"route\": [\n        \"N8\",\n        \"N9\",\n        \"N10\",\n        \"N11\",\n        \"N7\",\n        \"N3\"\n      ]\n    },\n    {\n      \"request_id\": \"R2\",\n      \"vehicle_id\": \"V4\",\n      \"route\": [\n        \"N12\",\n        \"N8\",\n        \"N4\",\n        \"N0\",\n        \"N1\",\n        \"N2\"\n      ]\n    }\n  ]\n}\n```",
+    "B1_pre_violations": [],
+    "B1_post_violations": [],
+    "B2_pre_violations": [
+      {
+        "request_id": "R0",
+        "vehicle_id": "V5",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N8 \u2194 N7) is closed or missing in ground-truth network."
+          }
+        ]
+      },
+      {
+        "request_id": "R2",
+        "vehicle_id": "V4",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N8 \u2194 N7) is closed or missing in ground-truth network."
+          }
+        ]
+      }
+    ],
+    "B2_post_violations": [],
+    "B3_pre_violations": [],
+    "B3_post_violations": [],
+    "B2_raw": "```json\n{\n  \"identified_closed_edges\": [\n    [\"N0\", \"N1\"]\n  ],\n  \"assignments\": [\n    {\n      \"request_id\": \"R1\",\n      \"vehicle_id\": \"V0\",\n      \"route\": [\"N0\", \"N4\", \"N5\", \"N9\", \"N13\", \"N14\", \"N15\"]\n    },\n    {\n      \"request_id\": \"R0\",\n      \"vehicle_id\": \"V5\",\n      \"route\": [\"N8\", \"N7\", \"N3\"]\n    },\n    {\n      \"request_id\": \"R2\",\n      \"vehicle_id\": \"V4\",\n      \"route\": [\"N12\", \"N8\", \"N7\", \"N6\", \"N2\"]\n    }\n  ]\n}\n```",
     "B3_logs": {
-      "traffic": "```json\n{\n  \"closed_edges\": [[\"N0\", \"N1\"]],\n  \"reasoning\": \"Scheduled maintenance has closed North Boulevard between N0 and N1 to public transit.\"\n}\n```",
-      "fleet": "{\n  \"emergency_reservations\": [\n    {\n      \"request_id\": \"R1\",\n      \"recommended_vehicle\": \"V1\",\n      \"rationale\": \"Highest SoC (91%) allocated to emergency priority request R1.\"\n    }\n  ],\n  \"standard_allocations\": [\n    {\n      \"request_id\": \"R0\",\n      \"recommended_vehicle\": \"V5\",\n      \"rationale\": \"Located at N8 (same as R0 origin), high battery (83%), adequate seats (6 >= 2).\"\n    },\n    {\n      \"request_id\": \"R2\",\n      \"recommended_vehicle\": \"V4\",\n      \"rationale\": \"Located at N12 (same as R2 origin), sufficient battery (67%), adequate seats (4 >= 2).\"\n    }\n  ]\n}",
-      "coordinator": "```json\n{\n  \"assignments\": [\n    {\n      \"request_id\": \"R1\",\n      \"vehicle_id\": \"V1\",\n      \"selected_route\": [\n        \"N0\",\n        \"N4\",\n        \"N8\",\n        \"N9\",\n        \"N10\",\n        \"N14\",\n        \"N15\"\n      ]\n    },\n    {\n      \"request_id\": \"R0\",\n      \"vehicle_id\": \"V5\",\n      \"selected_route\": [\n        \"N8\",\n        \"N9\",\n        \"N10\",\n        \"N11\",\n        \"N7\",\n        \"N3\"\n      ]\n    },\n    {\n      \"request_id\": \"R2\",\n      \"vehicle_id\": \"V4\",\n      \"selected_route\": [\n        \"N12\",\n        \"N13\",\n        \"N9\",\n        \"N5\",\n        \"N1\",\n        \"N2\"\n      ]\n    }\n  ]\n}\n```"
+      "traffic": "```json\n{\n  \"closed_edges\": [[\"N0\", \"N1\"]],\n  \"reasoning\": \"Scheduled maintenance on North Boulevard has closed the segment between N0 and N1 to public transit.\"\n}\n```",
+      "fleet": "```json\n{\n  \"emergency_reservations\": [\n    {\n      \"request_id\": \"R1\",\n      \"recommended_vehicle\": \"V1\",\n      \"rationale\": \"High SoC for emergency\"\n    }\n  ],\n  \"standard_allocations\": [\n    {\n      \"request_id\": \"R0\",\n      \"recommended_vehicle\": \"V5\"\n    },\n    {\n      \"request_id\": \"R2\",\n      \"recommended_vehicle\": \"V4\"\n    }\n  ]\n}\n```",
+      "coordinator": "```json\n{\n  \"assignments\": [\n    {\n      \"request_id\": \"R1\",\n      \"vehicle_id\": \"V1\",\n      \"selected_route\": [\n        \"N0\",\n        \"N4\",\n        \"N5\",\n        \"N9\",\n        \"N13\",\n        \"N14\",\n        \"N15\"\n      ]\n    },\n    {\n      \"request_id\": \"R0\",\n      \"vehicle_id\": \"V5\",\n      \"selected_route\": [\n        \"N8\",\n        \"N9\",\n        \"N10\",\n        \"N11\",\n        \"N7\",\n        \"N3\"\n      ]\n    },\n    {\n      \"request_id\": \"R2\",\n      \"vehicle_id\": \"V4\",\n      \"selected_route\": [\n        \"N12\",\n        \"N13\",\n        \"N9\",\n        \"N5\",\n        \"N1\",\n        \"N2\"\n      ]\n    }\n  ]\n}\n```"
     }
   },
   {
@@ -46,7 +121,23 @@
       "rfr": 100.0,
       "rfr_weighted": 100.0,
       "hcvr": 0.0,
-      "latency_s": 0.0015571117401123047,
+      "hcvr_pre": 0.0,
+      "hcvr_post": 0.0,
+      "pre_violations_count": 0,
+      "post_violations_count": 0,
+      "pre_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "post_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "latency_s": 0.0017838478088378906,
       "prompt_tokens": 0,
       "candidate_tokens": 0,
       "total_tokens": 0,
@@ -55,28 +146,97 @@
     "B2_metrics": {
       "rfr": 100.0,
       "rfr_weighted": 100.0,
-      "hcvr": 66.66666666666666,
-      "latency_s": 1.2766690254211426,
-      "prompt_tokens": 489,
-      "candidate_tokens": 258,
-      "total_tokens": 747,
-      "cost_usd": 0.0001521
+      "hcvr": 100.0,
+      "hcvr_pre": 100.0,
+      "hcvr_post": 0.0,
+      "pre_violations_count": 3,
+      "post_violations_count": 0,
+      "pre_by_type": {
+        "route_unreachable": 3,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "post_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "latency_s": 0.9442377090454102,
+      "prompt_tokens": 536,
+      "candidate_tokens": 188,
+      "total_tokens": 724,
+      "cost_usd": 0.0001288
     },
     "B3_metrics": {
       "rfr": 100.0,
       "rfr_weighted": 100.0,
       "hcvr": 0.0,
-      "latency_s": 3.748720407485962,
-      "prompt_tokens": 1197,
-      "candidate_tokens": 501,
-      "total_tokens": 1698,
-      "cost_usd": 0.00032010000000000003
+      "hcvr_pre": 0.0,
+      "hcvr_post": 0.0,
+      "pre_violations_count": 0,
+      "post_violations_count": 0,
+      "pre_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "post_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "latency_s": 3.503971815109253,
+      "prompt_tokens": 1063,
+      "candidate_tokens": 406,
+      "total_tokens": 1469,
+      "cost_usd": 0.0002687
     },
-    "B2_raw": "```json\n{\n  \"identified_closed_edges\": [\n    [\"N14\", \"N15\"]\n  ],\n  \"assignments\": [\n    {\n      \"request_id\": \"R1\",\n      \"vehicle_id\": \"V5\",\n      \"route\": [\"N8\", \"N9\", \"N10\", \"N11\", \"N7\", \"N6\", \"N5\", \"N6\", \"N7\", \"N11\"]\n    },\n    {\n      \"request_id\": \"R0\",\n      \"vehicle_id\": \"V1\",\n      \"route\": [\"N3\", \"N2\", \"N1\", \"N5\", \"N9\", \"N8\", \"N4\", \"N0\", \"N1\", \"N2\", \"N3\"]\n    },\n    {\n      \"request_id\": \"R2\",\n      \"vehicle_id\": \"V2\",\n      \"route\": [\"N4\", \"N0\", \"N1\", \"N5\", \"N9\", \"N13\", \"N14\"]\n    }\n  ]\n}\n```",
+    "B1_pre_violations": [],
+    "B1_post_violations": [],
+    "B2_pre_violations": [
+      {
+        "request_id": "R1",
+        "vehicle_id": "V3",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N5 \u2194 N11) is closed or missing in ground-truth network."
+          }
+        ]
+      },
+      {
+        "request_id": "R0",
+        "vehicle_id": "V5",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N8 \u2194 N3) is closed or missing in ground-truth network."
+          }
+        ]
+      },
+      {
+        "request_id": "R2",
+        "vehicle_id": "V0",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N1 \u2194 N6) is closed or missing in ground-truth network."
+          }
+        ]
+      }
+    ],
+    "B2_post_violations": [],
+    "B3_pre_violations": [],
+    "B3_post_violations": [],
+    "B2_raw": "```json\n{\n  \"identified_closed_edges\": [\n    [\"N14\", \"N15\"]\n  ],\n  \"assignments\": [\n    {\n      \"request_id\": \"R1\",\n      \"vehicle_id\": \"V3\",\n      \"route\": [\"N7\", \"N6\", \"N5\", \"N11\"]\n    },\n    {\n      \"request_id\": \"R0\",\n      \"vehicle_id\": \"V5\",\n      \"route\": [\"N8\", \"N3\"]\n    },\n    {\n      \"request_id\": \"R2\",\n      \"vehicle_id\": \"V0\",\n      \"route\": [\"N0\", \"N1\", \"N6\", \"N10\", \"N14\"]\n    }\n  ]\n}\n```",
     "B3_logs": {
-      "traffic": "```json\n{\n  \"closed_edges\": [[\"N14\", \"N15\"]],\n  \"reasoning\": \"Hospital Boulevard between N14 and N15 is closed to public transit due to scheduled maintenance.\"\n}\n```",
-      "fleet": "```json\n{\n  \"emergency_reservations\": [\n    {\n      \"request_id\": \"R1\",\n      \"recommended_vehicle\": \"V0\",\n      \"rationale\": \"V0 has the highest battery range (87%) and sufficient capacity (4 seats) to serve the emergency request R1.\"\n    }\n  ],\n  \"standard_allocations\": [\n    {\n      \"request_id\": \"R0\",\n      \"recommended_vehicle\": \"V5\",\n      \"rationale\": \"V5 is already at N8 (origin of R0), has 6 seats (exceeds 2), and adequate battery (45%).\"\n    },\n    {\n      \"request_id\": \"R2\",\n      \"recommended_vehicle\": \"V1\",\n      \"rationale\": \"V1 has sufficient battery (61%) and capacity (6 seats) to serve standard request R2.\"\n    }\n  ]\n}\n```",
-      "coordinator": "```json\n{\n  \"assignments\": [\n    {\n      \"request_id\": \"R1\",\n      \"vehicle_id\": \"V0\",\n      \"selected_route\": [\n        \"N5\",\n        \"N6\",\n        \"N10\",\n        \"N11\"\n      ]\n    },\n    {\n      \"request_id\": \"R0\",\n      \"vehicle_id\": \"V5\",\n      \"selected_route\": [\n        \"N8\",\n        \"N9\",\n        \"N10\",\n        \"N11\",\n        \"N7\",\n        \"N3\"\n      ]\n    },\n    {\n      \"request_id\": \"R2\",\n      \"vehicle_id\": \"V1\",\n      \"selected_route\": [\n        \"N1\",\n        \"N5\",\n        \"N9\",\n        \"N13\",\n        \"N14\"\n      ]\n    }\n  ]\n}\n```"
+      "traffic": "```json\n{\n  \"closed_edges\": [[\"N14\", \"N15\"]],\n  \"reasoning\": \"Hospital Boulevard between N14 and N15 is closed for scheduled maintenance.\"\n}\n```",
+      "fleet": "```json\n{\n  \"emergency_reservations\": [\n    {\n      \"request_id\": \"R1\",\n      \"recommended_vehicle\": \"V0\",\n      \"rationale\": \"High SoC for emergency\"\n    }\n  ],\n  \"standard_allocations\": [\n    {\n      \"request_id\": \"R0\",\n      \"recommended_vehicle\": \"V5\"\n    },\n    {\n      \"request_id\": \"R2\",\n      \"recommended_vehicle\": \"V1\"\n    }\n  ]\n}\n```",
+      "coordinator": "```json\n{\n  \"assignments\": [\n    {\n      \"request_id\": \"R1\",\n      \"vehicle_id\": \"V0\",\n      \"selected_route\": [\n        \"N5\",\n        \"N6\",\n        \"N10\",\n        \"N11\"\n      ]\n    },\n    {\n      \"request_id\": \"R0\",\n      \"vehicle_id\": \"V5\",\n      \"selected_route\": [\n        \"N8\",\n        \"N4\",\n        \"N5\",\n        \"N1\",\n        \"N2\",\n        \"N3\"\n      ]\n    },\n    {\n      \"request_id\": \"R2\",\n      \"vehicle_id\": \"V1\",\n      \"selected_route\": [\n        \"N1\",\n        \"N5\",\n        \"N9\",\n        \"N13\",\n        \"N14\"\n      ]\n    }\n  ]\n}\n```"
     }
   },
   {
@@ -86,47 +246,23 @@
       "rfr": 100.0,
       "rfr_weighted": 100.0,
       "hcvr": 25.0,
-      "latency_s": 0.0017397403717041016,
-      "prompt_tokens": 0,
-      "candidate_tokens": 0,
-      "total_tokens": 0,
-      "cost_usd": 0.0
-    },
-    "B2_metrics": {
-      "rfr": 100.0,
-      "rfr_weighted": 100.0,
-      "hcvr": 75.0,
-      "latency_s": 1.5113813877105713,
-      "prompt_tokens": 565,
-      "candidate_tokens": 279,
-      "total_tokens": 844,
-      "cost_usd": 0.0001681
-    },
-    "B3_metrics": {
-      "rfr": 75.0,
-      "rfr_weighted": 62.5,
-      "hcvr": 66.66666666666666,
-      "latency_s": 4.342791795730591,
-      "prompt_tokens": 1482,
-      "candidate_tokens": 666,
-      "total_tokens": 2148,
-      "cost_usd": 0.00041460000000000005
-    },
-    "B2_raw": "```json\n{\n  \"identified_closed_edges\": [\n    [\"N12\", \"N13\"]\n  ],\n  \"assignments\": [\n    {\n      \"request_id\": \"R0\",\n      \"vehicle_id\": \"V0\",\n      \"route\": [\"N0\", \"N4\", \"N8\", \"N12\", \"N13\", \"N14\", \"N15\"]\n    },\n    {\n      \"request_id\": \"R3\",\n      \"vehicle_id\": \"V2\",\n      \"route\": [\"N4\", \"N8\", \"N12\", \"N13\", \"N14\", \"N15\"]\n    },\n    {\n      \"request_id\": \"R2\",\n      \"vehicle_id\": \"V1\",\n      \"route\": [\"N3\", \"N2\", \"N1\", \"N0\", \"N4\", \"N3\"]\n    },\n    {\n      \"request_id\": \"R1\",\n      \"vehicle_id\": \"V3\",\n      \"route\": [\"N7\", \"N6\", \"N5\", \"N9\", \"N10\"]\n    }\n  ]\n}\n```",
-    "B3_logs": {
-      "traffic": "```json\n{\n  \"closed_edges\": [[\"N12\", \"N13\"]],\n  \"reasoning\": \"River Road between N12 and N13 is completely blocked due to a major water main break. Industrial Parkway (N4 \u2194 N8) experiences heavy delays (3.9x) but is not reported as impassable/closed.\"\n}\n```",
-      "fleet": "{\n  \"emergency_reservations\": [\n    {\n      \"request_id\": \"R3\",\n      \"recommended_vehicle\": \"V2\",\n      \"rationale\": \"Highest SoC (85%) allocated to emergency request R3 at N4.\"\n    },\n    {\n      \"request_id\": \"R0\",\n      \"recommended_vehicle\": \"V3\",\n      \"rationale\": \"Second highest SoC (70%) allocated to emergency request R0 at N0.\"\n    }\n  ],\n  \"standard_allocations\": [\n    {\n      \"request_id\": \"R1\",\n      \"recommended_vehicle\": \"V0\",\n      \"rationale\": \"Vehicle V0 located at N0 with 4 seats and 64% SoC allocated to standard request R1 (4 passengers).\"\n    },\n    {\n      \"request_id\": \"R2\",\n      \"recommended_vehicle\": \"V1\",\n      \"rationale\": \"Vehicle V1 with 6 seats and 40% SoC allocated to standard request R2 (4 passengers) originating near N3.\"\n    }\n  ]\n}",
-      "coordinator": "```json\n{\n  \"assignments\": [\n    {\n      \"request_id\": \"R3\",\n      \"vehicle_id\": \"V2\",\n      \"selected_route\": [\n        \"N4\",\n        \"N5\",\n        \"N9\",\n        \"N13\",\n        \"N14\",\n        \"N15\"\n      ]\n    },\n    {\n      \"request_id\": \"R0\",\n      \"vehicle_id\": \"V3\",\n      \"selected_route\": [\n        \"N0\",\n        \"N1\",\n        \"N5\",\n        \"N9\",\n        \"N13\",\n        \"N14\",\n        \"N15\"\n      ]\n    },\n    {\n      \"request_id\": \"R1\",\n      \"vehicle_id\": \"V0\",\n      \"selected_route\": [\n        \"N0\",\n        \"N1\",\n        \"N5\",\n        \"N9\",\n        \"N10\"\n      ]\n    },\n    {\n      \"request_id\": \"R2\",\n      \"vehicle_id\": \"V1\",\n      \"selected_route\": [\n        \"N13\",\n        \"N9\",\n        \"N10\",\n        \"N11\",\n        \"N7\",\n        \"N3\"\n      ]\n    }\n  ]\n}\n```"
-    }
-  },
-  {
-    "scenario": "L2_001",
-    "level": 2,
-    "B1_metrics": {
-      "rfr": 100.0,
-      "rfr_weighted": 100.0,
-      "hcvr": 0.0,
-      "latency_s": 0.0015320777893066406,
+      "hcvr_pre": 25.0,
+      "hcvr_post": 0.0,
+      "pre_violations_count": 1,
+      "post_violations_count": 0,
+      "pre_by_type": {
+        "route_unreachable": 1,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "post_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "latency_s": 0.002087116241455078,
       "prompt_tokens": 0,
       "candidate_tokens": 0,
       "total_tokens": 0,
@@ -136,27 +272,254 @@
       "rfr": 100.0,
       "rfr_weighted": 100.0,
       "hcvr": 50.0,
-      "latency_s": 1.5982372760772705,
-      "prompt_tokens": 569,
-      "candidate_tokens": 305,
-      "total_tokens": 874,
-      "cost_usd": 0.0001789
+      "hcvr_pre": 50.0,
+      "hcvr_post": 0.0,
+      "pre_violations_count": 2,
+      "post_violations_count": 0,
+      "pre_by_type": {
+        "route_unreachable": 1,
+        "soc_insufficient": 1,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "post_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "latency_s": 1.2485332489013672,
+      "prompt_tokens": 612,
+      "candidate_tokens": 268,
+      "total_tokens": 880,
+      "cost_usd": 0.00016840000000000003
     },
     "B3_metrics": {
       "rfr": 100.0,
       "rfr_weighted": 100.0,
-      "hcvr": 0.0,
-      "latency_s": 3.5237860679626465,
-      "prompt_tokens": 1452,
-      "candidate_tokens": 649,
-      "total_tokens": 2101,
-      "cost_usd": 0.0004048
+      "hcvr": 25.0,
+      "hcvr_pre": 25.0,
+      "hcvr_post": 0.0,
+      "pre_violations_count": 1,
+      "post_violations_count": 0,
+      "pre_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 1,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "post_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "latency_s": 3.52984881401062,
+      "prompt_tokens": 1353,
+      "candidate_tokens": 578,
+      "total_tokens": 1931,
+      "cost_usd": 0.00036649999999999996
     },
-    "B2_raw": "```json\n{\n  \"identified_closed_edges\": [\n    [\"N11\", \"N15\"]\n  ],\n  \"assignments\": [\n    {\n      \"request_id\": \"R2\",\n      \"vehicle_id\": \"V2\",\n      \"route\": [\"N4\", \"N0\", \"N1\", \"N2\", \"N3\", \"N7\", \"N11\", \"N10\", \"N14\", \"N15\"]\n    },\n    {\n      \"request_id\": \"R0\",\n      \"vehicle_id\": \"V5\",\n      \"route\": [\"N8\", \"N9\", \"N10\", \"N11\", \"N7\", \"N3\"]\n    },\n    {\n      \"request_id\": \"R3\",\n      \"vehicle_id\": \"V0\",\n      \"route\": [\"N0\", \"N4\", \"N8\", \"N9\", \"N10\"]\n    },\n    {\n      \"request_id\": \"R1\",\n      \"vehicle_id\": \"V4\",\n      \"route\": [\"N12\", \"N13\", \"N9\", \"N5\", \"N1\", \"N2\", \"N6\", \"N10\", \"N14\"]\n    }\n  ]\n}\n```",
+    "B1_pre_violations": [
+      {
+        "request_id": "R2",
+        "vehicle_id": "V4",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N12 \u2194 N13) is closed or missing in ground-truth network."
+          }
+        ]
+      }
+    ],
+    "B1_post_violations": [],
+    "B2_pre_violations": [
+      {
+        "request_id": "R0",
+        "vehicle_id": "V0",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N0 \u2194 N15) is closed or missing in ground-truth network."
+          }
+        ]
+      },
+      {
+        "request_id": "R2",
+        "vehicle_id": "V4",
+        "violations": [
+          {
+            "type": "soc_insufficient",
+            "detail": "Vehicle V4 battery (61%) < needed (64.9%)."
+          }
+        ]
+      }
+    ],
+    "B2_post_violations": [],
+    "B3_pre_violations": [
+      {
+        "request_id": "R3",
+        "vehicle_id": "V3",
+        "violations": [
+          {
+            "type": "soc_insufficient",
+            "detail": "Vehicle V3 battery (70%) < needed (77.5%)."
+          }
+        ]
+      }
+    ],
+    "B3_post_violations": [],
+    "B2_raw": "```json\n{\n  \"identified_closed_edges\": [\n    [\"N12\", \"N13\"]\n  ],\n  \"assignments\": [\n    {\n      \"request_id\": \"R0\",\n      \"vehicle_id\": \"V0\",\n      \"route\": [\"N0\", \"N15\"]\n    },\n    {\n      \"request_id\": \"R1\",\n      \"vehicle_id\": \"V3\",\n      \"route\": [\"N7\", \"N6\", \"N2\", \"N1\", \"N5\", \"N9\", \"N10\"]\n    },\n    {\n      \"request_id\": \"R2\",\n      \"vehicle_id\": \"V4\",\n      \"route\": [\"N12\", \"N8\", \"N4\", \"N0\", \"N1\", \"N2\", \"N3\"]\n    },\n    {\n      \"request_id\": \"R3\",\n      \"vehicle_id\": \"V2\",\n      \"route\": [\"N4\", \"N5\", \"N9\", \"N13\", \"N14\", \"N15\"]\n    }\n  ]\n}\n```",
     "B3_logs": {
-      "traffic": "```json\n{\n  \"closed_edges\": [[\"N11\", \"N15\"]],\n  \"reasoning\": \"Emergency Access Route between N11 and N15 is completely blocked due to a major water main break.\"\n}\n```",
-      "fleet": "```json\n{\n  \"emergency_reservations\": [\n    {\n      \"request_id\": \"R2\",\n      \"recommended_vehicle\": \"V0\",\n      \"rationale\": \"Highest SoC (85%) reserved for emergency request at N4.\"\n    }\n  ],\n  \"standard_allocations\": [\n    {\n      \"request_id\": \"R0\",\n      \"recommended_vehicle\": \"V5\",\n      \"rationale\": \"Vehicle V5 is already at N8 (origin of R0) with 43% battery and 6 seats, perfect for 1 standard passenger.\"\n    },\n    {\n      \"request_id\": \"R1\",\n      \"recommended_vehicle\": \"V1\",\n      \"rationale\": \"Vehicle V1 is near N1 (at N3) with 46% battery and 6 seats, sufficient for 2 standard passengers.\"\n    },\n    {\n      \"request_id\": \"R3\",\n      \"recommended_vehicle\": \"V4\",\n      \"rationale\": \"Vehicle V4 is at N0 (origin of R3) with high SoC (73%) and 4 seats, exactly matching the 4 passengers.\"\n    }\n  ]\n}\n```",
-      "coordinator": "```json\n{\n  \"assignments\": [\n    {\n      \"request_id\": \"R2\",\n      \"vehicle_id\": \"V0\",\n      \"selected_route\": [\n        \"N4\",\n        \"N5\",\n        \"N9\",\n        \"N13\",\n        \"N14\",\n        \"N15\"\n      ]\n    },\n    {\n      \"request_id\": \"R0\",\n      \"vehicle_id\": \"V5\",\n      \"selected_route\": [\n        \"N8\",\n        \"N9\",\n        \"N10\",\n        \"N11\",\n        \"N7\",\n        \"N3\"\n      ]\n    },\n    {\n      \"request_id\": \"R1\",\n      \"vehicle_id\": \"V1\",\n      \"selected_route\": [\n        \"N1\",\n        \"N5\",\n        \"N9\",\n        \"N13\",\n        \"N14\"\n      ]\n    },\n    {\n      \"request_id\": \"R3\",\n      \"vehicle_id\": \"V4\",\n      \"selected_route\": [\n        \"N0\",\n        \"N4\",\n        \"N5\",\n        \"N6\",\n        \"N10\"\n      ]\n    }\n  ]\n}\n```"
+      "traffic": "```json\n{\n  \"closed_edges\": [\n    [\"N12\", \"N13\"]\n  ],\n  \"reasoning\": \"River Road between N12 and N13 is completely blocked due to a major water main break. Industrial Parkway (N4 \u2194 N8) is heavily delayed but not noted as completely closed/impassable.\"\n}\n```",
+      "fleet": "```json\n{\n  \"emergency_reservations\": [\n    {\n      \"request_id\": \"R0\",\n      \"recommended_vehicle\": \"V2\",\n      \"rationale\": \"High SoC for emergency\"\n    },\n    {\n      \"request_id\": \"R3\",\n      \"recommended_vehicle\": \"V3\",\n      \"rationale\": \"High SoC for emergency\"\n    }\n  ],\n  \"standard_allocations\": [\n    {\n      \"request_id\": \"R1\",\n      \"recommended_vehicle\": \"V0\"\n    },\n    {\n      \"request_id\": \"R2\",\n      \"recommended_vehicle\": \"V5\"\n    }\n  ]\n}\n```",
+      "coordinator": "```json\n{\n  \"assignments\": [\n    {\n      \"request_id\": \"R0\",\n      \"vehicle_id\": \"V2\",\n      \"selected_route\": [\n        \"N0\",\n        \"N1\",\n        \"N5\",\n        \"N9\",\n        \"N13\",\n        \"N14\",\n        \"N15\"\n      ]\n    },\n    {\n      \"request_id\": \"R3\",\n      \"vehicle_id\": \"V3\",\n      \"selected_route\": [\n        \"N4\",\n        \"N8\",\n        \"N9\",\n        \"N10\",\n        \"N14\",\n        \"N15\"\n      ]\n    },\n    {\n      \"request_id\": \"R1\",\n      \"vehicle_id\": \"V0\",\n      \"selected_route\": [\n        \"N0\",\n        \"N1\",\n        \"N5\",\n        \"N9\",\n        \"N10\"\n      ]\n    },\n    {\n      \"request_id\": \"R2\",\n      \"vehicle_id\": \"V5\",\n      \"selected_route\": [\n        \"N13\",\n        \"N9\",\n        \"N10\",\n        \"N11\",\n        \"N7\",\n        \"N3\"\n      ]\n    }\n  ]\n}\n```"
+    }
+  },
+  {
+    "scenario": "L2_001",
+    "level": 2,
+    "B1_metrics": {
+      "rfr": 100.0,
+      "rfr_weighted": 100.0,
+      "hcvr": 0.0,
+      "hcvr_pre": 0.0,
+      "hcvr_post": 0.0,
+      "pre_violations_count": 0,
+      "post_violations_count": 0,
+      "pre_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "post_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "latency_s": 0.0013613700866699219,
+      "prompt_tokens": 0,
+      "candidate_tokens": 0,
+      "total_tokens": 0,
+      "cost_usd": 0.0
+    },
+    "B2_metrics": {
+      "rfr": 100.0,
+      "rfr_weighted": 100.0,
+      "hcvr": 100.0,
+      "hcvr_pre": 100.0,
+      "hcvr_post": 0.0,
+      "pre_violations_count": 4,
+      "post_violations_count": 0,
+      "pre_by_type": {
+        "route_unreachable": 4,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "post_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "latency_s": 1.139740228652954,
+      "prompt_tokens": 616,
+      "candidate_tokens": 219,
+      "total_tokens": 835,
+      "cost_usd": 0.00014920000000000002
+    },
+    "B3_metrics": {
+      "rfr": 100.0,
+      "rfr_weighted": 100.0,
+      "hcvr": 25.0,
+      "hcvr_pre": 25.0,
+      "hcvr_post": 0.0,
+      "pre_violations_count": 1,
+      "post_violations_count": 0,
+      "pre_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 1,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "post_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "latency_s": 4.446827173233032,
+      "prompt_tokens": 1306,
+      "candidate_tokens": 542,
+      "total_tokens": 1848,
+      "cost_usd": 0.0003474
+    },
+    "B1_pre_violations": [],
+    "B1_post_violations": [],
+    "B2_pre_violations": [
+      {
+        "request_id": "R2",
+        "vehicle_id": "V2",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N4 \u2194 N15) is closed or missing in ground-truth network."
+          }
+        ]
+      },
+      {
+        "request_id": "R0",
+        "vehicle_id": "V5",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N8 \u2194 N3) is closed or missing in ground-truth network."
+          }
+        ]
+      },
+      {
+        "request_id": "R3",
+        "vehicle_id": "V0",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N0 \u2194 N10) is closed or missing in ground-truth network."
+          }
+        ]
+      },
+      {
+        "request_id": "R1",
+        "vehicle_id": "V4",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N14 \u2194 N1) is closed or missing in ground-truth network."
+          }
+        ]
+      }
+    ],
+    "B2_post_violations": [],
+    "B3_pre_violations": [
+      {
+        "request_id": "R1",
+        "vehicle_id": "V1",
+        "violations": [
+          {
+            "type": "soc_insufficient",
+            "detail": "Vehicle V1 battery (46%) < needed (57.5%)."
+          }
+        ]
+      }
+    ],
+    "B3_post_violations": [],
+    "B2_raw": "```json\n{\n  \"identified_closed_edges\": [\n    [\"N11\", \"N15\"]\n  ],\n  \"assignments\": [\n    {\n      \"request_id\": \"R2\",\n      \"vehicle_id\": \"V2\",\n      \"route\": [\"N4\", \"N15\"]\n    },\n    {\n      \"request_id\": \"R0\",\n      \"vehicle_id\": \"V5\",\n      \"route\": [\"N8\", \"N3\"]\n    },\n    {\n      \"request_id\": \"R3\",\n      \"vehicle_id\": \"V0\",\n      \"route\": [\"N0\", \"N10\"]\n    },\n    {\n      \"request_id\": \"R1\",\n      \"vehicle_id\": \"V4\",\n      \"route\": [\"N12\", \"N13\", \"N14\", \"N1\"]\n    }\n  ]\n}\n```",
+    "B3_logs": {
+      "traffic": "```json\n{\n  \"closed_edges\": [\n    [\"N11\", \"N15\"]\n  ],\n  \"reasoning\": \"A major water main break has completely blocked the Emergency Access Route between N11 and N15. 5th Avenue (N10 \u2194 N14) is only delayed, not closed.\"\n}\n```",
+      "fleet": "{\n  \"emergency_reservations\": [\n    {\n      \"request_id\": \"R2\",\n      \"recommended_vehicle\": \"V0\",\n      \"rationale\": \"High SoC for emergency\"\n    }\n  ],\n  \"standard_allocations\": [\n    {\n      \"request_id\": \"R0\",\n      \"recommended_vehicle\": \"V5\"\n    },\n    {\n      \"request_id\": \"R1\",\n      \"recommended_vehicle\": \"V1\"\n    },\n    {\n      \"request_id\": \"R3\",\n      \"recommended_vehicle\": \"V4\"\n    }\n  ]\n}",
+      "coordinator": "```json\n{\n  \"assignments\": [\n    {\n      \"request_id\": \"R2\",\n      \"vehicle_id\": \"V0\",\n      \"selected_route\": [\n        \"N4\",\n        \"N5\",\n        \"N9\",\n        \"N13\",\n        \"N14\",\n        \"N15\"\n      ]\n    },\n    {\n      \"request_id\": \"R0\",\n      \"vehicle_id\": \"V5\",\n      \"selected_route\": [\n        \"N8\",\n        \"N4\",\n        \"N5\",\n        \"N1\",\n        \"N2\",\n        \"N3\"\n      ]\n    },\n    {\n      \"request_id\": \"R1\",\n      \"vehicle_id\": \"V1\",\n      \"selected_route\": [\n        \"N1\",\n        \"N2\",\n        \"N6\",\n        \"N10\",\n        \"N14\"\n      ]\n    },\n    {\n      \"request_id\": \"R3\",\n      \"vehicle_id\": \"V4\",\n      \"selected_route\": [\n        \"N0\",\n        \"N1\",\n        \"N5\",\n        \"N9\",\n        \"N10\"\n      ]\n    }\n  ]\n}\n```"
     }
   },
   {
@@ -165,8 +528,24 @@
     "B1_metrics": {
       "rfr": 80.0,
       "rfr_weighted": 88.88888888888889,
-      "hcvr": 25.0,
-      "latency_s": 0.0021920204162597656,
+      "hcvr": 20.0,
+      "hcvr_pre": 20.0,
+      "hcvr_post": 0.0,
+      "pre_violations_count": 1,
+      "post_violations_count": 0,
+      "pre_by_type": {
+        "route_unreachable": 1,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "post_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "latency_s": 0.0018429756164550781,
       "prompt_tokens": 0,
       "candidate_tokens": 0,
       "total_tokens": 0,
@@ -176,26 +555,86 @@
       "rfr": 100.0,
       "rfr_weighted": 100.0,
       "hcvr": 20.0,
-      "latency_s": 4.618158578872681,
-      "prompt_tokens": 605,
-      "candidate_tokens": 382,
-      "total_tokens": 987,
-      "cost_usd": 0.00021330000000000003
+      "hcvr_pre": 20.0,
+      "hcvr_post": 0.0,
+      "pre_violations_count": 1,
+      "post_violations_count": 0,
+      "pre_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 1,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "post_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "latency_s": 1.8209795951843262,
+      "prompt_tokens": 652,
+      "candidate_tokens": 387,
+      "total_tokens": 1039,
+      "cost_usd": 0.00021999999999999998
     },
     "B3_metrics": {
       "rfr": 100.0,
       "rfr_weighted": 100.0,
       "hcvr": 0.0,
-      "latency_s": 7.112984895706177,
-      "prompt_tokens": 1629,
-      "candidate_tokens": 763,
-      "total_tokens": 2392,
-      "cost_usd": 0.00046810000000000005
+      "hcvr_pre": 0.0,
+      "hcvr_post": 0.0,
+      "pre_violations_count": 0,
+      "post_violations_count": 0,
+      "pre_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "post_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "latency_s": 5.204147815704346,
+      "prompt_tokens": 1521,
+      "candidate_tokens": 696,
+      "total_tokens": 2217,
+      "cost_usd": 0.0004305
     },
-    "B2_raw": "```json\n{\n  \"identified_closed_edges\": [\n    [\"N3\", \"N7\"]\n  ],\n  \"assignments\": [\n    {\n      \"request_id\": \"R0\",\n      \"vehicle_id\": \"V2\",\n      \"route\": [\"N4\", \"N0\", \"N1\", \"N5\", \"N9\", \"N13\", \"N14\"]\n    },\n    {\n      \"request_id\": \"R1\",\n      \"vehicle_id\": \"V3\",\n      \"route\": [\"N7\", \"N6\", \"N2\", \"N1\", \"N0\", \"N4\", \"N8\", \"N9\", \"N10\", \"N11\", \"N15\", \"N14\", \"N13\", \"N9\", \"N5\", \"N1\", \"N2\", \"N3\"]\n    },\n    {\n      \"request_id\": \"R2\",\n      \"vehicle_id\": \"V0\",\n      \"route\": [\"N0\", \"N4\", \"N8\", \"N12\", \"N13\", \"N14\", \"N15\"]\n    },\n    {\n      \"request_id\": \"R3\",\n      \"vehicle_id\": \"V5\",\n      \"route\": [\"N8\", \"N9\", \"N10\"]\n    },\n    {\n      \"request_id\": \"R4\",\n      \"vehicle_id\": \"V4\",\n      \"route\": [\"N12\", \"N8\", \"N4\", \"N0\", \"N1\", \"N2\"]\n    }\n  ]\n}\n```",
+    "B1_pre_violations": [
+      {
+        "request_id": "R1",
+        "vehicle_id": "V4",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N7 \u2194 N3) is closed or missing in ground-truth network."
+          }
+        ]
+      }
+    ],
+    "B1_post_violations": [],
+    "B2_pre_violations": [
+      {
+        "request_id": "R1",
+        "vehicle_id": "V3",
+        "violations": [
+          {
+            "type": "soc_insufficient",
+            "detail": "Vehicle V3 battery (93%) < needed (111.5%)."
+          }
+        ]
+      }
+    ],
+    "B2_post_violations": [],
+    "B3_pre_violations": [],
+    "B3_post_violations": [],
+    "B2_raw": "```json\n{\n  \"identified_closed_edges\": [\n    [\"N3\", \"N7\"]\n  ],\n  \"assignments\": [\n    {\n      \"request_id\": \"R0\",\n      \"vehicle_id\": \"V2\",\n      \"route\": [\"N4\", \"N0\", \"N1\", \"N5\", \"N9\", \"N13\", \"N14\"]\n    },\n    {\n      \"request_id\": \"R1\",\n      \"vehicle_id\": \"V3\",\n      \"route\": [\"N7\", \"N6\", \"N2\", \"N1\", \"N0\", \"N4\", \"N8\", \"N12\", \"N13\", \"N9\", \"N5\", \"N4\", \"N0\", \"N1\", \"N2\", \"N3\"]\n    },\n    {\n      \"request_id\": \"R2\",\n      \"vehicle_id\": \"V0\",\n      \"route\": [\"N0\", \"N4\", \"N8\", \"N12\", \"N13\", \"N14\", \"N15\"]\n    },\n    {\n      \"request_id\": \"R3\",\n      \"vehicle_id\": \"V5\",\n      \"route\": [\"N8\", \"N4\", \"N0\", \"N1\", \"N2\", \"N6\", \"N10\"]\n    },\n    {\n      \"request_id\": \"R4\",\n      \"vehicle_id\": \"V4\",\n      \"route\": [\"N12\", \"N8\", \"N4\", \"N0\", \"N1\", \"N2\"]\n    }\n  ]\n}\n```",
     "B3_logs": {
-      "traffic": "```json\n{\n  \"closed_edges\": [[\"N3\", \"N7\"]],\n  \"reasoning\": \"East Ring Road between N3 and N7 is completely blocked due to a major water main break. 5th Avenue is delayed but not closed, and V1 is a vehicle failure, not a road closure.\"\n}\n```",
-      "fleet": "```json\n{\n  \"emergency_reservations\": [\n    {\n      \"request_id\": \"R0\",\n      \"recommended_vehicle\": \"V3\",\n      \"rationale\": \"Highest SoC (93%) allocated for emergency request R0\"\n    },\n    {\n      \"request_id\": \"R2\",\n      \"recommended_vehicle\": \"V0\",\n      \"rationale\": \"Second highest available SoC (83%) allocated for emergency request R2\"\n    }\n  ],\n  \"standard_allocations\": [\n    {\n      \"request_id\": \"R1\",\n      \"recommended_vehicle\": \"V5\",\n      \"rationale\": \"Sufficient seats (6) and good SoC (75%) for standard request R1\"\n    },\n    {\n      \"request_id\": \"R3\",\n      \"recommended_vehicle\": \"V2\",\n      \"rationale\": \"Sufficient seats (4) and high SoC (82%) for standard request R3\"\n    },\n    {\n      \"request_id\": \"R4\",\n      \"recommended_vehicle\": \"V4\",\n      \"rationale\": \"Located at N12 (pickup node) with matching capacity for standard request R4\"\n    }\n  ]\n}\n```",
+      "traffic": "```json\n{\n  \"closed_edges\": [\n    [\"N3\", \"N7\"]\n  ],\n  \"reasoning\": \"East Ring Road between N3 and N7 is completely blocked due to a major water main break. 5th Avenue (N10 \u2194 N14) has delays but is not closed, and Vehicle V1 is a fleet alert, not a road closure.\"\n}\n```",
+      "fleet": "```json\n{\n  \"emergency_reservations\": [\n    {\n      \"request_id\": \"R0\",\n      \"recommended_vehicle\": \"V3\",\n      \"rationale\": \"High SoC (93%) for emergency priority request\"\n    },\n    {\n      \"request_id\": \"R2\",\n      \"recommended_vehicle\": \"V0\",\n      \"rationale\": \"High SoC (83%) for emergency priority request\"\n    }\n  ],\n  \"standard_allocations\": [\n    {\n      \"request_id\": \"R1\",\n      \"recommended_vehicle\": \"V5\"\n    },\n    {\n      \"request_id\": \"R3\",\n      \"recommended_vehicle\": \"V2\"\n    },\n    {\n      \"request_id\": \"R4\",\n      \"recommended_vehicle\": \"V4\"\n    }\n  ]\n}\n```",
       "coordinator": "```json\n{\n  \"assignments\": [\n    {\n      \"request_id\": \"R0\",\n      \"vehicle_id\": \"V3\",\n      \"selected_route\": [\n        \"N1\",\n        \"N2\",\n        \"N6\",\n        \"N10\",\n        \"N14\"\n      ]\n    },\n    {\n      \"request_id\": \"R2\",\n      \"vehicle_id\": \"V0\",\n      \"selected_route\": [\n        \"N0\",\n        \"N1\",\n        \"N5\",\n        \"N9\",\n        \"N13\",\n        \"N14\",\n        \"N15\"\n      ]\n    },\n    {\n      \"request_id\": \"R1\",\n      \"vehicle_id\": \"V5\",\n      \"selected_route\": [\n        \"N13\",\n        \"N14\",\n        \"N10\",\n        \"N6\",\n        \"N2\",\n        \"N3\"\n      ]\n    },\n    {\n      \"request_id\": \"R3\",\n      \"vehicle_id\": \"V2\",\n      \"selected_route\": [\n        \"N0\",\n        \"N1\",\n        \"N5\",\n        \"N9\",\n        \"N10\"\n      ]\n    },\n    {\n      \"request_id\": \"R4\",\n      \"vehicle_id\": \"V4\",\n      \"selected_route\": [\n        \"N12\",\n        \"N13\",\n        \"N9\",\n        \"N5\",\n        \"N1\",\n        \"N2\"\n      ]\n    }\n  ]\n}\n```"
     }
   },
@@ -206,37 +645,194 @@
       "rfr": 60.0,
       "rfr_weighted": 77.77777777777779,
       "hcvr": 33.33333333333333,
-      "latency_s": 0.001531839370727539,
+      "hcvr_pre": 33.33333333333333,
+      "hcvr_post": 0.0,
+      "pre_violations_count": 1,
+      "post_violations_count": 0,
+      "pre_by_type": {
+        "route_unreachable": 1,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "post_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "latency_s": 0.0018253326416015625,
       "prompt_tokens": 0,
       "candidate_tokens": 0,
       "total_tokens": 0,
       "cost_usd": 0.0
     },
     "B2_metrics": {
-      "rfr": 80.0,
-      "rfr_weighted": 88.88888888888889,
-      "hcvr": 50.0,
-      "latency_s": 4.3343825340271,
-      "prompt_tokens": 601,
-      "candidate_tokens": 340,
-      "total_tokens": 941,
-      "cost_usd": 0.00019610000000000002
+      "rfr": 60.0,
+      "rfr_weighted": 77.77777777777779,
+      "hcvr": 100.0,
+      "hcvr_pre": 100.0,
+      "hcvr_post": 0.0,
+      "pre_violations_count": 5,
+      "post_violations_count": 0,
+      "pre_by_type": {
+        "route_unreachable": 5,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "post_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "latency_s": 1.4864230155944824,
+      "prompt_tokens": 648,
+      "candidate_tokens": 252,
+      "total_tokens": 900,
+      "cost_usd": 0.00016560000000000001
     },
     "B3_metrics": {
       "rfr": 60.0,
       "rfr_weighted": 55.55555555555556,
-      "hcvr": 66.66666666666666,
-      "latency_s": 4.127739906311035,
-      "prompt_tokens": 1609,
-      "candidate_tokens": 662,
-      "total_tokens": 2271,
-      "cost_usd": 0.00042570000000000005
+      "hcvr": 80.0,
+      "hcvr_pre": 80.0,
+      "hcvr_post": 0.0,
+      "pre_violations_count": 4,
+      "post_violations_count": 0,
+      "pre_by_type": {
+        "route_unreachable": 1,
+        "soc_insufficient": 3,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "post_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "latency_s": 4.06328821182251,
+      "prompt_tokens": 1505,
+      "candidate_tokens": 597,
+      "total_tokens": 2102,
+      "cost_usd": 0.00038930000000000003
     },
-    "B2_raw": "```json\n{\n  \"identified_closed_edges\": [\n    [\"N1\", \"N5\"]\n  ],\n  \"assignments\": [\n    {\n      \"request_id\": \"R0\",\n      \"vehicle_id\": \"V2\",\n      \"route\": [\"N4\", \"N0\", \"N1\", \"N2\"]\n    },\n    {\n      \"request_id\": \"R1\",\n      \"vehicle_id\": \"V5\",\n      \"route\": [\"N8\", \"N4\", \"N0\", \"N1\", \"N2\", \"N3\"]\n    },\n    {\n      \"request_id\": \"R2\",\n      \"vehicle_id\": \"V0\",\n      \"route\": [\"N0\", \"N4\", \"N8\", \"N12\", \"N13\", \"N14\", \"N15\"]\n    },\n    {\n      \"request_id\": \"R3\",\n      \"vehicle_id\": \"V3\",\n      \"route\": [\"N7\", \"N6\", \"N2\", \"N1\", \"N0\", \"N4\", \"N8\", \"N9\", \"N10\"]\n    },\n    {\n      \"request_id\": \"R4\",\n      \"vehicle_id\": \"V1\",\n      \"route\": [\"N3\", \"N2\", \"N6\", \"N10\", \"N9\", \"N13\"]\n    }\n  ]\n}\n```",
+    "B1_pre_violations": [
+      {
+        "request_id": "R2",
+        "vehicle_id": "V0",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N1 \u2194 N5) is closed or missing in ground-truth network."
+          }
+        ]
+      }
+    ],
+    "B1_post_violations": [],
+    "B2_pre_violations": [
+      {
+        "request_id": "R0",
+        "vehicle_id": "V2",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N4 \u2194 N2) is closed or missing in ground-truth network."
+          }
+        ]
+      },
+      {
+        "request_id": "R1",
+        "vehicle_id": "V5",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N8 \u2194 N3) is closed or missing in ground-truth network."
+          }
+        ]
+      },
+      {
+        "request_id": "R2",
+        "vehicle_id": "V0",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N0 \u2194 N15) is closed or missing in ground-truth network."
+          }
+        ]
+      },
+      {
+        "request_id": "R3",
+        "vehicle_id": "V3",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N7 \u2194 N0) is closed or missing in ground-truth network."
+          }
+        ]
+      },
+      {
+        "request_id": "R4",
+        "vehicle_id": "V1",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N3 \u2194 N13) is closed or missing in ground-truth network."
+          }
+        ]
+      }
+    ],
+    "B2_post_violations": [],
+    "B3_pre_violations": [
+      {
+        "request_id": "R0",
+        "vehicle_id": "V3",
+        "violations": [
+          {
+            "type": "soc_insufficient",
+            "detail": "Vehicle V3 battery (58%) < needed (69.0%)."
+          }
+        ]
+      },
+      {
+        "request_id": "R2",
+        "vehicle_id": "V0",
+        "violations": [
+          {
+            "type": "soc_insufficient",
+            "detail": "Vehicle V0 battery (58%) < needed (60.9%)."
+          }
+        ]
+      },
+      {
+        "request_id": "R3",
+        "vehicle_id": "V2",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N0 \u2194 N9) is closed or missing in ground-truth network."
+          }
+        ]
+      },
+      {
+        "request_id": "R4",
+        "vehicle_id": "V1",
+        "violations": [
+          {
+            "type": "soc_insufficient",
+            "detail": "Vehicle V1 battery (44%) < needed (69.0%)."
+          }
+        ]
+      }
+    ],
+    "B3_post_violations": [],
+    "B2_raw": "```json\n{\n  \"identified_closed_edges\": [\n    [\"N1\", \"N5\"]\n  ],\n  \"assignments\": [\n    {\n      \"request_id\": \"R0\",\n      \"vehicle_id\": \"V2\",\n      \"route\": [\"N4\", \"N2\"]\n    },\n    {\n      \"request_id\": \"R1\",\n      \"vehicle_id\": \"V5\",\n      \"route\": [\"N8\", \"N3\"]\n    },\n    {\n      \"request_id\": \"R2\",\n      \"vehicle_id\": \"V0\",\n      \"route\": [\"N0\", \"N15\"]\n    },\n    {\n      \"request_id\": \"R3\",\n      \"vehicle_id\": \"V3\",\n      \"route\": [\"N7\", \"N0\", \"N10\"]\n    },\n    {\n      \"request_id\": \"R4\",\n      \"vehicle_id\": \"V1\",\n      \"route\": [\"N3\", \"N13\"]\n    }\n  ]\n}\n```",
     "B3_logs": {
-      "traffic": "```json\n{\n  \"closed_edges\": [[\"N1\", \"N5\"]],\n  \"reasoning\": \"Major water main break on 1st Avenue completely blocks the road segment between N1 and N5.\"\n}\n```",
-      "fleet": "{\n  \"emergency_reservations\": [\n    {\n      \"request_id\": \"R0\",\n      \"recommended_vehicle\": \"V3\",\n      \"rationale\": \"Emergency request (3 passengers) allocated to V3 (58% SoC, 6 seats) which has the highest available battery alongside V0, and sufficient capacity.\"\n    },\n    {\n      \"request_id\": \"R2\",\n      \"recommended_vehicle\": \"V0\",\n      \"rationale\": \"Emergency request (1 passenger) allocated to V0 (58% SoC, 4 seats), matching the highest available battery for urgent priority.\"\n    }\n  ],\n  \"standard_allocations\": [\n    {\n      \"request_id\": \"R1\",\n      \"recommended_vehicle\": \"V5\",\n      \"rationale\": \"Standard request (4 passengers) at N8 allocated to V5 which is already at N8 with 48% SoC and 6 seats.\"\n    },\n    {\n      \"request_id\": \"R3\",\n      \"recommended_vehicle\": \"V2\",\n      \"rationale\": \"Standard request (3 passengers) at N0 allocated to V2 (52% SoC, 4 seats).\"\n    }\n  ]\n}",
-      "coordinator": "```json\n{\n  \"assignments\": [\n    {\n      \"request_id\": \"R0\",\n      \"vehicle_id\": \"V3\",\n      \"selected_route\": [\n        \"N12\",\n        \"N13\",\n        \"N14\",\n        \"N10\",\n        \"N6\",\n        \"N2\"\n      ]\n    },\n    {\n      \"request_id\": \"R2\",\n      \"vehicle_id\": \"V0\",\n      \"selected_route\": [\n        \"N0\",\n        \"N1\",\n        \"N2\",\n        \"N3\",\n        \"N7\",\n        \"N11\",\n        \"N15\"\n      ]\n    },\n    {\n      \"request_id\": \"R1\",\n      \"vehicle_id\": \"V5\",\n      \"selected_route\": [\n        \"N8\",\n        \"N9\",\n        \"N10\",\n        \"N11\",\n        \"N7\",\n        \"N3\"\n      ]\n    },\n    {\n      \"request_id\": \"R3\",\n      \"vehicle_id\": \"V2\",\n      \"selected_route\": [\n        \"N0\",\n        \"N4\",\n        \"N5\",\n        \"N9\",\n        \"N10\"\n      ]\n    }\n  ]\n}\n```"
+      "traffic": "```json\n{\n  \"closed_edges\": [[\"N1\", \"N5\"]],\n  \"reasoning\": \"A major water main break on 1st Avenue between N1 and N5 has completely blocked the road segment, making it impassable.\"\n}\n```",
+      "fleet": "```json\n{\n  \"emergency_reservations\": [\n    {\n      \"request_id\": \"R0\",\n      \"recommended_vehicle\": \"V3\",\n      \"rationale\": \"High SoC (58%) for emergency request at N12\"\n    },\n    {\n      \"request_id\": \"R2\",\n      \"recommended_vehicle\": \"V0\",\n      \"rationale\": \"High SoC (58%) for emergency request at N0\"\n    }\n  ],\n  \"standard_allocations\": [\n    {\n      \"request_id\": \"R1\",\n      \"recommended_vehicle\": \"V5\"\n    },\n    {\n      \"request_id\": \"R3\",\n      \"recommended_vehicle\": \"V2\"\n    },\n    {\n      \"request_id\": \"R4\",\n      \"recommended_vehicle\": \"V1\"\n    }\n  ]\n}\n```",
+      "coordinator": "```json\n{\n  \"assignments\": [\n    {\n      \"request_id\": \"R0\",\n      \"vehicle_id\": \"V3\",\n      \"selected_route\": [\"N12\", \"N13\", \"N14\", \"N10\", \"N6\", \"N2\"]\n    },\n    {\n      \"request_id\": \"R2\",\n      \"vehicle_id\": \"V0\",\n      \"selected_route\": [\"N0\", \"N1\", \"N2\", \"N3\", \"N7\", \"N11\", \"N15\"]\n    },\n    {\n      \"request_id\": \"R1\",\n      \"vehicle_id\": \"V5\",\n      \"selected_route\": [\"N8\", \"N9\", \"N10\", \"N11\", \"N7\", \"N3\"]\n    },\n    {\n      \"request_id\": \"R3\",\n      \"vehicle_id\": \"V2\",\n      \"selected_route\": [\"N0\", \"N9\", \"N5\", \"N4\", \"N10\"]\n    },\n    {\n      \"request_id\": \"R4\",\n      \"vehicle_id\": \"V1\",\n      \"selected_route\": [\"N13\", \"N9\", \"N10\", \"N11\", \"N7\", \"N3\"]\n    }\n  ]\n}\n```"
     }
   },
   {
@@ -246,7 +842,23 @@
       "rfr": 50.0,
       "rfr_weighted": 41.66666666666667,
       "hcvr": 0.0,
-      "latency_s": 0.002110004425048828,
+      "hcvr_pre": 0.0,
+      "hcvr_post": 0.0,
+      "pre_violations_count": 0,
+      "post_violations_count": 0,
+      "pre_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "post_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "latency_s": 0.002235889434814453,
       "prompt_tokens": 0,
       "candidate_tokens": 0,
       "total_tokens": 0,
@@ -254,29 +866,159 @@
     },
     "B2_metrics": {
       "rfr": 50.0,
-      "rfr_weighted": 58.333333333333336,
+      "rfr_weighted": 41.66666666666667,
       "hcvr": 100.0,
-      "latency_s": 1.6584389209747314,
-      "prompt_tokens": 653,
-      "candidate_tokens": 413,
-      "total_tokens": 1066,
-      "cost_usd": 0.00023050000000000002
+      "hcvr_pre": 100.0,
+      "hcvr_post": 0.0,
+      "pre_violations_count": 5,
+      "post_violations_count": 0,
+      "pre_by_type": {
+        "route_unreachable": 5,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "post_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "latency_s": 1.9198904037475586,
+      "prompt_tokens": 700,
+      "candidate_tokens": 290,
+      "total_tokens": 990,
+      "cost_usd": 0.00018600000000000002
     },
     "B3_metrics": {
       "rfr": 50.0,
       "rfr_weighted": 58.333333333333336,
-      "hcvr": 133.33333333333331,
-      "latency_s": 4.903589725494385,
-      "prompt_tokens": 1832,
-      "candidate_tokens": 831,
-      "total_tokens": 2663,
-      "cost_usd": 0.0005156000000000001
+      "hcvr": 80.0,
+      "hcvr_pre": 80.0,
+      "hcvr_post": 0.0,
+      "pre_violations_count": 4,
+      "post_violations_count": 0,
+      "pre_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 4,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "post_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "latency_s": 5.26045560836792,
+      "prompt_tokens": 1697,
+      "candidate_tokens": 723,
+      "total_tokens": 2420,
+      "cost_usd": 0.00045890000000000004
     },
-    "B2_raw": "```json\n{\n  \"identified_closed_edges\": [\n    [\"N7\", \"N11\"],\n    [\"N10\", \"N11\"]\n  ],\n  \"assignments\": [\n    {\n      \"request_id\": \"R0\",\n      \"vehicle_id\": \"V0\",\n      \"route\": [\"N0\", \"N4\", \"N8\", \"N9\", \"N13\", \"N14\", \"N10\"]\n    },\n    {\n      \"request_id\": \"R2\",\n      \"vehicle_id\": \"V2\",\n      \"route\": [\"N4\", \"N0\", \"N1\", \"N2\", \"N3\", \"N7\", \"N11\", \"N15\"]\n    },\n    {\n      \"request_id\": \"R4\",\n      \"vehicle_id\": \"V3\",\n      \"route\": [\"N7\", \"N6\", \"N5\", \"N9\", \"N13\", \"N14\", \"N10\", \"N11\"]\n    },\n    {\n      \"request_id\": \"R1\",\n      \"vehicle_id\": \"V5\",\n      \"route\": [\"N8\", \"N9\", \"N13\", \"N14\"]\n    },\n    {\n      \"request_id\": \"R3\",\n      \"vehicle_id\": \"V1\",\n      \"route\": [\"N3\", \"N2\", \"N1\", \"N0\", \"N4\", \"N8\", \"N4\", \"N0\", \"N1\", \"N2\", \"N3\"]\n    },\n    {\n      \"request_id\": \"R5\",\n      \"vehicle_id\": null,\n      \"route\": null\n    }\n  ]\n}\n```",
+    "B1_pre_violations": [],
+    "B1_post_violations": [],
+    "B2_pre_violations": [
+      {
+        "request_id": "R0",
+        "vehicle_id": "V2",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N0 \u2194 N10) is closed or missing in ground-truth network."
+          }
+        ]
+      },
+      {
+        "request_id": "R1",
+        "vehicle_id": "V1",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N3 \u2194 N1) is closed or missing in ground-truth network."
+          }
+        ]
+      },
+      {
+        "request_id": "R2",
+        "vehicle_id": "V0",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N0 \u2194 N15) is closed or missing in ground-truth network."
+          }
+        ]
+      },
+      {
+        "request_id": "R3",
+        "vehicle_id": "V5",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N8 \u2194 N3) is closed or missing in ground-truth network."
+          }
+        ]
+      },
+      {
+        "request_id": "R4",
+        "vehicle_id": "V3",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N7 \u2194 N11) is closed or missing in ground-truth network."
+          }
+        ]
+      }
+    ],
+    "B2_post_violations": [],
+    "B3_pre_violations": [
+      {
+        "request_id": "R2",
+        "vehicle_id": "V5",
+        "violations": [
+          {
+            "type": "soc_insufficient",
+            "detail": "Vehicle V5 battery (59%) < needed (75.4%)."
+          }
+        ]
+      },
+      {
+        "request_id": "R4",
+        "vehicle_id": "V0",
+        "violations": [
+          {
+            "type": "soc_insufficient",
+            "detail": "Vehicle V0 battery (44%) < needed (69.7%)."
+          }
+        ]
+      },
+      {
+        "request_id": "R1",
+        "vehicle_id": "V1",
+        "violations": [
+          {
+            "type": "soc_insufficient",
+            "detail": "Vehicle V1 battery (41%) < needed (59.3%)."
+          }
+        ]
+      },
+      {
+        "request_id": "R3",
+        "vehicle_id": "V3",
+        "violations": [
+          {
+            "type": "soc_insufficient",
+            "detail": "Vehicle V3 battery (36%) < needed (60.9%)."
+          }
+        ]
+      }
+    ],
+    "B3_post_violations": [],
+    "B2_raw": "```json\n{\n  \"identified_closed_edges\": [\n    [\"N7\", \"N11\"]\n  ],\n  \"assignments\": [\n    {\n      \"request_id\": \"R0\",\n      \"vehicle_id\": \"V2\",\n      \"route\": [\"N4\", \"N0\", \"N10\"]\n    },\n    {\n      \"request_id\": \"R1\",\n      \"vehicle_id\": \"V1\",\n      \"route\": [\"N3\", \"N1\", \"N14\"]\n    },\n    {\n      \"request_id\": \"R2\",\n      \"vehicle_id\": \"V0\",\n      \"route\": [\"N0\", \"N15\"]\n    },\n    {\n      \"request_id\": \"R3\",\n      \"vehicle_id\": \"V5\",\n      \"route\": [\"N8\", \"N3\"]\n    },\n    {\n      \"request_id\": \"R4\",\n      \"vehicle_id\": \"V3\",\n      \"route\": [\"N7\", \"N11\"]\n    },\n    {\n      \"request_id\": \"R5\",\n      \"vehicle_id\": null,\n      \"route\": null\n    }\n  ]\n}\n```",
     "B3_logs": {
-      "traffic": "```json\n{\n  \"closed_edges\": [\n    [\"N7\", \"N11\"]\n  ],\n  \"reasoning\": \"Extracted impassable road segment from the police dispatch regarding the major water main break on Express Link between N7 and N11. Maintenance on Civic Highway (N10-N11) is restricted to public transit, 2nd Avenue is only delayed, and V4 is a vehicle failure, not a road closure.\"\n}\n```",
-      "fleet": "```json\n{\n  \"emergency_reservations\": [\n    {\n      \"request_id\": \"R0\",\n      \"recommended_vehicle\": \"V2\",\n      \"rationale\": \"Highest available SoC (68%) assigned to emergency request from N0.\"\n    },\n    {\n      \"request_id\": \"R2\",\n      \"recommended_vehicle\": \"V5\",\n      \"rationale\": \"Second highest available SoC (59%) assigned to emergency request.\"\n    },\n    {\n      \"request_id\": \"R4\",\n      \"recommended_vehicle\": \"V0\",\n      \"rationale\": \"Sufficient SoC (44%) and capacity (4 seats) assigned to emergency request R4 (3 passengers).\"\n    }\n  ],\n  \"standard_allocations\": [\n    {\n      \"request_id\": \"R1\",\n      \"recommended_vehicle\": \"V1\",\n      \"rationale\": \"Located at N3, adequate capacity (6 seats) and SoC (41%) for standard request.\"\n    },\n    {\n      \"request_id\": \"R3\",\n      \"recommended_vehicle\": \"V3\",\n      \"rationale\": \"Located at N7, adequate capacity (6 seats) and SoC (36%) for standard request.\"\n    },\n    {\n      \"request_id\": \"R5\",\n      \"recommended_vehicle\": \"V3\",\n      \"rationale\": \"Allocated available capacity for standard request R5.\"\n    }\n  ]\n}\n```",
-      "coordinator": "```json\n{\n  \"assignments\": [\n    {\n      \"request_id\": \"R0\",\n      \"vehicle_id\": \"V2\",\n      \"selected_route\": [\n        \"N0\",\n        \"N1\",\n        \"N5\",\n        \"N9\",\n        \"N10\"\n      ]\n    },\n    {\n      \"request_id\": \"R2\",\n      \"vehicle_id\": \"V5\",\n      \"selected_route\": [\n        \"N0\",\n        \"N1\",\n        \"N5\",\n        \"N9\",\n        \"N13\",\n        \"N14\",\n        \"N15\"\n      ]\n    },\n    {\n      \"request_id\": \"R4\",\n      \"vehicle_id\": \"V0\",\n      \"selected_route\": [\n        \"N5\",\n        \"N6\",\n        \"N10\",\n        \"N11\"\n      ]\n    },\n    {\n      \"request_id\": \"R1\",\n      \"vehicle_id\": \"V1\",\n      \"selected_route\": [\n        \"N1\",\n        \"N2\",\n        \"N6\",\n        \"N10\",\n        \"N14\"\n      ]\n    },\n    {\n      \"request_id\": \"R3\",\n      \"vehicle_id\": \"V3\",\n      \"selected_route\": [\n        \"N8\",\n        \"N4\",\n        \"N5\",\n        \"N1\",\n        \"N2\",\n        \"N3\"\n      ]\n    }\n  ]\n}\n```"
+      "traffic": "```json\n{\n  \"closed_edges\": [\n    [\"N7\", \"N11\"],\n    [\"N10\", \"N11\"]\n  ],\n  \"reasoning\": \"Express Link between N7 and N11 is completely blocked due to a water main break. Civic Highway between N10 and N11 is closed due to scheduled maintenance.\"\n}\n```",
+      "fleet": "{\n  \"emergency_reservations\": [\n    {\n      \"request_id\": \"R0\",\n      \"recommended_vehicle\": \"V2\",\n      \"rationale\": \"High SoC for emergency, sufficient seats\"\n    },\n    {\n      \"request_id\": \"R2\",\n      \"recommended_vehicle\": \"V5\",\n      \"rationale\": \"High SoC for emergency, located near N0\"\n    },\n    {\n      \"request_id\": \"R4\",\n      \"recommended_vehicle\": \"V0\",\n      \"rationale\": \"Emergency reservation with available battery and seats\"\n    }\n  ],\n  \"standard_allocations\": [\n    {\n      \"request_id\": \"R1\",\n      \"recommended_vehicle\": \"V1\"\n    },\n    {\n      \"request_id\": \"R3\",\n      \"recommended_vehicle\": \"V3\"\n    },\n    {\n      \"request_id\": \"R5\",\n      \"recommended_vehicle\": \"V1\"\n    }\n  ]\n}",
+      "coordinator": "```json\n{\n  \"assignments\": [\n    {\n      \"request_id\": \"R0\",\n      \"vehicle_id\": \"V2\",\n      \"selected_route\": [\n        \"N0\",\n        \"N1\",\n        \"N5\",\n        \"N9\",\n        \"N10\"\n      ]\n    },\n    {\n      \"request_id\": \"R2\",\n      \"vehicle_id\": \"V5\",\n      \"selected_route\": [\n        \"N0\",\n        \"N1\",\n        \"N5\",\n        \"N9\",\n        \"N13\",\n        \"N14\",\n        \"N15\"\n      ]\n    },\n    {\n      \"request_id\": \"R4\",\n      \"vehicle_id\": \"V0\",\n      \"selected_route\": [\n        \"N5\",\n        \"N9\",\n        \"N10\",\n        \"N14\",\n        \"N15\",\n        \"N11\"\n      ]\n    },\n    {\n      \"request_id\": \"R1\",\n      \"vehicle_id\": \"V1\",\n      \"selected_route\": [\n        \"N1\",\n        \"N5\",\n        \"N9\",\n        \"N13\",\n        \"N14\"\n      ]\n    },\n    {\n      \"request_id\": \"R3\",\n      \"vehicle_id\": \"V3\",\n      \"selected_route\": [\n        \"N8\",\n        \"N4\",\n        \"N5\",\n        \"N1\",\n        \"N2\",\n        \"N3\"\n      ]\n    }\n  ]\n}\n```"
     }
   },
   {
@@ -286,7 +1028,23 @@
       "rfr": 50.0,
       "rfr_weighted": 41.66666666666667,
       "hcvr": 66.66666666666666,
-      "latency_s": 0.0020732879638671875,
+      "hcvr_pre": 66.66666666666666,
+      "hcvr_post": 0.0,
+      "pre_violations_count": 2,
+      "post_violations_count": 0,
+      "pre_by_type": {
+        "route_unreachable": 2,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "post_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "latency_s": 0.002129077911376953,
       "prompt_tokens": 0,
       "candidate_tokens": 0,
       "total_tokens": 0,
@@ -294,28 +1052,169 @@
     },
     "B2_metrics": {
       "rfr": 50.0,
-      "rfr_weighted": 58.333333333333336,
-      "hcvr": 133.33333333333331,
-      "latency_s": 1.5277810096740723,
-      "prompt_tokens": 650,
-      "candidate_tokens": 363,
-      "total_tokens": 1013,
-      "cost_usd": 0.00021020000000000001
+      "rfr_weighted": 41.66666666666667,
+      "hcvr": 100.0,
+      "hcvr_pre": 100.0,
+      "hcvr_post": 0.0,
+      "pre_violations_count": 5,
+      "post_violations_count": 0,
+      "pre_by_type": {
+        "route_unreachable": 5,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "post_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "latency_s": 1.3439581394195557,
+      "prompt_tokens": 697,
+      "candidate_tokens": 298,
+      "total_tokens": 995,
+      "cost_usd": 0.00018889999999999998
     },
     "B3_metrics": {
       "rfr": 50.0,
       "rfr_weighted": 58.333333333333336,
-      "hcvr": 100.0,
-      "latency_s": 5.325206518173218,
-      "prompt_tokens": 1851,
-      "candidate_tokens": 847,
-      "total_tokens": 2698,
-      "cost_usd": 0.0005239
+      "hcvr": 60.0,
+      "hcvr_pre": 60.0,
+      "hcvr_post": 0.0,
+      "pre_violations_count": 3,
+      "post_violations_count": 0,
+      "pre_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 3,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "post_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "latency_s": 5.47700047492981,
+      "prompt_tokens": 1706,
+      "candidate_tokens": 743,
+      "total_tokens": 2449,
+      "cost_usd": 0.00046780000000000004
     },
-    "B2_raw": "```json\n{\n  \"identified_closed_edges\": [\n    [\"N4\", \"N8\"]\n  ],\n  \"assignments\": [\n    {\n      \"request_id\": \"R0\",\n      \"vehicle_id\": \"V2\",\n      \"route\": [\"N4\", \"N0\", \"N1\", \"N2\", \"N6\", \"N10\"]\n    },\n    {\n      \"request_id\": \"R1\",\n      \"vehicle_id\": \"V3\",\n      \"route\": [\"N7\", \"N11\", \"N15\"]\n    },\n    {\n      \"request_id\": \"R2\",\n      \"vehicle_id\": \"V4\",\n      \"route\": [\"N12\", \"N8\", \"N9\", \"N10\", \"N6\", \"N2\"]\n    },\n    {\n      \"request_id\": \"R3\",\n      \"vehicle_id\": \"V1\",\n      \"route\": [\"N3\", \"N2\", \"N1\", \"N0\", \"N4\", \"N5\", \"N9\", \"N13\"]\n    },\n    {\n      \"request_id\": \"R4\",\n      \"vehicle_id\": \"V5\",\n      \"route\": [\"N8\", \"N9\", \"N13\", \"N14\", \"N15\", \"N11\"]\n    },\n    {\n      \"request_id\": \"R5\",\n      \"vehicle_id\": null,\n      \"route\": null\n    }\n  ]\n}\n```",
+    "B1_pre_violations": [
+      {
+        "request_id": "R0",
+        "vehicle_id": "V2",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N4 \u2194 N8) is closed or missing in ground-truth network."
+          }
+        ]
+      },
+      {
+        "request_id": "R2",
+        "vehicle_id": "V4",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N8 \u2194 N4) is closed or missing in ground-truth network."
+          }
+        ]
+      }
+    ],
+    "B1_post_violations": [],
+    "B2_pre_violations": [
+      {
+        "request_id": "R0",
+        "vehicle_id": "V2",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N0 \u2194 N10) is closed or missing in ground-truth network."
+          }
+        ]
+      },
+      {
+        "request_id": "R1",
+        "vehicle_id": "V3",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N7 \u2194 N0) is closed or missing in ground-truth network."
+          }
+        ]
+      },
+      {
+        "request_id": "R2",
+        "vehicle_id": "V4",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N12 \u2194 N2) is closed or missing in ground-truth network."
+          }
+        ]
+      },
+      {
+        "request_id": "R3",
+        "vehicle_id": "V1",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N3 \u2194 N13) is closed or missing in ground-truth network."
+          }
+        ]
+      },
+      {
+        "request_id": "R4",
+        "vehicle_id": "V5",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N8 \u2194 N5) is closed or missing in ground-truth network."
+          }
+        ]
+      }
+    ],
+    "B2_post_violations": [],
+    "B3_pre_violations": [
+      {
+        "request_id": "R1",
+        "vehicle_id": "V4",
+        "violations": [
+          {
+            "type": "soc_insufficient",
+            "detail": "Vehicle V4 battery (46%) < needed (82.8%)."
+          }
+        ]
+      },
+      {
+        "request_id": "R2",
+        "vehicle_id": "V1",
+        "violations": [
+          {
+            "type": "soc_insufficient",
+            "detail": "Vehicle V1 battery (34%) < needed (79.3%)."
+          }
+        ]
+      },
+      {
+        "request_id": "R3",
+        "vehicle_id": "V5",
+        "violations": [
+          {
+            "type": "soc_insufficient",
+            "detail": "Vehicle V5 battery (32%) < needed (51.7%)."
+          }
+        ]
+      }
+    ],
+    "B3_post_violations": [],
+    "B2_raw": "```json\n{\n  \"identified_closed_edges\": [\n    [\"N4\", \"N8\"]\n  ],\n  \"assignments\": [\n    {\n      \"request_id\": \"R0\",\n      \"vehicle_id\": \"V2\",\n      \"route\": [\"N4\", \"N0\", \"N10\"]\n    },\n    {\n      \"request_id\": \"R1\",\n      \"vehicle_id\": \"V3\",\n      \"route\": [\"N7\", \"N0\", \"N15\"]\n    },\n    {\n      \"request_id\": \"R2\",\n      \"vehicle_id\": \"V4\",\n      \"route\": [\"N12\", \"N2\"]\n    },\n    {\n      \"request_id\": \"R3\",\n      \"vehicle_id\": \"V1\",\n      \"route\": [\"N3\", \"N13\", \"N3\"]\n    },\n    {\n      \"request_id\": \"R4\",\n      \"vehicle_id\": \"V5\",\n      \"route\": [\"N8\", \"N5\", \"N11\"]\n    },\n    {\n      \"request_id\": \"R5\",\n      \"vehicle_id\": null,\n      \"route\": null\n    }\n  ]\n}\n```",
     "B3_logs": {
-      "traffic": "```json\n{\n  \"closed_edges\": [[\"N4\", \"N8\"], [\"N6\", \"N10\"]],\n  \"reasoning\": \"Industrial Parkway between N4 and N8 is completely blocked due to a water main break. 3rd Avenue between N6 and N10 is closed to public transit due to scheduled maintenance. Pine Avenue and vehicle V0 incidents represent delays/failures, not total road closures.\"\n}\n```",
-      "fleet": "{\n  \"emergency_reservations\": [\n    {\n      \"request_id\": \"R0\",\n      \"recommended_vehicle\": \"V3\",\n      \"rationale\": \"Highest available battery (63%) and sufficient seats (6) for emergency request R0.\"\n    },\n    {\n      \"request_id\": \"R1\",\n      \"recommended_vehicle\": \"V4\",\n      \"rationale\": \"High battery (46%) and sufficient seats (4) for emergency request R1.\"\n    },\n    {\n      \"request_id\": \"R4\",\n      \"recommended_vehicle\": \"V2\",\n      \"rationale\": \"Available battery (40%) and sufficient seats (4) for emergency request R4.\"\n    }\n  ],\n  \"standard_allocations\": [\n    {\n      \"request_id\": \"R2\",\n      \"recommended_vehicle\": \"V1\",\n      \"rationale\": \"Located at N3, suitable capacity (6 seats) and battery (34%) for standard request R2 starting near N12.\"\n    },\n    {\n      \"request_id\": \"R3\",\n      \"recommended_vehicle\": \"V5\",\n      \"rationale\": \"Sufficient capacity (6 seats) and battery (32%) for standard request R3.\"\n    },\n    {\n      \"request_id\": \"R5\",\n      \"recommended_vehicle\": \"V5\",\n      \"rationale\": \"Vehicle V5 is already at N8 (origin of R5) with capacity for 2 passengers.\"\n    }\n  ]\n}",
+      "traffic": "```json\n{\n  \"closed_edges\": [\n    [\"N4\", \"N8\"],\n    [\"N6\", \"N10\"]\n  ],\n  \"reasoning\": \"Industrial Parkway between N4 and N8 is completely blocked due to a water main break. 3rd Avenue between N6 and N10 is closed to public transit due to scheduled maintenance. Pine Avenue (N5 \u2194 N6) experiences delays but is not closed, and Vehicle V0 is a mechanical failure rather than a road closure.\"\n}\n```",
+      "fleet": "```json\n{\n  \"emergency_reservations\": [\n    {\n      \"request_id\": \"R0\",\n      \"recommended_vehicle\": \"V3\",\n      \"rationale\": \"High SoC for emergency\"\n    },\n    {\n      \"request_id\": \"R1\",\n      \"recommended_vehicle\": \"V4\",\n      \"rationale\": \"High SoC for emergency\"\n    },\n    {\n      \"request_id\": \"R4\",\n      \"recommended_vehicle\": \"V2\",\n      \"rationale\": \"High SoC for emergency\"\n    }\n  ],\n  \"standard_allocations\": [\n    {\n      \"request_id\": \"R2\",\n      \"recommended_vehicle\": \"V1\"\n    },\n    {\n      \"request_id\": \"R3\",\n      \"recommended_vehicle\": \"V5\"\n    },\n    {\n      \"request_id\": \"R5\",\n      \"recommended_vehicle\": \"V3\"\n    }\n  ]\n}\n```",
       "coordinator": "```json\n{\n  \"assignments\": [\n    {\n      \"request_id\": \"R0\",\n      \"vehicle_id\": \"V3\",\n      \"selected_route\": [\n        \"N0\",\n        \"N1\",\n        \"N5\",\n        \"N9\",\n        \"N10\"\n      ]\n    },\n    {\n      \"request_id\": \"R1\",\n      \"vehicle_id\": \"V4\",\n      \"selected_route\": [\n        \"N0\",\n        \"N1\",\n        \"N5\",\n        \"N9\",\n        \"N13\",\n        \"N14\",\n        \"N15\"\n      ]\n    },\n    {\n      \"request_id\": \"R4\",\n      \"vehicle_id\": \"V2\",\n      \"selected_route\": [\n        \"N5\",\n        \"N9\",\n        \"N10\",\n        \"N11\"\n      ]\n    },\n    {\n      \"request_id\": \"R2\",\n      \"vehicle_id\": \"V1\",\n      \"selected_route\": [\n        \"N12\",\n        \"N8\",\n        \"N9\",\n        \"N5\",\n        \"N1\",\n        \"N2\"\n      ]\n    },\n    {\n      \"request_id\": \"R3\",\n      \"vehicle_id\": \"V5\",\n      \"selected_route\": [\n        \"N13\",\n        \"N9\",\n        \"N10\",\n        \"N11\",\n        \"N7\",\n        \"N3\"\n      ]\n    }\n  ]\n}\n```"
     }
   },
@@ -326,37 +1225,153 @@
       "rfr": 42.857142857142854,
       "rfr_weighted": 69.23076923076923,
       "hcvr": 0.0,
-      "latency_s": 0.0023679733276367188,
+      "hcvr_pre": 0.0,
+      "hcvr_post": 0.0,
+      "pre_violations_count": 0,
+      "post_violations_count": 0,
+      "pre_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "post_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "latency_s": 0.0022063255310058594,
       "prompt_tokens": 0,
       "candidate_tokens": 0,
       "total_tokens": 0,
       "cost_usd": 0.0
     },
     "B2_metrics": {
-      "rfr": 0.0,
-      "rfr_weighted": 0.0,
-      "hcvr": 0.0,
-      "latency_s": 1.4559237957000732,
-      "prompt_tokens": 755,
-      "candidate_tokens": 311,
-      "total_tokens": 1066,
-      "cost_usd": 0.00019990000000000003
+      "rfr": 42.857142857142854,
+      "rfr_weighted": 69.23076923076923,
+      "hcvr": 100.0,
+      "hcvr_pre": 100.0,
+      "hcvr_post": 0.0,
+      "pre_violations_count": 4,
+      "post_violations_count": 0,
+      "pre_by_type": {
+        "route_unreachable": 4,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "post_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "latency_s": 1.460843563079834,
+      "prompt_tokens": 802,
+      "candidate_tokens": 312,
+      "total_tokens": 1114,
+      "cost_usd": 0.000205
     },
     "B3_metrics": {
       "rfr": 28.57142857142857,
       "rfr_weighted": 46.15384615384615,
-      "hcvr": 100.0,
-      "latency_s": 4.8100738525390625,
-      "prompt_tokens": 2125,
-      "candidate_tokens": 805,
-      "total_tokens": 2930,
-      "cost_usd": 0.0005345
+      "hcvr": 50.0,
+      "hcvr_pre": 50.0,
+      "hcvr_post": 0.0,
+      "pre_violations_count": 2,
+      "post_violations_count": 0,
+      "pre_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 2,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "post_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "latency_s": 3.797652006149292,
+      "prompt_tokens": 1951,
+      "candidate_tokens": 719,
+      "total_tokens": 2670,
+      "cost_usd": 0.0004827
     },
-    "B2_raw": "```json\n{\n  \"identified_closed_edges\": [\n    [\"N5\", \"N9\"],\n    [\"N4\", \"N8\"],\n    [\"N9\", \"N10\"]\n  ],\n  \"assignments\": [\n    {\n      \"request_id\": \"R0\",\n      \"vehicle_id\": null,\n      \"route\": null\n    },\n    {\n      \"request_id\": \"R1\",\n      \"vehicle_id\": \"V4\",\n      \"route\": [\"N12\", \"N8\", \"N4\", \"N0\", \"N1\", \"N2\"]\n    },\n    {\n      \"request_id\": \"R2\",\n      \"vehicle_id\": null,\n      \"route\": null\n    },\n    {\n      \"request_id\": \"R3\",\n      \"vehicle_id\": null,\n      \"route\": null\n    },\n    {\n      \"request_id\": \"R4\",\n      \"vehicle_id\": null,\n      \"route\": null\n    },\n    {\n      \"request_id\": \"R5\",\n      \"vehicle_id\": null,\n      \"route\": null\n    },\n    {\n      \"request_id\": \"R6\",\n      \"vehicle_id\": null,\n      \"route\": null\n    }\n  ]\n}\n```",
+    "B1_pre_violations": [],
+    "B1_post_violations": [],
+    "B2_pre_violations": [
+      {
+        "request_id": "R0",
+        "vehicle_id": "V2",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N0 \u2194 N10) is closed or missing in ground-truth network."
+          }
+        ]
+      },
+      {
+        "request_id": "R2",
+        "vehicle_id": "V3",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N7 \u2194 N15) is closed or missing in ground-truth network."
+          }
+        ]
+      },
+      {
+        "request_id": "R3",
+        "vehicle_id": "V1",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N3 \u2194 N5) is closed or missing in ground-truth network."
+          }
+        ]
+      },
+      {
+        "request_id": "R1",
+        "vehicle_id": "V4",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N12 \u2194 N2) is closed or missing in ground-truth network."
+          }
+        ]
+      }
+    ],
+    "B2_post_violations": [],
+    "B3_pre_violations": [
+      {
+        "request_id": "R2",
+        "vehicle_id": "V3",
+        "violations": [
+          {
+            "type": "soc_insufficient",
+            "detail": "Vehicle V3 battery (53%) < needed (73.6%)."
+          }
+        ]
+      },
+      {
+        "request_id": "R1",
+        "vehicle_id": "V4",
+        "violations": [
+          {
+            "type": "soc_insufficient",
+            "detail": "Vehicle V4 battery (26%) < needed (47.7%)."
+          }
+        ]
+      }
+    ],
+    "B3_post_violations": [],
+    "B2_raw": "```json\n{\n  \"identified_closed_edges\": [\n    [\"N5\", \"N9\"]\n  ],\n  \"assignments\": [\n    {\n      \"request_id\": \"R0\",\n      \"vehicle_id\": \"V2\",\n      \"route\": [\"N4\", \"N0\", \"N10\"]\n    },\n    {\n      \"request_id\": \"R2\",\n      \"vehicle_id\": \"V3\",\n      \"route\": [\"N7\", \"N15\"]\n    },\n    {\n      \"request_id\": \"R3\",\n      \"vehicle_id\": \"V1\",\n      \"route\": [\"N3\", \"N5\", \"N11\"]\n    },\n    {\n      \"request_id\": \"R1\",\n      \"vehicle_id\": \"V4\",\n      \"route\": [\"N12\", \"N2\"]\n    },\n    {\n      \"request_id\": \"R4\",\n      \"vehicle_id\": null,\n      \"route\": null\n    },\n    {\n      \"request_id\": \"R5\",\n      \"vehicle_id\": null,\n      \"route\": null\n    },\n    {\n      \"request_id\": \"R6\",\n      \"vehicle_id\": null,\n      \"route\": null\n    }\n  ]\n}\n```",
     "B3_logs": {
-      "traffic": "```json\n{\n  \"closed_edges\": [\n    [\"N5\", \"N9\"],\n    [\"N4\", \"N8\"],\n    [\"N9\", \"N10\"]\n  ],\n  \"reasoning\": \"Extracted road segments that are completely blocked or closed due to a water main break (2nd Avenue: N5-N9) and scheduled maintenance (Industrial Parkway: N4-N8, University Way: N9-N10). Bottlenecks and vehicle mechanical failures are excluded as they do not constitute closed road segments.\"\n}\n```",
-      "fleet": "```json\n{\n  \"emergency_reservations\": [\n    {\n      \"request_id\": \"R0\",\n      \"recommended_vehicle\": \"V1\",\n      \"rationale\": \"Highest available SoC (69%) allocated to emergency request at N0.\"\n    },\n    {\n      \"request_id\": \"R2\",\n      \"recommended_vehicle\": \"V3\",\n      \"rationale\": \"High SoC (53%) and sufficient seats (6) allocated to emergency request requiring 4 seats.\"\n    },\n    {\n      \"request_id\": \"R3\",\n      \"recommended_vehicle\": \"V2\",\n      \"rationale\": \"Available vehicle with 49% SoC allocated to emergency request.\"\n    }\n  ],\n  \"standard_allocations\": [\n    {\n      \"request_id\": \"R1\",\n      \"recommended_vehicle\": \"V4\",\n      \"rationale\": \"Remaining available vehicle with 26% SoC allocated to standard request.\"\n    },\n    {\n      \"request_id\": \"R4\",\n      \"recommended_vehicle\": \"V1\",\n      \"rationale\": \"Vehicle allocated based on route and capacity proximity.\"\n    },\n    {\n      \"request_id\": \"R5\",\n      \"recommended_vehicle\": \"V3\",\n      \"rationale\": \"Vehicle allocated based on route and capacity proximity.\"\n    },\n    {\n      \"request_id\": \"R6\",\n      \"recommended_vehicle\": \"V2\",\n      \"rationale\": \"Vehicle allocated based on route and capacity proximity.\"\n    }\n  ]\n}\n```",
-      "coordinator": "```json\n{\n  \"assignments\": [\n    {\n      \"request_id\": \"R0\",\n      \"vehicle_id\": \"V1\",\n      \"selected_route\": [\n        \"N0\",\n        \"N1\",\n        \"N2\",\n        \"N6\",\n        \"N10\"\n      ]\n    },\n    {\n      \"request_id\": \"R2\",\n      \"vehicle_id\": \"V3\",\n      \"selected_route\": [\n        \"N0\",\n        \"N4\",\n        \"N5\",\n        \"N6\",\n        \"N7\",\n        \"N11\",\n        \"N15\"\n      ]\n    },\n    {\n      \"request_id\": \"R3\",\n      \"vehicle_id\": \"V2\",\n      \"selected_route\": [\n        \"N5\",\n        \"N6\",\n        \"N7\",\n        \"N11\"\n      ]\n    },\n    {\n      \"request_id\": \"R1\",\n      \"vehicle_id\": \"V4\",\n      \"selected_route\": [\n        \"N12\",\n        \"N13\",\n        \"N14\",\n        \"N10\",\n        \"N6\",\n        \"N2\"\n      ]\n    }\n  ]\n}\n```"
+      "traffic": "```json\n{\n  \"closed_edges\": [\n    [\"N5\", \"N9\"]\n  ],\n  \"reasoning\": \"A major water main break on 2nd Avenue between N5 and N9 has completely blocked the road to all traffic. Maintenance closures on Industrial Parkway (N4-N8) and University Way (N9-N10) are restricted to public transit only, and the bottlenecks on N3-N7 and N13-N14 involve severe delays rather than total closures.\"\n}\n```",
+      "fleet": "```json\n{\n  \"emergency_reservations\": [\n    {\n      \"request_id\": \"R0\",\n      \"recommended_vehicle\": \"V1\",\n      \"rationale\": \"High SoC (69%) for emergency priority request\"\n    },\n    {\n      \"request_id\": \"R2\",\n      \"recommended_vehicle\": \"V3\",\n      \"rationale\": \"Sufficient battery (53%) and capacity (6 seats) for emergency priority request\"\n    },\n    {\n      \"request_id\": \"R3\",\n      \"recommended_vehicle\": \"V2\",\n      \"rationale\": \"Available battery (49%) for emergency priority request\"\n    }\n  ],\n  \"standard_allocations\": [\n    {\n      \"request_id\": \"R1\",\n      \"recommended_vehicle\": \"V4\"\n    },\n    {\n      \"request_id\": \"R4\",\n      \"recommended_vehicle\": \"V4\"\n    },\n    {\n      \"request_id\": \"R5\",\n      \"recommended_vehicle\": \"V1\"\n    },\n    {\n      \"request_id\": \"R6\",\n      \"recommended_vehicle\": \"V3\"\n    }\n  ]\n}\n```",
+      "coordinator": "```json\n{\n  \"assignments\": [\n    {\n      \"request_id\": \"R0\",\n      \"vehicle_id\": \"V1\",\n      \"selected_route\": [\n        \"N0\",\n        \"N1\",\n        \"N2\",\n        \"N6\",\n        \"N10\"\n      ]\n    },\n    {\n      \"request_id\": \"R2\",\n      \"vehicle_id\": \"V3\",\n      \"selected_route\": [\n        \"N0\",\n        \"N1\",\n        \"N2\",\n        \"N6\",\n        \"N10\",\n        \"N14\",\n        \"N15\"\n      ]\n    },\n    {\n      \"request_id\": \"R3\",\n      \"vehicle_id\": \"V2\",\n      \"selected_route\": [\n        \"N5\",\n        \"N6\",\n        \"N7\",\n        \"N11\"\n      ]\n    },\n    {\n      \"request_id\": \"R1\",\n      \"vehicle_id\": \"V4\",\n      \"selected_route\": [\n        \"N12\",\n        \"N13\",\n        \"N14\",\n        \"N10\",\n        \"N6\",\n        \"N2\"\n      ]\n    }\n  ]\n}\n```"
     }
   },
   {
@@ -366,7 +1381,23 @@
       "rfr": 42.857142857142854,
       "rfr_weighted": 53.84615384615385,
       "hcvr": 33.33333333333333,
-      "latency_s": 0.0014493465423583984,
+      "hcvr_pre": 33.33333333333333,
+      "hcvr_post": 0.0,
+      "pre_violations_count": 1,
+      "post_violations_count": 0,
+      "pre_by_type": {
+        "route_unreachable": 1,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "post_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "latency_s": 0.0018858909606933594,
       "prompt_tokens": 0,
       "candidate_tokens": 0,
       "total_tokens": 0,
@@ -376,27 +1407,158 @@
       "rfr": 42.857142857142854,
       "rfr_weighted": 53.84615384615385,
       "hcvr": 100.0,
-      "latency_s": 1.7281758785247803,
-      "prompt_tokens": 757,
-      "candidate_tokens": 422,
-      "total_tokens": 1179,
-      "cost_usd": 0.00024450000000000003
+      "hcvr_pre": 100.0,
+      "hcvr_post": 0.0,
+      "pre_violations_count": 4,
+      "post_violations_count": 0,
+      "pre_by_type": {
+        "route_unreachable": 4,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "post_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "latency_s": 2.4543375968933105,
+      "prompt_tokens": 804,
+      "candidate_tokens": 317,
+      "total_tokens": 1121,
+      "cost_usd": 0.00020720000000000002
     },
     "B3_metrics": {
       "rfr": 42.857142857142854,
       "rfr_weighted": 53.84615384615385,
-      "hcvr": 133.33333333333331,
-      "latency_s": 4.574781656265259,
-      "prompt_tokens": 1901,
-      "candidate_tokens": 641,
-      "total_tokens": 2542,
-      "cost_usd": 0.0004465
+      "hcvr": 100.0,
+      "hcvr_pre": 100.0,
+      "hcvr_post": 0.0,
+      "pre_violations_count": 4,
+      "post_violations_count": 0,
+      "pre_by_type": {
+        "route_unreachable": 3,
+        "soc_insufficient": 1,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "post_by_type": {
+        "route_unreachable": 0,
+        "soc_insufficient": 0,
+        "capacity_exceeded": 0,
+        "duplicate_vehicle_assignment": 0
+      },
+      "latency_s": 5.309126853942871,
+      "prompt_tokens": 1893,
+      "candidate_tokens": 744,
+      "total_tokens": 2637,
+      "cost_usd": 0.0004869
     },
-    "B2_raw": "```json\n{\n  \"identified_closed_edges\": [\n    [\"N5\", \"N9\"],\n    [\"N11\", \"N15\"],\n    [\"N13\", \"N14\"]\n  ],\n  \"assignments\": [\n    {\n      \"request_id\": \"R0\",\n      \"vehicle_id\": \"V1\",\n      \"route\": [\"N3\", \"N2\", \"N1\", \"N0\", \"N4\", \"N8\", \"N9\", \"N13\"]\n    },\n    {\n      \"request_id\": \"R2\",\n      \"vehicle_id\": \"V3\",\n      \"route\": [\"N7\", \"N6\", \"N5\", \"N4\", \"N8\", \"N9\", \"N10\", \"N11\", \"N12\", \"N13\", \"N14\", \"N15\"]\n    },\n    {\n      \"request_id\": \"R3\",\n      \"vehicle_id\": \"V5\",\n      \"route\": [\"N8\", \"N9\", \"N10\", \"N11\"]\n    },\n    {\n      \"request_id\": \"R1\",\n      \"vehicle_id\": null,\n      \"route\": null\n    },\n    {\n      \"request_id\": \"R4\",\n      \"vehicle_id\": \"V4\",\n      \"route\": [\"N12\", \"N8\", \"N4\", \"N0\", \"N1\", \"N2\"]\n    },\n    {\n      \"request_id\": \"R5\",\n      \"vehicle_id\": null,\n      \"route\": null\n    },\n    {\n      \"request_id\": \"R6\",\n      \"vehicle_id\": null,\n      \"route\": null\n    }\n  ]\n}\n```",
+    "B1_pre_violations": [
+      {
+        "request_id": "R2",
+        "vehicle_id": "V1",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N5 \u2194 N9) is closed or missing in ground-truth network."
+          }
+        ]
+      }
+    ],
+    "B1_post_violations": [],
+    "B2_pre_violations": [
+      {
+        "request_id": "R0",
+        "vehicle_id": "V1",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N3 \u2194 N13) is closed or missing in ground-truth network."
+          }
+        ]
+      },
+      {
+        "request_id": "R1",
+        "vehicle_id": "V5",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N8 \u2194 N3) is closed or missing in ground-truth network."
+          }
+        ]
+      },
+      {
+        "request_id": "R3",
+        "vehicle_id": "V3",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N7 \u2194 N5) is closed or missing in ground-truth network."
+          }
+        ]
+      },
+      {
+        "request_id": "R4",
+        "vehicle_id": "V4",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N12 \u2194 N2) is closed or missing in ground-truth network."
+          }
+        ]
+      }
+    ],
+    "B2_post_violations": [],
+    "B3_pre_violations": [
+      {
+        "request_id": "R0",
+        "vehicle_id": "V5",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N13 \u2194 N14) is closed or missing in ground-truth network."
+          }
+        ]
+      },
+      {
+        "request_id": "R2",
+        "vehicle_id": "V1",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N11 \u2194 N15) is closed or missing in ground-truth network."
+          }
+        ]
+      },
+      {
+        "request_id": "R3",
+        "vehicle_id": "V3",
+        "violations": [
+          {
+            "type": "soc_insufficient",
+            "detail": "Vehicle V3 battery (49%) < needed (67.4%)."
+          }
+        ]
+      },
+      {
+        "request_id": "R4",
+        "vehicle_id": "V4",
+        "violations": [
+          {
+            "type": "route_unreachable",
+            "detail": "Segment (N13 \u2194 N14) is closed or missing in ground-truth network."
+          }
+        ]
+      }
+    ],
+    "B3_post_violations": [],
+    "B2_raw": "```json\n{\n  \"identified_closed_edges\": [\n    [\"N5\", \"N9\"],\n    [\"N9\", \"N5\"]\n  ],\n  \"assignments\": [\n    {\n      \"request_id\": \"R0\",\n      \"vehicle_id\": \"V1\",\n      \"route\": [\"N3\", \"N13\"]\n    },\n    {\n      \"request_id\": \"R1\",\n      \"vehicle_id\": \"V5\",\n      \"route\": [\"N8\", \"N3\"]\n    },\n    {\n      \"request_id\": \"R2\",\n      \"vehicle_id\": null,\n      \"route\": null\n    },\n    {\n      \"request_id\": \"R3\",\n      \"vehicle_id\": \"V3\",\n      \"route\": [\"N7\", \"N5\", \"N11\"]\n    },\n    {\n      \"request_id\": \"R4\",\n      \"vehicle_id\": \"V4\",\n      \"route\": [\"N12\", \"N2\"]\n    },\n    {\n      \"request_id\": \"R5\",\n      \"vehicle_id\": null,\n      \"route\": null\n    },\n    {\n      \"request_id\": \"R6\",\n      \"vehicle_id\": null,\n      \"route\": null\n    }\n  ]\n}\n```",
     "B3_logs": {
-      "traffic": "```json\n{\n  \"closed_edges\": [\n    [\"N5\", \"N9\"]\n  ],\n  \"reasoning\": \"A major water main break on 2nd Avenue has completely blocked the road segment between N5 and N9. Maintenance closures on N11-N15 and N13-N14 apply only to public transit and are not full road closures. Bottlenecks and vehicle mechanical failures cause delays but do not imply road closures.\"\n}\n```",
-      "fleet": "```json\n{\n  \"emergency_reservations\": [\n    {\n      \"request_id\": \"R0\",\n      \"recommended_vehicle\": \"V1\",\n      \"rationale\": \"Emergency request with highest available battery (65%) and sufficient seats (6).\"\n    },\n    {\n      \"request_id\": \"R2\",\n      \"recommended_vehicle\": \"V5\",\n      \"rationale\": \"Emergency request assigned to the highest SoC available vehicle (80%) located at N8.\"\n    },\n    {\n      \"request_id\": \"R3\",\n      \"recommended_vehicle\": \"V3\",\n      \"rationale\": \"Emergency request assigned to available vehicle V3 (49% battery) as higher SoC vehicles are depleted.\"\n    }\n  ],\n  \"standard_allocations\": [\n    {\n      \"request_id\": \"R4\",\n      \"recommended_vehicle\": \"V4\"\n    }\n  ]\n}\n```",
-      "coordinator": "```json\n{\n  \"assignments\": [\n    {\n      \"request_id\": \"R0\",\n      \"vehicle_id\": \"V1\",\n      \"selected_route\": [\n        \"N13\",\n        \"N14\",\n        \"N10\",\n        \"N11\",\n        \"N7\",\n        \"N3\"\n      ]\n    },\n    {\n      \"request_id\": \"R2\",\n      \"vehicle_id\": \"V5\",\n      \"selected_route\": [\n        \"N4\",\n        \"N5\",\n        \"N6\",\n        \"N7\",\n        \"N11\",\n        \"N15\"\n      ]\n    },\n    {\n      \"request_id\": \"R3\",\n      \"vehicle_id\": \"V3\",\n      \"selected_route\": [\n        \"N5\",\n        \"N6\",\n        \"N7\",\n        \"N11\"\n      ]\n    },\n    {\n      \"request_id\": \"R4\",\n      \"vehicle_id\": \"V4\",\n      \"selected_route\": [\n        \"N12\",\n        \"N13\",\n        \"N14\",\n        \"N10\",\n        \"N6\",\n        \"N2\"\n      ]\n    }\n  ]\n}\n```"
+      "traffic": "```json\n{\n  \"closed_edges\": [\n    [\"N5\", \"N9\"]\n  ],\n  \"reasoning\": \"Extracted the completely blocked road segment due to the water main break on 2nd Avenue between N5 and N9. Other alerts are traffic advisories for public transit maintenance or severe bottlenecks with delays, not total closures.\"\n}\n```",
+      "fleet": "```json\n{\n  \"emergency_reservations\": [\n    {\n      \"request_id\": \"R0\",\n      \"recommended_vehicle\": \"V5\",\n      \"rationale\": \"High SoC (80%) for emergency\"\n    },\n    {\n      \"request_id\": \"R2\",\n      \"recommended_vehicle\": \"V1\",\n      \"rationale\": \"High SoC (65%) for emergency\"\n    },\n    {\n      \"request_id\": \"R3\",\n      \"recommended_vehicle\": \"V3\",\n      \"rationale\": \"Adequate SoC (49%) for emergency\"\n    }\n  ],\n  \"standard_allocations\": [\n    {\n      \"request_id\": \"R1\",\n      \"recommended_vehicle\": \"V5\"\n    },\n    {\n      \"request_id\": \"R4\",\n      \"recommended_vehicle\": \"V4\"\n    },\n    {\n      \"request_id\": \"R5\",\n      \"recommended_vehicle\": \"V1\"\n    },\n    {\n      \"request_id\": \"R6\",\n      \"recommended_vehicle\": \"V3\"\n    }\n  ]\n}\n```",
+      "coordinator": "```json\n{\n  \"assignments\": [\n    {\n      \"request_id\": \"R0\",\n      \"vehicle_id\": \"V5\",\n      \"selected_route\": [\n        \"N13\",\n        \"N14\",\n        \"N10\",\n        \"N11\",\n        \"N7\",\n        \"N3\"\n      ]\n    },\n    {\n      \"request_id\": \"R2\",\n      \"vehicle_id\": \"V1\",\n      \"selected_route\": [\n        \"N4\",\n        \"N5\",\n        \"N6\",\n        \"N7\",\n        \"N11\",\n        \"N15\"\n      ]\n    },\n    {\n      \"request_id\": \"R3\",\n      \"vehicle_id\": \"V3\",\n      \"selected_route\": [\n        \"N5\",\n        \"N6\",\n        \"N7\",\n        \"N11\"\n      ]\n    },\n    {\n      \"request_id\": \"R4\",\n      \"vehicle_id\": \"V4\",\n      \"selected_route\": [\n        \"N12\",\n        \"N13\",\n        \"N14\",\n        \"N10\",\n        \"N6\",\n        \"N2\"\n      ]\n    },\n    {\n      \"request_id\": \"R6\",\n      \"vehicle_id\": \"V3\",\n      \"selected_route\": [\n        \"N0\",\n        \"N1\",\n        \"N2\",\n        \"N6\",\n        \"N10\"\n      ]\n    }\n  ]\n}\n```"
     }
   }
 ]

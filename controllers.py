@@ -161,7 +161,9 @@ def controller_b1_rule_based(scenario, G_original):
 #  B2: Single-LLM Agent with Tool-Calling
 # ═══════════════════════════════════════════════════════════════════════════════
 
-_B2_PROMPT_TEMPLATE = """You are an Autonomous Transport Disruption Controller for a 4×4 city road network (nodes N0 to N15).
+_B2_PROMPT_TEMPLATE = """You are an Autonomous Transport Disruption Controller for an urban road network with {node_count} intersections:
+Intersections: {node_list}
+
 You must analyze live text incident alerts, identify closed road segments, and assign available electric vehicles to passenger requests.
 
 ## LIVE INCIDENT TEXT ALERTS
@@ -183,10 +185,10 @@ You must analyze live text incident alerts, identify closed road segments, and a
 
 Output strictly valid JSON:
 {{
-  "identified_closed_edges": [["N4", "N5"]],
+  "identified_closed_edges": [["u", "v"]],
   "assignments": [
-    {{"request_id": "R0", "vehicle_id": "V0", "route": ["N0", "N1", "N2", "N15"]}},
-    {{"request_id": "R1", "vehicle_id": null, "route": null}}
+    {{"request_id": "REQ_ID", "vehicle_id": "VEH_ID", "route": ["n1", "n2", "n3"]}},
+    {{"request_id": "REQ_ID", "vehicle_id": null, "route": null}}
   ]
 }}"""
 
@@ -206,7 +208,12 @@ def controller_b2_single_llm(client, model_name, scenario, G_original):
         for v in scenario["vehicles"]
     )
 
+    node_nodes = list(G_original.nodes())
+    node_list = ", ".join(node_nodes[:20]) + ("..." if len(node_nodes) > 20 else "")
+
     prompt = _B2_PROMPT_TEMPLATE.format(
+        node_count=len(node_nodes),
+        node_list=node_list,
         alerts=alerts_text,
         requests=reqs_text,
         vehicles=veh_text
@@ -277,7 +284,7 @@ Your SOLE task: Read these real-time incident alerts and extract ALL impassable/
 
 Output strictly valid JSON:
 {{
-  "closed_edges": [["N4", "N5"]],
+  "closed_edges": [["u", "v"]],
   "reasoning": "brief summary of closures"
 }}"""
 
@@ -294,8 +301,8 @@ Your SOLE task: Audit the vehicle fleet and allocate vehicles based on battery r
 Reserve the highest-SoC vehicles for 'EMERGENCY' requests.
 Output strictly valid JSON:
 {{
-  "emergency_reservations": [{{"request_id": "R0", "recommended_vehicle": "V1", "rationale": "High SoC for emergency"}}],
-  "standard_allocations": [{{"request_id": "R1", "recommended_vehicle": "V0"}}]
+  "emergency_reservations": [{{"request_id": "REQ_ID", "recommended_vehicle": "VEH_ID", "rationale": "High SoC for emergency"}}],
+  "standard_allocations": [{{"request_id": "REQ_ID", "recommended_vehicle": "VEH_ID"}}]
 }}"""
 
 
@@ -319,8 +326,7 @@ Your task: Synthesize reports from the Traffic Agent and Fleet Agent to finalize
 Output strictly valid JSON:
 {{
   "assignments": [
-    {{"request_id": "R0", "vehicle_id": "V1", "selected_route": ["N0", "N1", "N2", "N15"]}},
-    {{"request_id": "R1", "vehicle_id": "V0", "selected_route": ["N8", "N9", "N10", "N11"]}}
+    {{"request_id": "REQ_ID", "vehicle_id": "VEH_ID", "selected_route": ["n1", "n2", "n3"]}}
   ]
 }}"""
 

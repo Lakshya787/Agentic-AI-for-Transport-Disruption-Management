@@ -33,7 +33,8 @@ def validate_decision(decision, G_ground_truth_disrupted, scenario):
 
     for asgn in decision["assignments"]:
         # Skip unserved assignments
-        if asgn["status"] != "served" or not asgn.get("route"):
+        status = asgn.get("status", "served" if asgn.get("route") else "unserved")
+        if status != "served" or not asgn.get("route"):
             validated_assignments.append(asgn)
             continue
 
