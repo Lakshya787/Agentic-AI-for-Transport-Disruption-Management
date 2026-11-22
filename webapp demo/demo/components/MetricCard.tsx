@@ -55,12 +55,14 @@ export default function MetricCard({ label, value, unit, color, description, pro
 
 export function MetricsRow({ metrics, projected }: { metrics: Metrics; projected?: boolean }) {
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 12 }}>
-      <MetricCard label="HCVR"    value={metrics.hcvr.toFixed(2)}          unit="%"  color="rose"    description="Hard Constraint Violation Rate" projected={projected} Icon={AlertTriangle} />
-      <MetricCard label="RFR"     value={metrics.rfr.toFixed(2)}           unit="%"  color="emerald" description="Request Fulfillment Rate"       projected={projected} Icon={CheckCircle2}  />
-      <MetricCard label="ADIF"    value={metrics.adif.toFixed(4)}                    color="amber"   description="Avg Delay Inflation Factor"   projected={projected} Icon={TrendingUp}    />
-      <MetricCard label="Latency" value={metrics.latency.toFixed(2)}       unit="ms" color="cyan"    description="Execution Latency (B1=real)"  projected={projected} Icon={Zap}          />
-      <MetricCard label="IDR"     value={metrics.idr.toFixed(2)}           unit="%"  color="purple"  description="Infeasible Decision Rate"     projected={projected} Icon={XCircle}      />
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 12 }}>
+      <MetricCard label="HCVR"    value={metrics.hcvr.toFixed(1)}          unit="%"  color="rose"    description="Hard Constraint Violation Rate" projected={projected} Icon={AlertTriangle} />
+      <MetricCard label="RFR"     value={metrics.rfr.toFixed(1)}           unit="%"  color="emerald" description="Request Fulfillment Rate"       projected={projected} Icon={CheckCircle2}  />
+      <MetricCard label="ADIF"    value={metrics.adif.toFixed(3)}                    color="amber"   description="Avg Delay Inflation Factor"   projected={projected} Icon={TrendingUp}    />
+      <MetricCard label="Latency" value={metrics.latency.toFixed(0)}       unit="ms" color="cyan"    description="Execution Latency"            projected={projected} Icon={Zap}          />
+      <MetricCard label="IDR"     value={metrics.idr.toFixed(1)}           unit="%"  color="purple"  description="Infeasible Decision Rate"     projected={projected} Icon={XCircle}      />
+      <MetricCard label="Tokens"  value={metrics.tokens ? metrics.tokens.toLocaleString() : '0'} unit="tk" color="cyan" description="LLM Tokens (Total)" projected={projected} Icon={Zap} />
+      <MetricCard label="Cost"    value={metrics.costUsd ? `$${metrics.costUsd.toFixed(4)}` : '$0.00'} color="amber" description="API Cost Estimate" projected={projected} Icon={Timer} />
     </div>
   );
 }

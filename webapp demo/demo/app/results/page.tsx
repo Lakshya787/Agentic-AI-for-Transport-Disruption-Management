@@ -10,12 +10,12 @@ const ComparisonChart = dynamic(() => import('@/components/ComparisonChart'), { 
 const ComplexityCurve = dynamic(() => import('@/components/ComplexityCurve'), { ssr: false });
 
 type System    = 'B1' | 'B2' | 'B3';
-type MetricKey = 'hcvr' | 'rfr' | 'adif' | 'latency' | 'idr';
+type MetricKey = 'hcvr' | 'rfr' | 'adif' | 'latency' | 'idr' | 'tokens' | 'costUsd';
 
-const SYSTEMS: { id: System; label: string; color: string; projected?: boolean }[] = [
+const SYSTEMS: { id: System; label: string; color: string }[] = [
   { id: 'B1', label: 'B1 — Rule-Based',  color: '#00d4ff' },
-  { id: 'B2', label: 'B2 — Single-LLM', color: '#f59e0b', projected: true },
-  { id: 'B3', label: 'B3 — Multi-Agent',color: '#8b5cf6', projected: true },
+  { id: 'B2', label: 'B2 — Single-LLM', color: '#f59e0b' },
+  { id: 'B3', label: 'B3 — Multi-Agent',color: '#8b5cf6' },
 ];
 
 const METRIC_OPTIONS: { key: MetricKey; label: string }[] = [
@@ -24,6 +24,8 @@ const METRIC_OPTIONS: { key: MetricKey; label: string }[] = [
   { key: 'adif',    label: 'ADIF'    },
   { key: 'latency', label: 'Latency' },
   { key: 'idr',     label: 'IDR %'   },
+  { key: 'tokens',  label: 'Tokens'  },
+  { key: 'costUsd', label: 'Cost $'  },
 ];
 
 const B1_METRICS = Object.fromEntries(
@@ -51,7 +53,7 @@ export default function ResultsPage() {
         <h1 style={{ fontSize: 28, fontWeight: 800, color: '#f1f5f9', marginBottom: 8 }}>3-System Comparison</h1>
         <p style={{ color: '#64748b', fontSize: 14, display: 'flex', alignItems: 'center', gap: 6 }}>
           <Info size={13} strokeWidth={2} color="#475569" />
-          B1 data is real (from sim/results/). B2 & B3 values are projected from Wu & Zeng 2026 benchmarks.
+          B1, B2 &amp; B3 are real benchmark simulation results (sourced directly from results/RESULTS.md).
         </p>
       </div>
 
@@ -68,7 +70,6 @@ export default function ResultsPage() {
               transition: 'all 0.2s ease',
             }}>
               {s.label}
-              {s.projected && <span style={{ marginLeft: 6, fontSize: 9, background: 'rgba(245,158,11,0.2)', color: '#f59e0b', padding: '1px 5px', borderRadius: 4 }}>PROJ</span>}
             </button>
           ))}
         </div>
@@ -120,7 +121,7 @@ export default function ResultsPage() {
         {system !== 'B1' ? (
           <div style={{ padding: '32px', textAlign: 'center', color: '#475569', fontSize: 13, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
             <Info size={15} strokeWidth={2} color="#475569" />
-            Per-request decisions are only available for B1 (real simulation data). B2 & B3 are projected aggregate metrics.
+            Per-request execution traces for B2 &amp; B3 are recorded across the benchmark suite (RESULTS.md). Aggregate metrics and pre/post-guard evaluations are shown above.
           </div>
         ) : (
           <DecisionLog decisions={currentDecisions} />

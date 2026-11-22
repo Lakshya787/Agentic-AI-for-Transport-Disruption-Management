@@ -82,8 +82,8 @@ export default function ComplexityCurve({ b1, b2, b3 }: Props) {
         bodyColor: '#94a3b8',
         padding: 12,
         callbacks: {
-          label: (ctx: { dataset: { label: string }; parsed: { y: number } }) =>
-            ` ${ctx.dataset.label}: ${ctx.parsed.y}% RFR`,
+          label: (ctx: any) =>
+            ` ${ctx.dataset?.label ?? ''}: ${ctx.parsed?.y ?? 0}% RFR`,
         },
       },
     },

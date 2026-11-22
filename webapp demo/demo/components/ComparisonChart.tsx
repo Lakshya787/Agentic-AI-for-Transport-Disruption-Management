@@ -26,6 +26,18 @@ const METRIC_LABELS: Record<MetricKey, string> = {
   adif: 'ADIF',
   latency: 'Latency (ms)',
   idr: 'IDR (%)',
+  tokens: 'Tokens',
+  costUsd: 'Cost (USD)',
+};
+
+const METRIC_UNIT: Record<MetricKey, string> = {
+  hcvr: '%',
+  rfr: '%',
+  adif: '',
+  latency: ' ms',
+  idr: '%',
+  tokens: '',
+  costUsd: ' $',
 };
 
 export default function ComparisonChart({ b1, b2, b3, selectedMetric, selectedScenario }: Props) {
@@ -44,7 +56,7 @@ export default function ComparisonChart({ b1, b2, b3, selectedMetric, selectedSc
         borderSkipped: false,
       },
       {
-        label: 'B2 Single-LLM ⟨Projected⟩',
+        label: 'B2 Single-LLM',
         data: scenarios.map(s => b2[s]?.[selectedMetric] ?? 0),
         backgroundColor: 'rgba(245,158,11,0.25)',
         borderColor: '#f59e0b',
@@ -53,7 +65,7 @@ export default function ComparisonChart({ b1, b2, b3, selectedMetric, selectedSc
         borderSkipped: false,
       },
       {
-        label: 'B3 Multi-Agent ⟨Projected⟩',
+        label: 'B3 Multi-Agent',
         data: scenarios.map(s => b3[s]?.[selectedMetric] ?? 0),
         backgroundColor: 'rgba(139,92,246,0.25)',
         borderColor: '#8b5cf6',
@@ -85,8 +97,8 @@ export default function ComparisonChart({ b1, b2, b3, selectedMetric, selectedSc
         bodyColor: '#94a3b8',
         padding: 12,
         callbacks: {
-          label: (ctx: { dataset: { label: string }; parsed: { y: number } }) =>
-            ` ${ctx.dataset.label}: ${ctx.parsed.y}${selectedMetric === 'adif' ? '' : selectedMetric === 'latency' ? ' ms' : '%'}`,
+          label: (ctx: any) =>
+            ` ${ctx.dataset?.label ?? ''}: ${ctx.parsed?.y ?? 0}${METRIC_UNIT[selectedMetric] ?? ''}`,
         },
       },
     },

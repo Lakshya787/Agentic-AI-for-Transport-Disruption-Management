@@ -1,12 +1,13 @@
 'use client';
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
-import { Play, Square, AlertTriangle, Zap, AlertCircle, Navigation, Users, Clock } from 'lucide-react';
+import { Play, Square, AlertTriangle, Zap, AlertCircle, Navigation, Users, Clock, Radio } from 'lucide-react';
 import { SCENARIOS, Disruption } from '@/lib/data';
+import FleetPanel from '@/components/FleetPanel';
 
 const NetworkCanvas = dynamic(() => import('@/components/NetworkCanvas'), { ssr: false });
 
-const DISRUPTION_META: Record<string, { color: string; Icon: React.ComponentType<{size?:number;strokeWidth?:number;color?:string}> }> = {
+const DISRUPTION_META: Record<string, { color: string; Icon: React.ComponentType<{size?:number;strokeWidth?:number;color?:string;style?:React.CSSProperties}> }> = {
   road_closure:      { color: '#f43f5e', Icon: AlertTriangle },
   congestion:        { color: '#f59e0b', Icon: AlertCircle   },
   vehicle_breakdown: { color: '#f59e0b', Icon: Zap           },
@@ -131,6 +132,44 @@ export default function SimulatorPage() {
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 16 }}>
               {scenario.disruptions.map(d => <DisruptionDetail key={d.id} d={d} />)}
+            </div>
+
+            {/* NLP Text Alerts / B1 Limitation */}
+            {scenario.textAlerts && scenario.textAlerts.length > 0 && (
+              <div style={{ marginBottom: 16, display: 'flex', flexDirection: 'column', gap: 8 }}>
+                <div style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#f59e0b' }}>
+                  Unstructured Text Alerts (NLP Required)
+                </div>
+                {scenario.textAlerts.map((alert, i) => (
+                  <div key={i} style={{
+                    padding: '8px 12px', borderRadius: 8,
+                    background: 'rgba(245,158,11,0.08)', border: '1px solid rgba(245,158,11,0.25)',
+                    display: 'flex', gap: 8, alignItems: 'center', fontSize: 11, color: '#f59e0b', fontStyle: 'italic',
+                  }}>
+                    <Radio size={14} color="#f59e0b" style={{ flexShrink: 0 }} />
+                    <span>{alert}</span>
+                  </div>
+                ))}
+                <div style={{
+                  padding: '8px 12px', borderRadius: 8,
+                  background: 'rgba(244,63,94,0.08)', border: '1px solid rgba(244,63,94,0.2)',
+                  display: 'flex', gap: 8, alignItems: 'flex-start',
+                }}>
+                  <AlertTriangle size={13} color="#f43f5e" strokeWidth={2} style={{ flexShrink: 0, marginTop: 1 }} />
+                  <div style={{ fontSize: 11, color: '#94a3b8', lineHeight: 1.4 }}>
+                    <span style={{ color: '#f43f5e', fontWeight: 700 }}>B1 Blind Spot: </span>
+                    Rule-based SOP cannot parse unstructured text broadcasts and routes directly through closed links, triggering constraint violations.
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Electric Fleet Panel */}
+            <div style={{ marginBottom: 16 }}>
+              <div style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#475569', marginBottom: 8 }}>
+                Electric Vehicle Fleet &amp; SoC
+              </div>
+              <FleetPanel scenario={scenario} />
             </div>
 
             {/* Requests */}

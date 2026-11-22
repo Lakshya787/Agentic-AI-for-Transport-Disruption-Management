@@ -33,8 +33,8 @@ export default function ArchitecturePage() {
         <div className="section-label">System Architecture</div>
         <h1 style={{ fontSize: 28, fontWeight: 800, color: '#f1f5f9', marginBottom: 8 }}>Multi-Agent Pipeline Design</h1>
         <p style={{ color: '#64748b', fontSize: 14, maxWidth: 680 }}>
-          Five specialized agents work in sequence — each with a defined information scope and toolset —
-          before a Safety Guard validates every decision.
+          Three LLM agents + one deterministic routing tool work in sequence — each with a defined
+          information scope and toolset — before a Safety Guard validates every decision.
         </p>
       </div>
 
