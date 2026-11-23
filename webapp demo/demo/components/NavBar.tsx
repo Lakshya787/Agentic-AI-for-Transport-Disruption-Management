@@ -1,14 +1,15 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Map, BarChart2, Cpu, BookOpen, TrafficCone } from 'lucide-react';
+import { Home, Map, BarChart2, Cpu, BookOpen, TrafficCone, Microscope } from 'lucide-react';
 
 const NAV = [
-  { href: '/',             label: 'Home',         Icon: Home,     id: 'nav-home'         },
-  { href: '/simulator',    label: 'Simulator',    Icon: Map,      id: 'nav-simulator'    },
-  { href: '/results',      label: 'Results',      Icon: BarChart2,id: 'nav-results'      },
-  { href: '/architecture', label: 'Architecture', Icon: Cpu,      id: 'nav-architecture' },
-  { href: '/research',     label: 'Research',     Icon: BookOpen, id: 'nav-research'     },
+  { href: '/',                label: 'Home',          Icon: Home,       id: 'nav-home'          },
+  { href: '/simulator',       label: 'Simulator',     Icon: Map,        id: 'nav-simulator'      },
+  { href: '/results',         label: 'Results',       Icon: BarChart2,  id: 'nav-results'        },
+  { href: '/architecture',    label: 'Architecture',  Icon: Cpu,        id: 'nav-architecture'   },
+  { href: '/research',        label: 'Research',      Icon: BookOpen,   id: 'nav-research'       },
+  { href: '/explainability',  label: 'Explain',       Icon: Microscope, id: 'nav-explainability' },
 ];
 
 export default function NavBar() {
@@ -66,7 +67,7 @@ export default function NavBar() {
             width: 6, height: 6, borderRadius: '50%', background: '#10b981',
             boxShadow: '0 0 6px #10b981', animation: 'pulse-dot 2s ease-in-out infinite',
           }} />
-          <span style={{ fontSize: 11, fontWeight: 600, color: '#10b981' }}>W3 Complete</span>
+          <span style={{ fontSize: 11, fontWeight: 600, color: '#10b981' }}>All Weeks Complete</span>
         </div>
       </div>
     </nav>

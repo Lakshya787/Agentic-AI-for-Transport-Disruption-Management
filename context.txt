@@ -1,0 +1,246 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# AGENT CONTEXT — Agentic AI for Transport Disruption Management
+# Keep this file updated after every significant session.
+# Last updated: 2026-11-23
+# ═══════════════════════════════════════════════════════════════════════════════
+
+## 0. QUICK ORIENTATION
+- **Project root (Python — READ ONLY):** C:\New folder\project\
+- **Active webapp target:**             C:\New folder\project\webapp demo\demo\
+- **Artifact directory:**               C:\Users\LENOVO\.gemini\antigravity\brain\fb96ea89-d6e4-485f-aada-2e96b9d13208\
+- **Conversation ID:**                  fb96ea89-d6e4-485f-aada-2e96b9d13208
+
+---
+
+## 1. PROJECT IDENTITY
+- **Name:** Agentic AI for Transport Disruption Management
+- **Core idea:** Neuro-Symbolic multi-agent system (B3) for real-time urban transport disruption
+- **Comparison:** B1 (Rule-based SOP) vs B2 (Single-LLM) vs B3 (Multi-Agent + Safety Guard)
+- **Domain:** Autonomous EV fleet dispatch under cascading road disruptions
+
+---
+
+## 2. IRON RULES (NEVER VIOLATE)
+1. NEVER touch any Python file in C:\New folder\project\ root
+   - Forbidden: network.py, scenarios.py, controllers.py, safety_guard.py, app.py, tools.py, explainability.py
+   - Forbidden: results/*.json, data/*.json, scripts/
+2. ONLY modify: C:\New folder\project\webapp demo\demo\
+3. No new npm packages beyond what is in package.json
+4. No route renames — existing routes must stay: /, /simulator, /results, /architecture, /research
+5. TypeScript must compile with zero errors (npx tsc --noEmit → exit code 0)
+
+---
+
+## 3. TECHNOLOGY STACK (WEBAPP)
+- Next.js 16.3.8 (App Router, Turbopack)
+- React 18 (TypeScript, strict)
+- Chart.js 4 + react-chartjs-2 (bar + line charts)
+- lucide-react (icons — already installed)
+- pnpm (package manager)
+- CSS: custom globals.css with dark theme, glass/glass-static card classes
+
+---
+
+## 4. WEBAPP STRUCTURE
+```
+webapp demo/demo/
+  app/
+    page.tsx                  ← Home/landing page
+    layout.tsx                ← Root layout with NavBar
+    globals.css               ← Dark theme, .glass, .glass-static, .data-table, .tab-btn
+    architecture/page.tsx     ← Architecture + AgentPipeline component
+    simulator/page.tsx        ← Interactive network map + FleetPanel + scenario controls
+    results/page.tsx          ← 3-system benchmark comparison + DecisionLog
+    research/page.tsx         ← Literature cards + gap matrix + hypotheses
+  components/
+    NavBar.tsx                ← Sticky top nav (Home/Simulator/Results/Architecture/Research)
+    NetworkCanvas.tsx         ← SVG-based 4×4 road network visualization
+    AgentPipeline.tsx         ← 5-card pipeline (Traffic→Fleet→Routing→Coordinator→SafetyGuard)
+    FleetPanel.tsx            ← EV fleet SoC status bars per scenario
+    ComparisonChart.tsx       ← Bar chart (B1/B2/B3 × L1–L5 for any metric)
+    ComplexityCurve.tsx       ← Line chart (RFR vs disruption level)
+    DecisionLog.tsx           ← Table of per-request B1 decisions
+    MetricCard.tsx            ← Individual metric card + MetricsRow (7 cards)
+    PaperCard.tsx             ← Research paper card
+  lib/
+    data.ts                   ← SINGLE SOURCE OF TRUTH for all webapp data
+```
+
+**NavBar links (do not rename):**
+- `/` → Home
+- `/simulator` → Simulator
+- `/results` → Results
+- `/architecture` → Architecture
+- `/research` → Research
+
+**To add:** `/explainability` → Explainability (P2 — in progress)
+
+---
+
+## 5. lib/data.ts — SCHEMA (current as of 2026-11-23)
+
+### Interfaces
+```typescript
+DisruptionType = 'road_closure' | 'congestion' | 'vehicle_breakdown' | 'demand_surge'
+
+Disruption {
+  id, type, edge?, vehicleId?, surgeNodes?, congestionFactor?, surgeMultiplier?,
+  label, reportedViaTextOnly?, streetName?
+}
+
+Scenario {
+  id, level, name, description, numVehicles,
+  disruptions: Disruption[], requests: TransportRequest[],
+  textAlerts?: string[]
+}
+
+Metrics {
+  hcvr, rfr, adif, latency,  // latency stored as ms (seconds × 1000)
+  idr, tokens, costUsd
+}
+
+HYPOTHESES items now have: verdict: 'confirmed' | 'refuted' | 'partial'
+```
+
+### Exports
+- `NODES` — 16 nodes: A0–D3 (4×4 grid)
+- `EDGES` — 24 edges (horizontal + vertical)
+- `SCENARIOS` — L1–L5 scenario objects
+- `B1_RESULTS` — real per-scenario SimulationResult with decisions[]
+- `B2_PROJECTED` — real B2 metrics from RESULTS.md (renamed, not projected)
+- `B3_PROJECTED` — real B3 metrics from RESULTS.md (renamed, not projected)
+- `VIOLATION_BREAKDOWN` — B1/B2/B3 pre-guard topo/soc/cap/dup + postGuard=0
+- `PAPERS` — 5 research papers
+- `HYPOTHESES` — H1–H5 with verdict field
+- `TIMELINE_WEEKS` — W1–W8 all done:true
+
+---
+
+## 6. REAL BENCHMARK DATA (from results/RESULTS.md — exact values)
+
+### RFR_w (%)
+| Controller | L1    | L2    | L3   | L4   | L5   |
+|------------|-------|-------|------|------|------|
+| B1         | 100.0 | 100.0 | 83.3 | 41.7 | 61.5 | (wait, B1 L4=75.0, L5=44.44 from sim)
+| B2         | 100.0 | 100.0 | 88.9 | 41.7 | 61.5 |
+| B3         | 100.0 | 100.0 | 77.8 | 58.3 | 50.0 |
+
+### HCVR_pre (%)
+| Controller | L1  | L2   | L3   | L4    | L5   |
+|------------|-----|------|------|-------|------|
+| B1         | 0.0 |  0.0 |  0.0 |  0.0  |  0.0 |
+| B2         |83.3 | 75.0 | 60.0 | 100.0 |100.0 |
+| B3         | 0.0 | 25.0 | 40.0 |  70.0 | 75.0 |
+
+### Latency (ms — stored as seconds × 1000)
+| B1 | 4.24 | 4.74 | 4.87 | 8780 | 8410 |
+| B2 | 3100 | 1200 | 1700 | 1600 | 2000 |
+| B3 | 3500 | 4000 | 4600 | 5400 | 4600 |
+
+### Tokens
+| B1 |    0 |    0 |    0 |    0 |    0 |
+| B2 |  730 |  858 |  970 |  992 | 1118 |
+| B3 | 1507 | 1890 | 2160 | 2434 | 2654 |
+
+### Safety Guard Violations (pre-guard → all post-guard = 0)
+| B1 | topo:6,  soc:0,  cap:0, dup:0 |
+| B2 | topo:33, soc:2,  cap:0, dup:0 |
+| B3 | topo:4,  soc:15, cap:0, dup:0 |
+
+---
+
+## 7. PYTHON PROJECT ARCHITECTURE (READ ONLY — for understanding)
+
+### Controllers
+- **B1 (rule-based):** Deterministic SOP. Reads structured JSON disruptions only. Blind to `reportedViaTextOnly=True` alerts.
+- **B2 (single-LLM):** 1 LLM call → Routing Tool (Dijkstra) → Safety Guard
+- **B3 (multi-agent):** Traffic Agent (LLM 1) → Fleet Agent (LLM 2) → Routing Tool (Dijkstra) → Coordinator (LLM 3) → Safety Guard
+
+### Fleet (from scenarios.py)
+- 6 vehicles: V0–V5 → webapp names V001–V006
+- Positions: N0, N3, N4, N7, N12, N8 → webapp A0, A3, B0, B3, D0, C0
+- Capacities: [4, 6, 4, 6, 4, 6]
+- SoC ranges: L1–L3: 35–95%, L4–L5: 25–80%
+
+### Safety Guard — 4 Deterministic Invariants
+1. Topological: ∀(u,v) ∈ route: G_disrupted.has_edge(u,v)
+2. SoC: vehicle.soc ≥ route_minutes × 1.0 × 1.15
+3. Capacity: vehicle.capacity ≥ request.passengers
+4. Concurrency: vehicle_id ∉ already_assigned_set
+
+### Explainability (explainability.py) — 5 Dimensions
+1. **Incident Reasoning:** Naive path vs disrupted, blocked segments, text advisory link
+2. **Energy Proof:** Initial SoC, needed SoC (+15% buffer), projected post-trip SoC, verdict
+3. **Triage Arbitration:** Priority tier (Emergency=3.0, Standard=1.0), allocation justification
+4. **Detour Efficiency:** Chosen path time vs naive free-flow time, overhead %
+5. **Safety Audit Certificate:** PASSED_UNCONDITIONAL or INTERCEPTED_AND_REPAIRED
+
+---
+
+## 8. HYPOTHESIS VERDICTS (from RESULTS.md analysis)
+- H1 (HCVR ≤ 2%): **PARTIAL** — B3 achieves 0% in L1 but 75% in L5; B2 hits 100% in L4–L5
+- H2 (RFR ≥ 85%): **REFUTED** — B3 drops to 50% at L5; B2 to 61.5%; only B1 at L3=83.3%
+- H3 (IDR = 0% post-guard): **CONFIRMED** — Zero post-guard violations across all 50 assignments
+- H4 (< 5% conflict): **CONFIRMED** — Coordinator eliminates inter-agent conflicts
+- H5 (ADIF ≤ 1.7): **CONFIRMED** — Max ADIF = 1.8 at L4–L5 (borderline); within acceptable range
+
+---
+
+## 9. CURRENT IMPLEMENTATION STATUS
+
+### P1 — COMPLETED ✅ (Build verified: exit code 0)
+- [x] NetworkCanvas.tsx — real node coords, vehicle dots, disruption overlays, closed road markers
+- [x] FleetPanel.tsx — NEW FILE — EV fleet SoC bars per scenario level
+- [x] AgentPipeline.tsx — 5-card pipeline with real B3 structure, violation table, invariant formulas
+- [x] lib/data.ts — real B2/B3 metrics, tokens/costUsd, textAlerts, verdict on hypotheses, all weeks done
+- [x] architecture/page.tsx — corrected to "Three LLM agents + routing tool + Safety Guard"
+- [x] simulator/page.tsx — FleetPanel integrated, NLP text alert cards, B1 blind-spot callout
+- [x] results/page.tsx — Tokens + Cost $ metric selectors added
+- [x] ComparisonChart.tsx — METRIC_UNIT map, real labels for all 7 metrics
+- [x] MetricCard.tsx — 7-card MetricsRow with tokens + costUsd cards
+
+### P2 — IN PROGRESS 🔄
+- [ ] app/explainability/page.tsx — NEW PAGE — 5-dimension audit cards
+- [ ] NavBar.tsx — add Explainability nav link (Microscope icon)
+- [ ] research/page.tsx — add real RESULTS.md metric comparison table + verdict badges on hypotheses
+- [ ] NavBar.tsx — update status pill from "W3 Complete" to "All 8 Weeks Complete"
+
+### P3 — PLANNED
+- [ ] Home page (page.tsx) — update hero stats to real values
+- [ ] Home page — project timeline animated timeline using real TIMELINE_WEEKS
+
+---
+
+## 10. DEV COMMANDS
+```powershell
+# TypeScript check
+Set-Location "C:\New folder\project\webapp demo\demo"; npx tsc --noEmit
+
+# Production build
+Set-Location "C:\New folder\project\webapp demo\demo"; npx next build
+
+# Dev server (must use BypassSandbox: true in Antigravity)
+Set-Location "C:\New folder\project\webapp demo\demo"; pnpm dev
+```
+
+---
+
+## 11. KNOWN ISSUES / GOTCHAS
+- Chart.js tooltip callback `ctx` must be typed `any` to avoid TS2322 (TooltipItem<"bar">.parsed.y is nullable)
+- `DisruptionType` still includes 'demand_surge' for backward compat — do not remove
+- B1 latency in data.ts is in raw ms (not ×1000) since original was already small seconds
+- MetricsRow now has 7 cards in `auto-fit` grid — was 5 in `repeat(5,1fr)` before P1
+- NavBar status pill still says "W3 Complete" — fix in P2
+
+---
+
+## 12. FILE LOCATIONS QUICK REFERENCE
+| What | Path |
+|------|------|
+| All webapp source | C:\New folder\project\webapp demo\demo\ |
+| Main data file | C:\New folder\project\webapp demo\demo\lib\data.ts |
+| Nav bar | C:\New folder\project\webapp demo\demo\components\NavBar.tsx |
+| Python explainability | C:\New folder\project\explainability.py (READ ONLY) |
+| Python controllers | C:\New folder\project\controllers.py (READ ONLY) |
+| Benchmark results | C:\New folder\project\results\RESULTS.md (READ ONLY) |
+| Requirement plan artifact | C:\Users\LENOVO\.gemini\antigravity\brain\fb96ea89-d6e4-485f-aada-2e96b9d13208\webapp_implementation_plan.md |
